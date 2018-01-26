@@ -1,6 +1,22 @@
-module.exports = {
+//#region Require modules
+const requires = {
     discord: require('discord.js'),
     lodash: require('lodash'),
-    guildIndex: new(require('enmap'))({ provider: new(require('enmap-level'))({ name: 'guildIndex' }) })
-
+    fs: require('fs'),
+    nodeutil: require('util'),
+    Enmap: require('enmap'),
+    EnmapLevel: require('enmap-level'),
 }
+//#endregion
+
+//#region Patch or construct modules
+requires.fs.readdir = requires.nodeutil.promisify(requires.fs.readdir);
+
+const provider = new requires.EnmapLevel({ name: 'guildIndex' })
+requires.guildIndex = new requires.Enmap({ provider });
+//#endregion
+
+// Any modules not needed
+const prune = ['Enmap', 'EnmapLevel'];
+
+module.exports = requires.lodash.omit(requires, prune);
