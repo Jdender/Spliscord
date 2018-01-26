@@ -12,6 +12,7 @@ void async function Main() {
     client.on('error', (e) => console.error(e));
     client.on('warn', (w) => console.warn(w));
     client.on('debug', (d) => console.info(d));
+    process.on('unhandledRejection', (e) => console.error(`Uncaught Promise Rejection:\n${e}`));
     //#endregion
 
     //#region Event Handler
