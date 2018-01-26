@@ -1,5 +1,6 @@
 //#region Require modules
 const requires = {
+    config: require('./config.json'),
     discord: require('discord.js'),
     lodash: require('lodash'),
     fs: require('fs'),
