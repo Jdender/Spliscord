@@ -11,6 +11,10 @@ void async function Main() {
     client.once('ready', () => client.prefixMention = new RegExp(`^<@!?${client.user.id}> `));
     //#endregion
 
+    //#region Make Collections
+    client.commands = new client.discord.Collection();
+    //#endregion
+
     //#region Simple Events
     client.on('error', (e) => console.error(e));
     client.on('warn', (w) => console.warn(w));
@@ -18,18 +22,34 @@ void async function Main() {
     process.on('unhandledRejection', (e) => console.error(`Uncaught Promise Rejection:\n${e}`));
     //#endregion
 
-    //#region Event Handler
-    const eventFiles = await client.fs.readdir('./events/');
-    console.info(`[load] Loading ${eventFiles.length} events.`);
-    eventFiles.forEach((file) => {
+    //#region Command Importer
+    const commandFiles = await client.fs.readdir('./commands/');
+    console.info(`[load] Loading ${commandFiles.length} commands.`);
+
+    for (const file of commandFiles) {
         if (file.split('.')[1] !== 'js') return;
 
-        const eventFunction = require(`./events/${file}`);
-        const eventName = file.split('.')[0];
+        const command = require(`./commands/${file}`);
 
-        client.on(eventName, (...args) => eventFunction.run(client, ...args));
+        client.commands.set(command.name, command);
+
+        delete require.cache[require.resolve(`./commands/${file}`)];
+    }
+    //#endregion
+
+    //#region Event Importer
+    const eventFiles = await client.fs.readdir('./events/');
+    console.info(`[load] Loading ${eventFiles.length} events.`);
+    
+    for (const file of eventFiles) {
+        if (file.split('.')[1] !== 'js') return;
+
+        const event = require(`./events/${file}`);
+
+        client.on(event.name, (...args) => event.execute(client, ...args));
+
         delete require.cache[require.resolve(`./events/${file}`)];
-    });
+    }
     //#endregion
 
     client.login(require(client.config.token.path)[client.config.token.name]);
