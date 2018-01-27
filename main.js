@@ -8,11 +8,15 @@ Object.assign(client, require('./requires'));
 void async function Main() {
 
     //#region Set Constants
-    client.once('ready', () => client.prefixMention = new RegExp(`^<@!?${client.user.id}> `));
+    client.once('ready', () => { 
+        client.prefixMention = new RegExp(`^<@!?${client.user.id}> `);
+        client.inviteLink = `https://discordapp.com/oauth2/authorize?client_id=${client.user.id}&scope=bot`;
+     });
     //#endregion
 
     //#region Make Collections
     client.commands = new client.discord.Collection();
+    client.cooldowns = new client.discord.Collection();
     //#endregion
 
     //#region Simple Events
@@ -40,7 +44,7 @@ void async function Main() {
     //#region Event Importer
     const eventFiles = await client.fs.readdir('./events/');
     console.info(`[load] Loading ${eventFiles.length} events.`);
-    
+
     for (const file of eventFiles) {
         if (file.split('.')[1] !== 'js') return;
 
