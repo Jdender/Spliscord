@@ -1,11 +1,14 @@
 if (process.version.slice(1).split('.')[0] < 8) throw new Error('Node 8.0.0 or higher is required. Update Node.');
 
+//#region Set up client and requires.
+const client = new(require('discord.js')).Client();
+Object.assign(client, require('./requires'));
+//#endregion
 
 void async function Main() {
 
-    //#region Set up client and requires.
-    const client = new(require('discord.js')).Client();
-    require('lodash').assign(client, require('./requires'));
+    //#region Set Constants
+    client.once('ready', () => client.prefixMention = new RegExp(`^<@!?${client.user.id}> `));
     //#endregion
 
     //#region Simple Events
