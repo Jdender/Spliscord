@@ -27,8 +27,6 @@
     "homepage": "https://github.com/jdenderplays/Spliscord#readme",
     "dependencies": {
         "discord.js": "^11.3.0",
-        "enmap": "^0.4.2",
-        "enmap-level": "^1.0.0",
         "erlpack": "github:discordapp/erlpack",
         "libsodium-wrappers": "^0.5.4",
         "lodash": "^4.17.4",

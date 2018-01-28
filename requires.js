@@ -5,8 +5,6 @@ const requires = {
     lodash: require('lodash'),
     fs: require('fs'),
     nodeutil: require('util'),
-    Enmap: require('enmap'),
-    EnmapLevel: require('enmap-level'),
     path: require('path'),
 }
 //#endregion
@@ -14,9 +12,6 @@ const requires = {
 //#region Patch or construct modules
 requires.fs.readdir = requires.nodeutil.promisify(requires.fs.readdir);
 requires.fs.stat = requires.nodeutil.promisify(requires.fs.stat);
-
-const provider = new requires.EnmapLevel({ name: 'guildIndex' })
-requires.guildIndex = new requires.Enmap({ provider });
 //#endregion
 
 //#region Util Functions
@@ -28,6 +23,6 @@ Object.assign(requires, {
 //#endregion
 
 // Any modules not needed
-const prune = ['Enmap', 'EnmapLevel'];
+const prune = [];
 
 module.exports = requires.lodash.omit(requires, prune);
