@@ -8,13 +8,6 @@ Object.assign(client, require('./requires'));
 
 void async function Main() {
 
-    //#region Set Constants
-    client.once('ready', () => { 
-        client.prefixMention = new RegExp(`^<@!?${client.user.id}> `);
-        client.inviteLink = `https://discordapp.com/oauth2/authorize?client_id=${client.user.id}&scope=bot`;
-     });
-    //#endregion
-
     //#region Make Collections
     client.commands = new client.discord.Collection();
     client.cooldowns = new client.discord.Collection();
@@ -35,6 +28,8 @@ void async function Main() {
         if (file.split('.')[1] !== 'js') return;
 
         const command = require(`./${file}`);
+
+        if (command.initialize) command.initialize(client);
 
         client.commands.set(command.name, command);
 
