@@ -5,16 +5,22 @@ module.exports = {
         if (message.author.id === '1') return console.warn(message.content); // Clyde
         if (message.author.bot) return; // Bot
 
+
         message.prefix = (client.prefixMention.exec(message.content)) ? message.content.match(client.prefixMention)[0] : false;
         if (!message.prefix) return; // Prefix
 
+
+        //#region
         message.args = message.content.slice(message.prefix.length).split(/ +/g); // Get Args
         message.command = message.args.shift().toLowerCase(); // Get Command Name
 
         if (!client.commands.has(message.command)) return; // Command Name
 
         const command = client.commands.get(message.command); // Get Command
+        //#endregion
 
+
+        //#region Args Checking
         if (command.args === true && !message.args.length) {
             return message.channel.send(`You didn't provide any arguments, ${message.author}.`);
         }
@@ -28,6 +34,8 @@ module.exports = {
 
             return message.channel.send(reply);
         }
+        //#endregion
+
 
         //#region Cooldowns
         if (!client.cooldowns.has(command.name)) { // Make cooldown collecions here instead of in Main()
@@ -54,12 +62,23 @@ module.exports = {
         }
         //#endregion
 
-        try {
-            command.execute(client, message);
-        } catch (error) {
-            console.error(error);
-            message.channel.send(`There was an error trying to execute the \`${command.name}\` command.`);
+
+        //#region Execute&Error Handler
+        if (command.execute.constructor.name === 'AsyncFunction') {
+            command.execute(client, message)
+                .catch(error => {
+                    console.error(error);
+                    message.channel.send(`There was an error trying to execute the \`${command.name}\` command.`);
+                });
+        } else {
+            try {
+                command.execute(client, message);
+            } catch (error) {
+                console.error(error);
+                message.channel.send(`There was an error trying to execute the \`${command.name}\` command.`);
+            }
         }
+        //#endregion
 
     },
 };
