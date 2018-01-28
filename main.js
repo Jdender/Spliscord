@@ -28,17 +28,17 @@ void async function Main() {
     //#endregion
 
     //#region Command Importer
-    const commandFiles = await client.fs.readdir('./commands/');
+    const commandFiles = client.lodash.flattenDeep(await client.walk('./commands/'));
     console.info(`[load] Loading ${commandFiles.length} commands.`);
 
     for (const file of commandFiles) {
         if (file.split('.')[1] !== 'js') return;
 
-        const command = require(`./commands/${file}`);
+        const command = require(`./${file}`);
 
         client.commands.set(command.name, command);
 
-        delete require.cache[require.resolve(`./commands/${file}`)];
+        delete require.cache[require.resolve(`./${file}`)];
     }
     //#endregion
 
