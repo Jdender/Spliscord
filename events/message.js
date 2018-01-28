@@ -15,6 +15,20 @@ module.exports = {
 
         const command = client.commands.get(message.command); // Get Command
 
+        if (command.args === true && !message.args.length) {
+            return message.channel.send(`You didn't provide any arguments, ${message.author}.`);
+        }
+
+        if (typeof command.args === 'number' && message.args.length !== command.args) {
+            let reply = `You didn't provide enough arguments, ${message.author}. This command is expecting ${command.args}.`;
+
+            if (command.usage) {
+                reply += `\nThe proper usage would be: \`${message.prefix}${command.name} ${command.usage}\``;
+            }
+
+            return message.channel.send(reply);
+        }
+
         //#region Cooldowns
         if (!client.cooldowns.has(command.name)) { // Make cooldown collecions here instead of in Main()
             client.cooldowns.set(command.name, new client.discord.Collection()); // Don't want to waste mem for commands never used
