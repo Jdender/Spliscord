@@ -14,9 +14,10 @@ module.exports = {
         message.args = message.content.slice(message.prefix.length).split(/ +/g); // Get Args
         message.command = message.args.shift().toLowerCase(); // Get Command Name
 
-        if (!client.commands.has(message.command)) return; // Command Name
+        const command = client.commands.get(message.command) ||
+            client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(message.command));
 
-        const command = client.commands.get(message.command); // Get Command
+        if (!command) return;
         //#endregion
 
 
