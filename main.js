@@ -8,6 +8,16 @@ Object.assign(client, require('./requires'));
 
 void async function Main() {
 
+    //#region Set Up Database
+    client.db = client.low(new client.LowDbFileSync('db.json'));
+    client.db.defaults({
+            servers: [],
+            users: [],
+        })
+        .write()
+
+    //#endregion
+
     //#region Make Collections
     client.commands = new client.discord.Collection();
     client.cooldowns = new client.discord.Collection();

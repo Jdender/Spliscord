@@ -6,6 +6,8 @@ const requires = {
     fs: require('fs'),
     nodeutil: require('util'),
     path: require('path'),
+    low: require('lowdb'),
+    LowDbFileSync: require('lowdb/adapters/FileSync'),
 }
 //#endregion
 
