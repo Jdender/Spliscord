@@ -14,8 +14,7 @@ void async function Main() {
             servers: [],
             users: [],
         })
-        .write()
-
+        .write();
     //#endregion
 
     //#region Make Collections
