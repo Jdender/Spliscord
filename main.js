@@ -3,7 +3,7 @@ if (version[0] < 8 || version[1] < 9) throw new Error('Node 8.9.0 or higher is r
 
 //#region Set up client and requires.
 const client = new(require('discord.js')).Client();
-Object.assign(client, require('./requires'));
+Object.assign(client, require('./modules/requires'));
 //#endregion
 
 void async function Main() {
@@ -30,7 +30,7 @@ void async function Main() {
     //#endregion
 
     //#region Command Importer
-    const commandFiles = client.lodash.flattenDeep(await client.walk('./commands/'));
+    const commandFiles = client.lodash.flattenDeep(await client.functions.walk('./commands/'));
     console.info(`[load] Loading ${commandFiles.length} commands.`);
 
     for (const file of commandFiles) {
