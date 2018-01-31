@@ -3,6 +3,7 @@
     "version": "0.1.0",
     "description": "",
     "main": "main.js",
+    "engines": { "node": "8.9.0" },
     "scripts": {
         "test": "node main.js",
         "start": "pm2 start main.js -n \"spliscord\"",
