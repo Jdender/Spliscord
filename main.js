@@ -17,6 +17,15 @@ void async function Main() {
         .write();
     //#endregion
 
+    //#region Set Up Environment Config
+    client.env = client.low(new client.LowDbFileSync('env.json'));
+    client.env.defaults({
+            comment: 'This file will be removed when the bot moves to the new db. For now it\'s using LowDB so it needs this.',
+            stack: [],
+        })
+        .write();
+    //#endregion
+
     //#region Make Collections
     client.commands = new client.discord.Collection();
     client.cooldowns = new client.discord.Collection();
