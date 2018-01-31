@@ -5,14 +5,38 @@ module.exports = {
         if (message.author.id === '1') return console.warn(message.content); // Clyde
         if (message.author.bot) return; // Bot
 
+        const prefixes = [];
 
-        message.prefix = (client.prefixMention.exec(message.content)) ? message.content.match(client.prefixMention)[0] : false;
+        //#region User Config
+        const user = client.db.get('users')
+            .find({ id: message.author.id })
+            .value();
+
+        if (user) {
+            message.userConf = user;
+            
+            if (typeof user.prefix === 'string') prefixes.push(user.prefix);
+        }
+        //#endregion
+
+        //#region Prefix Checking
+
+
+        message.prefix = false;
+
+        for (const thisPrefix of prefixes) {
+            if (message.content.startsWith(thisPrefix)) message.prefix = thisPrefix;
+        }
+
+        message.prefix = (client.prefixMention.exec(message.content)) ? message.content.match(client.prefixMention)[0] : message.prefix;
+
         if (!message.prefix) return; // Prefix
+        //#endregion
 
 
         //#region
-        message.args = message.content.slice(message.prefix.length).split(/ +/g); // Get Args
-        message.command = message.args.shift().toLowerCase(); // Get Command Name
+        message.args = client.parseArgs(message.content.slice(message.prefix.length).split(/ +/g)); // Get Args 
+        message.command = message.args._.shift().toLowerCase(); // Get Command Name
 
         const command = client.commands.get(message.command) ||
             client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(message.command));
@@ -21,6 +45,7 @@ module.exports = {
         //#endregion
 
 
+        /* TODO With new arg parser
         //#region Args Checking
         if (command.args === true && !message.args.length) {
             return message.channel.send(`You didn't provide any arguments, ${message.author}.`);
@@ -35,7 +60,7 @@ module.exports = {
 
             return message.channel.send(reply);
         }
-        //#endregion
+        //#endregion*/
 
 
         //#region Cooldowns
