@@ -5,7 +5,9 @@ module.exports = {
         if (message.author.id === '1') return console.warn(message.content); // Clyde
         if (message.author.bot) return; // Bot
 
+
         const prefixes = [];
+
 
         //#region User Config
         const user = client.db.get('users')
@@ -14,14 +16,13 @@ module.exports = {
 
         if (user) {
             message.userConf = user;
-            
+
             if (typeof user.prefix === 'string') prefixes.push(user.prefix);
         }
         //#endregion
 
+
         //#region Prefix Checking
-
-
         message.prefix = false;
 
         for (const thisPrefix of prefixes) {
@@ -43,24 +44,6 @@ module.exports = {
 
         if (!command) return;
         //#endregion
-
-
-        /* TODO With new arg parser
-        //#region Args Checking
-        if (command.args === true && !message.args.length) {
-            return message.channel.send(`You didn't provide any arguments, ${message.author}.`);
-        }
-
-        if (typeof command.args === 'number' && message.args.length !== command.args) {
-            let reply = `You didn't provide enough arguments, ${message.author}. This command is expecting ${command.args}.`;
-
-            if (command.usage) {
-                reply += `\nThe proper usage would be: \`${message.prefix}${command.name} ${command.usage}\``;
-            }
-
-            return message.channel.send(reply);
-        }
-        //#endregion*/
 
 
         //#region Cooldowns
@@ -89,7 +72,7 @@ module.exports = {
         //#endregion
 
 
-        //#region Execute&Error Handler
+        //#region Execute & Error Handler
         if (command.execute.constructor.name === 'AsyncFunction') {
             command.execute(client, message)
                 .catch(error => {
