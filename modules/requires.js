@@ -10,6 +10,7 @@ const requires = {
     LowDbFileSync: require('lowdb/adapters/FileSync'),
     functions: require('./functions.js'),
     parseArgs: require('minimist'),
+    phin: require('phin').promisified,
 }
 //#endregion
 
@@ -18,7 +19,4 @@ requires.fs.readdir = requires.nodeutil.promisify(requires.fs.readdir);
 requires.fs.stat = requires.nodeutil.promisify(requires.fs.stat);
 //#endregion
 
-// Any modules not needed
-const prune = [];
-
-module.exports = requires.lodash.omit(requires, prune);
+module.exports = requires;
