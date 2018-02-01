@@ -6,7 +6,7 @@ module.exports = {
     async execute(client, message) {
 
         const response = await client.phin({
-            url: 'http://random.cat/meow',
+            url: 'https://random.cat/meow',
             parse: 'json',
         });
 

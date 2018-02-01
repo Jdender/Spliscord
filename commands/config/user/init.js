@@ -15,6 +15,13 @@ module.exports = {
             id: message.author.id
         };
 
+        if (message.args.prefix) {
+
+            config.prefix = message.args.prefix;
+
+            message.channel.send(`[--prefix] Set your prefix to ${message.args.prefix}.`);
+        }
+
         client.db.get('users')
             .push(config)
             .write()
