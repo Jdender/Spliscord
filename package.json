@@ -1,14 +1,17 @@
 {
     "name": "spliscord",
-    "version": "0.1.0",
+    "version": "0.0.1",
     "description": "",
-    "main": "main.js",
+    "main": "dist/main.js",
     "engines": {
         "node": "8.9.0"
     },
     "scripts": {
-        "test": "node main.js",
-        "start": "pm2 start main.js -n \"spliscord\"",
+        "pretest": "tsc",
+        "test": "node dist/main.js",
+        "prestart": "tsc",
+        "start": "pm2 start dist/main.js -n \"spliscord\" ",
+        "prerestart": "tsc",
         "restart": "pm2 restart spliscord",
         "stop": "pm2 stop spliscord"
     },
