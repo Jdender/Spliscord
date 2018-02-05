@@ -1,22 +1,28 @@
+//#region Import
 import { Client } from 'discord.js';
-import config from './config';
+import Events from './modules/events';
+import { Config } from './interfaces/config';
+//#endregion
 
-interface Config {
-    foo: string; // TODO
-}
+//#region Unpack/Init
+const { on, registerEvents } = Events;
+//#endregion
 
+//#region Because typescript
 class Spliscord extends Client {
     public constructor(public config: Config) {
         super();
 
-        this.emit('debug', 'test')
+        registerEvents(this);
     }
 
-    @on('debug') // TODO
+    @on('debug')
     private _onDebug(message: string): void {
         console.info(message);
     }
+
 }
+//#endregion
 
-
+import config from './config';
 const client = new Spliscord(config);
