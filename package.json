@@ -37,7 +37,8 @@
         "lowdb": "^1.0.0",
         "minimist": "^1.2.0",
         "node-opus": "^0.2.7",
-        "phin": "^2.9.0"
+        "phin": "^2.9.0",
+        "reflect-metadata": "^0.1.12"
     },
     "optionalDependencies": {
         "erlpack": "^0.1.2",
