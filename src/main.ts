@@ -1,11 +1,14 @@
 const version: string[] = process.version.slice(1).split('.');
 if ((version[0] as any) < 8 || ((version[1] as any) < 9)) throw new Error('Node 8.9.0 or higher is required. Update Node.');
 
+process.on('unhandledRejection', (e) => console.error(`Uncaught Promise Rejection:\n${e}`));
+
 //#region Import
 import { Client } from 'discord.js';
 import Events from './modules/events';
 import Config from './interfaces/config';
 import walk from './modules/walk';
+import { readdirAsync } from './modules/fsAsync';
 //#endregion
 
 //#region Unpack/Init
@@ -22,6 +25,27 @@ class Spliscord extends Client {
         super();
 
         registerInClassEvents(this);
+        this._register();
+
+        this.login(require(config.token.path)[config.token.name]);
+    }
+
+    private async _register(): Promise < void > {
+
+        //#region Event Importer
+        const rawEventFiles = await readdirAsync('./dist/events/');
+        const eventFiles = rawEventFiles.filter(file => file.split('.')[2] !== 'map');
+        console.info(`[load] Loading ${eventFiles.length} events.`);
+
+        for (const file of eventFiles) {
+            if (file.split('.')[1] !== 'js') return;
+
+            const { default: event } = require(`./events/${file}`);
+
+            this.on(event.name, (...args) => event.execute(this, ...args));
+        }
+        //#endregion
+
     }
 
     @once('ready')
