@@ -1,11 +1,15 @@
+const version: string[] = process.version.slice(1).split('.');
+if ((version[0] as any) < 8 || ((version[1] as any) < 9)) throw new Error('Node 8.9.0 or higher is required. Update Node.');
+
 //#region Import
 import { Client } from 'discord.js';
 import Events from './modules/events';
-import { Config } from './interfaces/config';
+import Config from './interfaces/config';
+import walk from './modules/walk';
 //#endregion
 
 //#region Unpack/Init
-const { on, once, registerEvents } = Events;
+const { on, once, registerEvents: registerInClassEvents } = Events;
 //#endregion
 
 //#region Because typescript
@@ -16,7 +20,8 @@ class Spliscord extends Client {
 
     public constructor(public config: Config) {
         super();
-        registerEvents(this);
+
+        registerInClassEvents(this);
     }
 
     @once('ready')
