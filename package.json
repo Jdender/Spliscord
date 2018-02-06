@@ -2,15 +2,15 @@
     "name": "spliscord",
     "version": "0.0.1",
     "description": "",
-    "main": "dist/main.js",
+    "main": "dist/bot.js",
     "engines": {
         "node": "8.9.0"
     },
     "scripts": {
         "pretest": "tsc",
-        "test": "node dist/main.js",
+        "test": "node dist/bot.js",
         "prestart": "tsc",
-        "start": "pm2 start dist/main.js -n \"spliscord\" ",
+        "start": "pm2 start dist/bot.js -n \"spliscord\" ",
         "prerestart": "tsc",
         "restart": "pm2 restart spliscord",
         "stop": "pm2 stop spliscord"

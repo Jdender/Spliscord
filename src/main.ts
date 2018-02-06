@@ -1,15 +1,10 @@
-const version: string[] = process.version.slice(1).split('.');
-if ((version[0] as any) < 8 || ((version[1] as any) < 9)) throw new Error('Node 8.9.0 or higher is required. Update Node.');
-
-process.on('unhandledRejection', (e) => console.error(`Uncaught Promise Rejection:\n${e}`));
-
 //#region Import
 import { Client, Collection } from 'discord.js';
 import Events from './modules/events';
-import Config from './interfaces/config';
+import {BotConfig} from './interfaces/config';
 import walk from './modules/walk';
 import { readdirAsync } from './modules/fsAsync';
-import Command from './interfaces/command';
+import {Command} from './interfaces/command';
 import * as low from 'lowdb';
 import * as LowDbFileSync from 'lowdb/adapters/FileSync';
 import { flattenDeep } from 'lodash';
@@ -20,7 +15,7 @@ const { on, once, registerEvents: registerInClassEvents } = Events;
 //#endregion
 
 //#region Because typescript
-class Spliscord extends Client {
+export default class Spliscord extends Client {
 
     public prefixMention: RegExp;
     public inviteLink: string;
@@ -31,7 +26,7 @@ class Spliscord extends Client {
     public db = low(new LowDbFileSync('db.json'));
     public env = low(new LowDbFileSync('env.json'));
 
-    public constructor(public config: Config) {
+    public constructor(public config: BotConfig) {
         super();
 
         this._initDB();
@@ -91,13 +86,13 @@ class Spliscord extends Client {
 
     @once('ready')
     private _onceReady(): void {
-        this.prefixMention = new RegExp(`^<@!?${client.user.id}> `);
-        this.inviteLink = `https://discordapp.com/oauth2/authorize?client_id=${client.user.id}&scope=bot`;
+        this.prefixMention = new RegExp(`^<@!?${this.user.id}> `);
+        this.inviteLink = `https://discordapp.com/oauth2/authorize?client_id=${this.user.id}&scope=bot`;
     }
 
     @on('ready')
     private _onReady(): void {
-        console.info(`[info] Runing in ${client.channels.size} channels on ${client.guilds.size} servers, for a total of ${client.users.size} users.`);
+        console.info(`[info] Runing in ${this.channels.size} channels on ${this.guilds.size} servers, for a total of ${this.users.size} users.`);
     }
 
     @on('debug')
@@ -116,6 +111,3 @@ class Spliscord extends Client {
     }
 }
 //#endregion
-
-import config from './config';
-const client = new Spliscord(config);
