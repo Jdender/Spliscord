@@ -1,11 +1,16 @@
 import { ClientOptions } from 'discord.js';
 
-interface TokenConfig {
+export interface TokenConfig {
     path: string;
     name: string;
 }
 
-export default interface Config {
+export interface BotConfig {
     token: TokenConfig;
     client: ClientOptions;
+}
+
+export interface UserConfig {
+    id: string;
+    prefix ? : string;
 }

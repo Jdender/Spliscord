@@ -31,8 +31,8 @@ export default class Events {
         }
     }
 
-    public static registerEvents(emitter: EventEmitter): void
-	{
+    public static registerEvents(emitter: EventEmitter): void {
+        
 		if (!(emitter instanceof EventEmitter))
 			throw new TypeError('Events can only be registered on classes extending EventEmitter');
 
