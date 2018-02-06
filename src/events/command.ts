@@ -1,12 +1,15 @@
 import Event from '../interfaces/event';
-import {Collection} from 'discord.js';
+import { UserConfig } from '../interfaces/config';
+import { CommandMessage } from '../interfaces/command';
+import { Collection } from 'discord.js';
+import SpliscordClient from '../main';
 import * as parseArgs from 'minimist';
 
 //TODO Add typescript PFM
 
 const test: Event = {
     name: 'message',
-    execute(client, message) {
+    execute(client: SpliscordClient, message: CommandMessage) {
 
         if (message.author.id === '1') return console.warn(message.content); // Clyde
         if (message.author.bot) return; // Bot
@@ -16,7 +19,7 @@ const test: Event = {
 
 
         //#region User Config
-        const user = client.db.get('users')
+        const user: UserConfig = client.db.get('users')
             .find({ id: message.author.id })
             .value();
 
@@ -29,7 +32,7 @@ const test: Event = {
 
 
         //#region Prefix Checking
-        message.prefix = false;
+        message.prefix = null;
 
         for (const thisPrefix of prefixes) {
             if (message.content.startsWith(thisPrefix)) message.prefix = thisPrefix;
@@ -46,7 +49,8 @@ const test: Event = {
         message.command = message.args._.shift().toLowerCase(); // Get Command Name
 
         const command = client.commands.get(message.command) ||
-            client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(message.command));
+            client.commands.find((cmd: any) => cmd.aliases && cmd.aliases.includes(message.command));
+        // `(cmd: any)` needed to make ts shut up.
 
         if (!command) return;
         //#endregion
@@ -69,7 +73,8 @@ const test: Event = {
 
             if (now < expirationTime) {
                 const timeLeft = (expirationTime - now) / 1000;
-                return message.channel.send(`Please wait ${timeLeft.toFixed(1)} more second(s) before reusing the \`${command.name}\` command.`);
+                message.channel.send(`Please wait ${timeLeft.toFixed(1)} more second(s) before reusing the \`${command.name}\` command.`);
+                return;
             }
 
             timestamps.set(message.author.id, now);
@@ -79,8 +84,8 @@ const test: Event = {
 
 
         //#region Execute & Error Handler
-        if (command.execute.constructor.name === 'AsyncFunction') {
-            command.execute(client, message)
+        if (command.execute.constructor.name === 'AsyncFunction') {  
+            (command as any).execute(client, message) // `as any` needed here too.
                 .catch(error => {
                     console.error(error);
                     message.channel.send(`There was an error trying to execute the \`${command.name}\` command.`);
