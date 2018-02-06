@@ -1,7 +1,7 @@
 import { Command } from '../../interfaces/command';
 import { promisified as phin } from 'phin';
 
-const ping: Command = {
+const cat: Command = {
     name: 'api.cat',
     aliases: ['api.meow'],
     cooldown: 5,
@@ -18,4 +18,4 @@ const ping: Command = {
     },
 }
 
-export default ping;
+export default cat;
