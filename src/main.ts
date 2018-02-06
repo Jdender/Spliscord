@@ -4,11 +4,15 @@ if ((version[0] as any) < 8 || ((version[1] as any) < 9)) throw new Error('Node 
 process.on('unhandledRejection', (e) => console.error(`Uncaught Promise Rejection:\n${e}`));
 
 //#region Import
-import { Client } from 'discord.js';
+import { Client, Collection } from 'discord.js';
 import Events from './modules/events';
 import Config from './interfaces/config';
 import walk from './modules/walk';
 import { readdirAsync } from './modules/fsAsync';
+import Command from './interfaces/command';
+import * as low from 'lowdb';
+import * as LowDbFileSync from 'lowdb/adapters/FileSync';
+import { flattenDeep } from 'lodash';
 //#endregion
 
 //#region Unpack/Init
@@ -21,21 +25,44 @@ class Spliscord extends Client {
     public prefixMention: RegExp;
     public inviteLink: string;
 
+    public commands: Collection < string, Command > = new Collection();
+    public cooldowns: Collection < string, any > = new Collection();
+
+    public db = low(new LowDbFileSync('db.json'));
+    public env = low(new LowDbFileSync('env.json'));
+
     public constructor(public config: Config) {
         super();
 
+        this._initDB();
         registerInClassEvents(this);
-        this._register();
+        this._import();
 
         this.login(require(config.token.path)[config.token.name]);
     }
 
-    private async _register(): Promise < void > {
+    private async _import(): Promise < void > {
+
+        //#region Command Importer
+        const rawCommandFiles: string[] = flattenDeep(await walk('./dist/commands/'));
+        const commandFiles: string[] = rawCommandFiles.filter((file: string) => file.split('.')[2] !== 'map');
+
+        console.info(`[init] [load] Loading ${commandFiles.length} commands.`);
+
+        for (const file of commandFiles) {
+            if (file.split('.')[1] !== 'js') return;
+
+            const { default: command } = require(`../${file}`); // The `..` is needed.
+
+            this.commands.set(command.name, command);
+        }
+        //#endregion
 
         //#region Event Importer
-        const rawEventFiles = await readdirAsync('./dist/events/');
-        const eventFiles = rawEventFiles.filter(file => file.split('.')[2] !== 'map');
-        console.info(`[load] Loading ${eventFiles.length} events.`);
+        const rawEventFiles: string[] = await readdirAsync('./dist/events/');
+        const eventFiles: string[] = rawEventFiles.filter((file: string) => file.split('.')[2] !== 'map');
+
+        console.info(`[init] [load] Loading ${eventFiles.length} events.`);
 
         for (const file of eventFiles) {
             if (file.split('.')[1] !== 'js') return;
@@ -45,7 +72,21 @@ class Spliscord extends Client {
             this.on(event.name, (...args) => event.execute(this, ...args));
         }
         //#endregion
+    }
 
+    private _initDB(): void {
+
+        this.db.defaults({
+                servers: [],
+                users: [],
+            })
+            .write();
+
+        this.env.defaults({
+                comment: 'This file will be removed when the bot moves to the new db. For now it\'s using LowDB so it needs this.',
+                stack: [],
+            })
+            .write();
     }
 
     @once('ready')
