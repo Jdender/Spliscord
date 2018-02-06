@@ -40,12 +40,13 @@ const test: Event = {
 
         message.prefix = (client.prefixMention.exec(message.content)) ? message.content.match(client.prefixMention)[0] : message.prefix;
 
-        if (!message.prefix) return; // Prefix
+        if (message.channel.type === 'text')
+            if (!message.prefix) return; // Prefix
         //#endregion
 
 
         //#region
-        message.args = parseArgs(message.content.slice(message.prefix.length).split(/ +/g)); // Get Args 
+        message.args = parseArgs(message.channel.type === 'text' ? message.content.slice(message.prefix.length).split(/ +/g) : message.content.split(/ +/g)); // Get Args 
         message.command = message.args._.shift().toLowerCase(); // Get Command Name
 
         const command = client.commands.get(message.command) ||
@@ -58,7 +59,7 @@ const test: Event = {
 
         //#region Cooldowns
         if (!client.cooldowns.has(command.name)) { // Make cooldown collecions here instead of in Main()
-            client.cooldowns.set(command.name, new Collection()); // Don't want to waste mem for commands never used
+            client.cooldowns.set(command.name, new Collection < string, any > ()); // Don't want to waste mem for commands never used
         }
 
         const now = Date.now(); // Used more then once so set to a const
@@ -84,7 +85,7 @@ const test: Event = {
 
 
         //#region Execute & Error Handler
-        if (command.execute.constructor.name === 'AsyncFunction') {  
+        if (command.execute.constructor.name === 'AsyncFunction') {
             (command as any).execute(client, message) // `as any` needed here too.
                 .catch(error => {
                     console.error(error);
