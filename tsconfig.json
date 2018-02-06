@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+        "locale": "en",
+        "target": "ES6",
+        "experimentalDecorators": true,
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "sourceMap": true,
+        "sourceRoot": "src",
+        "outDir": "dist"
+    },
+    "exclude": [
+        "dist",
+        "port",
+        "node_modules"
+    ]
+}

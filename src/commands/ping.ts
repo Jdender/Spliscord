@@ -1,4 +1,6 @@
-module.exports = {
+import Command from '../interfaces/command';
+
+const ping: Command = {
     name: 'ping',
     aliases: ['pong', 'latency'],
     cooldown: 3,
@@ -8,4 +10,6 @@ module.exports = {
 
         pingMessage.edit(`Ponged. | Took **${Math.abs(pingMessage.createdTimestamp - message.createdTimestamp)} ms**.`);
     },
-};
+}
+
+export default ping;

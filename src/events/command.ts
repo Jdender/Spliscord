@@ -1,6 +1,12 @@
-module.exports = {
+import Event from '../interfaces/event';
+import {Collection} from 'discord.js';
+import * as parseArgs from 'minimist';
+
+//TODO Add typescript PFM
+
+const test: Event = {
     name: 'message',
-    async execute(client, message) {
+    execute(client, message) {
 
         if (message.author.id === '1') return console.warn(message.content); // Clyde
         if (message.author.bot) return; // Bot
@@ -36,7 +42,7 @@ module.exports = {
 
 
         //#region
-        message.args = client.parseArgs(message.content.slice(message.prefix.length).split(/ +/g)); // Get Args 
+        message.args = parseArgs(message.content.slice(message.prefix.length).split(/ +/g)); // Get Args 
         message.command = message.args._.shift().toLowerCase(); // Get Command Name
 
         const command = client.commands.get(message.command) ||
@@ -48,7 +54,7 @@ module.exports = {
 
         //#region Cooldowns
         if (!client.cooldowns.has(command.name)) { // Make cooldown collecions here instead of in Main()
-            client.cooldowns.set(command.name, new client.discord.Collection()); // Don't want to waste mem for commands never used
+            client.cooldowns.set(command.name, new Collection()); // Don't want to waste mem for commands never used
         }
 
         const now = Date.now(); // Used more then once so set to a const
@@ -88,6 +94,7 @@ module.exports = {
             }
         }
         //#endregion
-
     },
-};
+}
+
+export default test;

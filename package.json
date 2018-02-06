@@ -1,12 +1,17 @@
 {
     "name": "spliscord",
-    "version": "0.1.0",
+    "version": "0.0.1",
     "description": "",
-    "main": "main.js",
-    "engines": { "node": "8.9.0" },
+    "main": "dist/main.js",
+    "engines": {
+        "node": "8.9.0"
+    },
     "scripts": {
-        "test": "node main.js",
-        "start": "pm2 start main.js -n \"spliscord\"",
+        "pretest": "tsc",
+        "test": "node dist/main.js",
+        "prestart": "tsc",
+        "start": "pm2 start dist/main.js -n \"spliscord\" ",
+        "prerestart": "tsc",
         "restart": "pm2 restart spliscord",
         "stop": "pm2 stop spliscord"
     },
@@ -27,16 +32,25 @@
     },
     "homepage": "https://github.com/jdenderplays/Spliscord#readme",
     "dependencies": {
+        "@types/lodash": "^4.14.101",
+        "@types/lowdb": "^1.0.0",
+        "@types/node": "^9.4.0",
+        "@types/minimist": "^1.2.0",
         "discord.js": "^11.3.0",
-        "erlpack": "github:discordapp/erlpack",
-        "libsodium-wrappers": "^0.5.4",
-        "lodash": "^4.17.4",
+        "lodash": "^4.17.5",
         "lowdb": "^1.0.0",
         "minimist": "^1.2.0",
         "node-opus": "^0.2.7",
         "phin": "^2.9.0",
+        "reflect-metadata": "^0.1.12"
+    },
+    "optionalDependencies": {
+        "erlpack": "^0.1.2",
+        "libsodium-wrappers": "^0.5.4",
         "uws": "^9.14.0",
         "zlib-sync": "^0.1.4"
     },
-    "optionalDependencies": {}
+    "devDependencies": {
+        "typescript": "^2.7.1"
+    }
 }

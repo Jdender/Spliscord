@@ -32,6 +32,9 @@ env.json
 dist/
 build/
 
+# Temp folder for porting
+port/
+
 # Serverless generated files
 .serverless/
 
