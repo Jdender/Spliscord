@@ -32,6 +32,10 @@
     },
     "homepage": "https://github.com/jdenderplays/Spliscord#readme",
     "dependencies": {
+        "@types/lodash": "^4.14.101",
+        "@types/lowdb": "^1.0.0",
+        "@types/node": "^9.4.0",
+        "@types/minimist": "^1.2.0",
         "discord.js": "^11.3.0",
         "lodash": "^4.17.5",
         "lowdb": "^1.0.0",
@@ -47,7 +51,6 @@
         "zlib-sync": "^0.1.4"
     },
     "devDependencies": {
-        "@types/node": "^9.4.0",
         "typescript": "^2.7.1"
     }
 }
