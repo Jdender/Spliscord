@@ -1,10 +1,10 @@
 //#region Import
 import { Client, Collection } from 'discord.js';
 import Events from './modules/events';
-import {BotConfig} from './interfaces/config';
+import { BotConfig } from './interfaces/config';
 import walk from './modules/walk';
 import { readdirAsync } from './modules/fsAsync';
-import {Command} from './interfaces/command';
+import { Command } from './interfaces/command';
 import * as low from 'lowdb';
 import * as LowDbFileSync from 'lowdb/adapters/FileSync';
 import { flattenDeep } from 'lodash';
@@ -21,7 +21,7 @@ export default class Spliscord extends Client {
     public inviteLink: string;
 
     public commands: Collection < string, Command > = new Collection();
-    public cooldowns: Collection < string, any > = new Collection();
+    public cooldowns: Collection < string, Collection < string, any > > = new Collection();
 
     public db = low(new LowDbFileSync('db.json'));
     public env = low(new LowDbFileSync('env.json'));

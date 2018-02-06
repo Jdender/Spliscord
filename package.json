@@ -7,11 +7,11 @@
         "node": "8.9.0"
     },
     "scripts": {
-        "pretest": "tsc",
+        "pretest": "rd /s /q \"dist\" && tsc",
         "test": "node dist/bot.js",
-        "prestart": "tsc",
+        "prestart": "rd /s /q \"dist\" && tsc",
         "start": "pm2 start dist/bot.js -n \"spliscord\" ",
-        "prerestart": "tsc",
+        "prerestart": "rd /s /q \"dist\" && tsc",
         "restart": "pm2 restart spliscord",
         "stop": "pm2 stop spliscord"
     },
