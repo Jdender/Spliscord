@@ -1,14 +1,16 @@
-//#region Import
-import { Collection } from 'discord.js';
-import { BotConfig } from './config.i';
-import { walk } from '../util/walk';
-import { readdirAsync } from '../util/fsAsync';
-import { Command } from '../cmdHandler/commands.i';
-import * as low from 'lowdb';
-import * as LowDbFileSync from 'lowdb/adapters/FileSync';
-import { flattenDeep } from 'lodash';
-import { Logger } from '../logger/main';
-import { execute as executeCmd } from '../cmdHandler/main';
+//#region Because barrels
+import {
+    Collection,
+    BotConfig,
+    walk,
+    readdirAsync,
+    Command,
+    low,
+    LowDbFileSync,
+    flattenDeep,
+    Logger,
+    executeCmd
+} from './client.b';
 //#endregion
 
 //#region Because typescript

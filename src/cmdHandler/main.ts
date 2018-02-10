@@ -1,8 +1,9 @@
-import { UserConfig } from '../client/config.i';
-import { CommandMessage } from './commands.i';
-import { Collection } from 'discord.js';
-import * as parseArgs from 'minimist';
-
+import {
+    UserConfig,
+    CommandMessage,
+    Collection,
+    parseArgs
+} from './handler.b';
 
 export function execute(client, message: CommandMessage) {
 
