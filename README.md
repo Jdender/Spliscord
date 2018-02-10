@@ -12,11 +12,11 @@ Spliscord is a Discord bot made using the Discord.js wrapper for Discord's API. 
 
 * **Jdender** - *Full stack & Initial work* - [jdenderplays](https://github.com/jdenderplays)
 
-See also the list of [contributors](https://github.com/jdenderplays/Spliscord/contributors) who participated in this project.
+Also check the list of [contributors](https://github.com/jdenderplays/Spliscord/contributors) who did minor contributions.
 
 ## License
 
-This project is licensed under the AGPL 3.0 License - see the [LICENSE](LICENSE) file for details
+This project is licensed under the AGPL 3.0 License - see the [license](LICENSE) file for details.
 
 ## Acknowledgments
 
