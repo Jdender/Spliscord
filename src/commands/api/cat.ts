@@ -1,12 +1,11 @@
-import { Command } from '../../cmdHandler/commands.i';
-import { promisified as phin } from 'phin';
+import { Command, CommandMessage, Client, phin } from '../../cmdHandler/commands.b';
 
 const cat: Command = {
     name: 'api.cat',
     aliases: ['api.meow'],
     cooldown: 5,
     description: 'Get a random cat image from `random.cat`.',
-    async execute(client, message) {
+    async execute(client: Client, message: CommandMessage) {
 
         const response = await phin({
             url: 'https://random.cat/meow',

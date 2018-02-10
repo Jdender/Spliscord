@@ -1,4 +1,4 @@
-import { Command } from '../cmdHandler/commands.i';
+import { Command, CommandMessage, Client } from '../cmdHandler/commands.b';
 
 const help: Command = {
     name: 'help',
@@ -6,7 +6,7 @@ const help: Command = {
     aliases: ['commands'],
     usage: '[command name]',
     cooldown: 5,
-    execute(client, message) {
+    execute(client: Client, message: CommandMessage) {
 
         const data = [];
 
@@ -28,9 +28,12 @@ const help: Command = {
         } else {
 
             const command = client.commands.get(message.args._[0]) ||
-                client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(message.args._[0]));
+                client.commands.find((cmd: any) => cmd.aliases && cmd.aliases.includes(message.args._[0]));
 
-            if (!command) return message.channel.send('That\'s not a command I have.');
+            if (!command) {
+                message.channel.send('That\'s not a command I have.');
+                return;
+            } 
 
             data.push(`**Name:** ${command.name}`);
 

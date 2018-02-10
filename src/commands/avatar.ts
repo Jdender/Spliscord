@@ -1,11 +1,11 @@
-import { Command } from '../cmdHandler/commands.i';
+import { Command, CommandMessage, Client } from '../cmdHandler/commands.b';
 
 const avatar: Command = {
     name: 'avatar',
     aliases: ['icon', 'pfp'],
     cooldown: 5,
     description: 'Get one or multiple user\'s avatar.',
-    execute(client, message) {
+    execute(client: Client, message: CommandMessage) {
 
         const mentions = (client.prefixMention.exec(message.content) && (message.prefix === message.content.match(client.prefixMention)[0])) ?
             message.mentions.users.filter(user => {
@@ -14,7 +14,8 @@ const avatar: Command = {
             message.mentions.users;
 
         if (!mentions.size) {
-            return message.channel.send(`Your avatar: ${message.author.displayAvatarURL}`);
+            message.channel.send(`Your avatar: ${message.author.displayAvatarURL}`);
+            return
         }
 
         const avatarList = mentions.map(user => {
