@@ -10,7 +10,7 @@ interface EventMeta {
     attached ? : boolean;
 }
 
-export default class Events {
+export class Events {
 
     public static on(event: string, ...args: any[]) {
         return Events._addEvent(event, false, ...args);
@@ -40,7 +40,7 @@ export default class Events {
 
         const metaTarget: any = emitter.constructor.prototype;
         
-		for (const event of <EventMeta[]> Reflect.getMetadata('events', metaTarget)) {
+		for (const event of Reflect.getMetadata('events', metaTarget) as EventMeta[]) {
 
 			if (!(emitter as any)[event.method]) continue;
 			if (event.attached) continue;

@@ -1,4 +1,4 @@
-import Events from '../util/events';
+import { Events } from '../util/events';
 import { Client } from 'discord.js';
 const { on, once, registerEvents } = Events;
 

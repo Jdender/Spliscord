@@ -14,7 +14,7 @@ import {
 //#endregion
 
 //#region Because typescript
-export default class Spliscord extends Logger {
+export class Spliscord extends Logger {
 
     public commands: Collection < string, Command > = new Collection();
     public cooldowns: Collection < string, Collection < string, any > > = new Collection();
