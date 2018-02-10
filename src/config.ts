@@ -1,6 +1,6 @@
 export default {
     token: {
-        path: '../../tokens.json',
+        path: '../../../tokens.json',
         name: 'Spliscord',
     },
     client: {

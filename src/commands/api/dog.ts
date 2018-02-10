@@ -1,4 +1,4 @@
-import { Command } from '../../interfaces/command';
+import { Command } from '../../cmdHandler/commands.i';
 import { promisified as phin } from 'phin';
 
 const dog: Command = {

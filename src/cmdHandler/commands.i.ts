@@ -1,5 +1,5 @@
 import { Message } from 'discord.js';
-import { UserConfig } from './config';
+import { UserConfig } from '../client/config.i';
 import { ParsedArgs } from 'minimist';
 
 export interface Command {
