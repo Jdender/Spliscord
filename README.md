@@ -8,14 +8,6 @@ Spliscord is a Discord bot made using the Discord.js wrapper for Discord's API. 
 * [minimist](https://github.com/substack/minimist) - Used to parse command arguments
 * [Phin](https://github.com/ethanent/phin) - Used to interact with external HTTP APIs
 
-## Contributing
-
-Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [releases on this repository](https://github.com/jdenderplays/Spliscord/releases). 
-
 ## Authors
 
 * **Jdender** - *Full stack & Initial work* - [jdenderplays](https://github.com/jdenderplays)
