@@ -29,5 +29,4 @@ This project is licensed under the AGPL 3.0 License - see the [LICENSE](LICENSE)
 ## Acknowledgments
 
 * [An Idiot's Guide](https://anidiots.guide/) - Where I learned Discord.js and JavaScript.
-
-* Extra hat tip to [Chronmly](https://github.com/Chronomly) for convincing me to start bot developing and switch from Lua to JS.
+* [Chronmly](https://github.com/Chronomly) - Hat tip for convincing me to start bot developing and switch from Lua to JS.
