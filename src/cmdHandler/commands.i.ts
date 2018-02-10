@@ -9,6 +9,7 @@ export interface Command {
     cooldown: number;
     aliases ? : string[];
     usage ? : string;
+    args ? : boolean | number;
 }
 
 export interface CommandMessage extends Message {

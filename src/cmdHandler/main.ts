@@ -52,6 +52,31 @@ export function execute(client, message: CommandMessage) {
     if (!command) return;
     //#endregion
 
+    //#region Arg checking
+    if (typeof command.args === 'boolean' && !message.args._.length) {
+
+        let reply = `You didn't provide any arguments.`;
+
+        if (command.usage) {
+            reply += `\nThe proper usage would be: \`${message.prefix}${command.name} ${command.usage}\``;
+        }
+
+        message.channel.send(reply);
+        return;
+    }
+
+    if (typeof command.args === 'number' && message.args._.length < command.args) {
+
+        let reply = `You didn't provide enough arguments. This command needs ${command.args}.`;
+
+        if (command.usage) {
+            reply += `\nThe proper usage would be: \`${message.prefix}${command.name} ${command.usage}\``;
+        }
+
+        message.channel.send(reply);
+        return;
+    }
+    //#endregion
 
     //#region Cooldowns
     if (!client.cooldowns.has(command.name)) { // Make cooldown collecions here instead of in Main()
