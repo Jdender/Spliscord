@@ -15,8 +15,7 @@ yarn-error.log*
 /bower_components
 
 # Databases
-db.json
-env.json
+storage.json
 
 # Yarn Integrity file
 .yarn-integrity
