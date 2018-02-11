@@ -10,6 +10,7 @@ export interface Command {
     aliases ? : string[];
     usage ? : string;
     args ? : boolean | number;
+    guildOnly: boolean;
 }
 
 export interface CommandMessage extends Message {

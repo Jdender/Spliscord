@@ -5,6 +5,7 @@ const avatar: Command = {
     aliases: ['icon', 'pfp'],
     cooldown: 5,
     description: 'Get one or multiple user\'s avatar.',
+    guildOnly: false,
     execute(client: Client, message: CommandMessage) {
 
         const mentions = (client.prefixMention.exec(message.content) && (message.prefix === message.content.match(client.prefixMention)[0])) ?

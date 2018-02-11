@@ -6,6 +6,7 @@ const help: Command = {
     aliases: ['commands'],
     usage: '[command name]',
     cooldown: 5,
+    guildOnly: false,
     execute(client: Client, message: CommandMessage) {
 
         const data = [];

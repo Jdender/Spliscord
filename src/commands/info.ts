@@ -5,6 +5,7 @@ const info: Command = {
     aliases: ['information', 'about', ''],
     cooldown: 3,
     description: 'Ping!',
+    guildOnly: false,
     execute(client: Client, message: CommandMessage) {
         message.channel.send('For information or source for the bot please see the readme on github: https://github.com/jdenderplays/Spliscord/#readme');
     },

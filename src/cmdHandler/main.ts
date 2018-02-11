@@ -4,6 +4,7 @@ import {
     Collection,
     parseArgs,
     Client,
+    StorageTypeKeys,
 } from './handler.b';
 
 export function execute(client: Client, message: CommandMessage) {
@@ -40,7 +41,7 @@ export function execute(client: Client, message: CommandMessage) {
     //#endregion
 
 
-    //#region
+    //#region Args and Cmd
     message.args = parseArgs(message.channel.type === 'text' ? message.content.slice(message.prefix.length).split(/ +/g) : message.content.split(/ +/g)); // Get Args 
     message.command = message.args._.shift().toLowerCase(); // Get Command Name
 
@@ -49,6 +50,17 @@ export function execute(client: Client, message: CommandMessage) {
     // `(cmd: any)` needed to make ts shut up.
 
     if (!command) return;
+    //#endregion
+
+    /*client.db.dispatch({
+        type: StorageTypeKeys.ADD_USER,
+        id: message.author.id,
+    });*/
+    
+    //#region Guild checking
+    if (command.guildOnly && message.channel.type !== 'text') {
+        return message.reply('I can\'t execute that command inside DMs.');
+    }
     //#endregion
 
     //#region Arg checking

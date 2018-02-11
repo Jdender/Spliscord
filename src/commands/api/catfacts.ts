@@ -5,6 +5,7 @@ const catfacts: Command = {
     aliases: ['api.catfact', 'api.factsrightmeow', 'api.factsfurever'],
     cooldown: 5,
     description: 'Get a random cat fact from cat-facts. (https://alexwohlbruck.github.io/cat-facts/).',
+    guildOnly: false,
     async execute(client: Client, message: CommandMessage) {
 
         const response = await phin({
