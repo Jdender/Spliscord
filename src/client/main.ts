@@ -5,11 +5,10 @@ import {
     walk,
     readdirAsync,
     Command,
-    low,
-    LowDbFileSync,
     flattenDeep,
     Logger,
-    executeCmd
+    executeCmd,
+    db,
 } from './client.b';
 //#endregion
 
@@ -19,13 +18,11 @@ export class Spliscord extends Logger {
     public commands: Collection < string, Command > = new Collection();
     public cooldowns: Collection < string, Collection < string, any > > = new Collection();
 
-    public db = low(new LowDbFileSync('db.json'));
-    public env = low(new LowDbFileSync('env.json'));
+    public db = db;
 
     public constructor(public config: BotConfig) {
         super();
 
-        this._initDB();
         this._registerEvents();
         this._import();
 
@@ -50,21 +47,6 @@ export class Spliscord extends Logger {
             this.commands.set(command.name, command);
         }
         //#endregion
-    }
-
-    private _initDB(): void {
-
-        this.db.defaults({
-                servers: [],
-                users: [],
-            })
-            .write();
-
-        this.env.defaults({
-                comment: 'This file will be removed when the bot moves to the new db. For now it\'s using LowDB so it needs this.',
-                stack: [],
-            })
-            .write();
     }
 }
 //#endregion
