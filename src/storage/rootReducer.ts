@@ -9,6 +9,7 @@ const initialState = {
 
 export function rootReducer(state = initialState, action: ActionsTypes) {
     switch (action.type) {
+
         case TypeKeys.ADD_USER:
             return {
                 ...state,
@@ -19,6 +20,18 @@ export function rootReducer(state = initialState, action: ActionsTypes) {
                     }
                 }
             };
+
+        case TypeKeys.ADD_GUILD:
+            return {
+                ...state,
+                guilds: {
+                    ...state.guilds,
+                    [action.id]: {
+                        id: action.id
+                    }
+                }
+            };
+
         default:
             return state;
     }
