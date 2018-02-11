@@ -1,5 +1,5 @@
 import { Message } from 'discord.js';
-import { UserConfig } from '../client/config.i';
+import { UserConfig, GuildConfig } from '../client/config.i';
 import { ParsedArgs } from 'minimist';
 
 export interface Command {
@@ -7,14 +7,17 @@ export interface Command {
     execute(...args: any[]): void | Promise < void > ;
     description: string;
     cooldown: number;
+    args: boolean | number;
+    guildOnly: boolean;
+    userConf: boolean;
+    guildConf: boolean;
     aliases ? : string[];
     usage ? : string;
-    args ? : boolean | number;
-    guildOnly: boolean;
 }
 
 export interface CommandMessage extends Message {
     userConf: UserConfig;
+    guildConf: GuildConfig;
     prefix: string;
     args: ParsedArgs;
     command: string;

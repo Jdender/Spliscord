@@ -5,6 +5,9 @@ const dog: Command = {
     aliases: ['api.woof','api.bark','api.doggo'],
     cooldown: 5,
     description: 'Get a random dog image from `random.dog`.',
+    args: false,
+    userConf: false,
+    guildConf: false,
     guildOnly: false,
     async execute(client: Client, message: CommandMessage) {
 

@@ -5,6 +5,9 @@ const cat: Command = {
     aliases: ['api.meow'],
     cooldown: 5,
     description: 'Get a random cat image from `random.cat`.',
+    args: false,
+    userConf: false,
+    guildConf: false,
     guildOnly: false,
     async execute(client: Client, message: CommandMessage) {
 

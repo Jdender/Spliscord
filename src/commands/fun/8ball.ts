@@ -23,6 +23,9 @@ const ball: Command = {
     usage: '{question}',
     description: 'Asks the magic 8-ball a question',
     cooldown: 3,
+    args: false,
+    userConf: false,
+    guildConf: false,
     guildOnly: false,
     execute(client: Client, message: CommandMessage) {
         const response = responses[Math.floor(Math.random() * responses.length)];

@@ -6,6 +6,9 @@ const help: Command = {
     aliases: ['commands'],
     usage: '[command name]',
     cooldown: 5,
+    args: false,
+    userConf: false,
+    guildConf: false,
     guildOnly: false,
     execute(client: Client, message: CommandMessage) {
 

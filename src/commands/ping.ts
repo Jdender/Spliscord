@@ -5,6 +5,9 @@ const ping: Command = {
     aliases: ['pong', 'latency'],
     cooldown: 3,
     description: 'Ping!',
+    args: false,
+    userConf: false,
+    guildConf: false,
     guildOnly: false,
     async execute(client: Client, message: CommandMessage) {
         const pingMessage: Message = await message.channel.send('Pinging...') as any; // More `as any`

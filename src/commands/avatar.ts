@@ -5,6 +5,9 @@ const avatar: Command = {
     aliases: ['icon', 'pfp'],
     cooldown: 5,
     description: 'Get one or multiple user\'s avatar.',
+    args: false,
+    userConf: false,
+    guildConf: false,
     guildOnly: false,
     execute(client: Client, message: CommandMessage) {
 
