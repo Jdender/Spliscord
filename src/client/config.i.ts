@@ -14,3 +14,8 @@ export interface UserConfig {
     id: string;
     prefix ? : string;
 }
+
+export interface GuildConfig {
+    id: string;
+    prefix ? : string;
+}

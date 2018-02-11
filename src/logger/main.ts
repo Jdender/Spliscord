@@ -23,7 +23,7 @@ export class Logger extends Client {
 
     @on('ready')
     private _onReady(): void {
-        console.info(`[info] Runing in ${this.channels.size} channels on ${this.guilds.size} servers, for a total of ${this.users.size} users.`);
+        console.info(`[info] Runing in ${this.channels.size} channels on ${this.guilds.size} guilds, for a total of ${this.users.size} users.`);
     }
 
     @on('debug')
