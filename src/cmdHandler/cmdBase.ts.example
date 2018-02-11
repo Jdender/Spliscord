@@ -1,0 +1,12 @@
+import { Command, CommandMessage, Client, Message } from '../cmdHandler/commands.b';
+
+const $: Command = {
+    name: '$',
+    aliases: [],
+    cooldown: 3,
+    description: '$',
+    execute(client: Client, message: CommandMessage) {
+    },
+}
+
+export default $;
