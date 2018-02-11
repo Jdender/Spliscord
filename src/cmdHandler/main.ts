@@ -1,5 +1,6 @@
 import {
     UserConfig,
+    GuildConfig,
     CommandMessage,
     Collection,
     parseArgs,
@@ -17,12 +18,28 @@ export function execute(client: Client, message: CommandMessage) {
 
 
     //#region User Config
-    const user: UserConfig = client.db.getState().users[message.author.id];
+    {
+        const user: UserConfig = client.db.getState().users[message.author.id];
 
-    if (user) {
-        message.userConf = user;
+        if (user) {
+            message.userConf = user;
 
-        if (typeof user.prefix === 'string') prefixes.push(user.prefix);
+            if (typeof user.prefix === 'string') prefixes.push(user.prefix);
+        }
+    }
+    //#endregion
+
+
+    //#region Guild Config
+    if (message.channel.type === 'text') {
+
+        const guild: GuildConfig = client.db.getState().guilds[message.guild.id];
+
+        if (guild) {
+            message.guildConf = guild;
+
+            if (typeof guild.prefix === 'string') prefixes.push(guild.prefix);
+        }
     }
     //#endregion
 
@@ -52,19 +69,39 @@ export function execute(client: Client, message: CommandMessage) {
     if (!command) return;
     //#endregion
 
-    /*client.db.dispatch({
-        type: StorageTypeKeys.ADD_USER,
-        id: message.author.id,
-    });*/
-    
+
     //#region Guild checking
     if (command.guildOnly && message.channel.type !== 'text') {
         return message.reply('I can\'t execute that command inside DMs.');
     }
     //#endregion
 
+
+    //#region Config Checking
+    if (command.userConf && !message.userConf) {
+
+        client.db.dispatch({
+            type: StorageTypeKeys.ADD_USER,
+            id: message.author.id,
+        });
+
+        message.userConf = client.db.getState().users[message.author.id];
+    }
+
+    if (command.guildConf && !message.guildConf) {
+
+        client.db.dispatch({
+            type: StorageTypeKeys.ADD_GUILD,
+            id: message.guild.id,
+        });
+
+        message.guildConf = client.db.getState().guilds[message.guild.id];
+    }
+    //#endregion
+
+
     //#region Arg checking
-    if (typeof command.args === 'boolean' && !message.args._.length) {
+    if (typeof command.args === 'boolean' && command.args === true && !message.args._.length) {
 
         let reply = `You didn't provide any arguments.`;
 
@@ -88,6 +125,7 @@ export function execute(client: Client, message: CommandMessage) {
         return;
     }
     //#endregion
+
 
     //#region Cooldowns
     if (!client.cooldowns.has(command.name)) { // Make cooldown collecions here instead of in Main()
