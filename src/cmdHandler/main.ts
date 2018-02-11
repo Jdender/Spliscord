@@ -2,10 +2,11 @@ import {
     UserConfig,
     CommandMessage,
     Collection,
-    parseArgs
+    parseArgs,
+    Client,
 } from './handler.b';
 
-export function execute(client, message: CommandMessage) {
+export function execute(client: Client, message: CommandMessage) {
 
     if (message.author.id === '1') return console.warn(message.content); // Clyde
     if (message.author.bot) return; // Bot
@@ -15,9 +16,7 @@ export function execute(client, message: CommandMessage) {
 
 
     //#region User Config
-    const user: UserConfig = client.db.get('users')
-        .find({ id: message.author.id })
-        .value();
+    const user: UserConfig = client.db.getState().users[message.author.id];
 
     if (user) {
         message.userConf = user;
