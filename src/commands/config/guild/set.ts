@@ -12,7 +12,7 @@ const set: Command = {
     execute(client: Client, message: CommandMessage) {
         
         if (typeof message.args.prefix === 'string') {
-            client.db.dispatch({
+            client.storage.dispatch({
                 type: StorageTypeKeys.SET_GUILD_PREFIX,
                 id: message.guild.id,
                 prefix: message.args.prefix,

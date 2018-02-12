@@ -6,4 +6,4 @@ export { Command } from '../cmdHandler/commands.i';
 export { flattenDeep } from 'lodash';
 export { Logger } from '../logger/main';
 export { execute as executeCmd } from '../cmdHandler/main';
-export { db } from '../storage/main';
+export { storage } from '../storage/main';

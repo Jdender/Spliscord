@@ -8,7 +8,7 @@ import {
     flattenDeep,
     Logger,
     executeCmd,
-    db,
+    storage,
 } from './client.b';
 //#endregion
 
@@ -18,7 +18,7 @@ export class Spliscord extends Logger {
     public commands: Collection < string, Command > = new Collection();
     public cooldowns: Collection < string, Collection < string, any > > = new Collection();
 
-    public db = db;
+    public storage = storage;
 
     public constructor(public config: BotConfig) {
         super();

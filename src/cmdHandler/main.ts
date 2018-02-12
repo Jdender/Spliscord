@@ -19,7 +19,7 @@ export function execute(client: Client, message: CommandMessage) {
 
     //#region User Config
     {
-        const user: UserConfig = client.db.getState().users[message.author.id];
+        const user: UserConfig = client.storage.getState().users[message.author.id];
 
         if (user) {
             message.userConf = user;
@@ -33,7 +33,7 @@ export function execute(client: Client, message: CommandMessage) {
     //#region Guild Config
     if (message.channel.type === 'text') {
 
-        const guild: GuildConfig = client.db.getState().guilds[message.guild.id];
+        const guild: GuildConfig = client.storage.getState().guilds[message.guild.id];
 
         if (guild) {
             message.guildConf = guild;
@@ -80,22 +80,22 @@ export function execute(client: Client, message: CommandMessage) {
     //#region Config Checking
     if (command.userConf && !message.userConf) {
 
-        client.db.dispatch({
+        client.storage.dispatch({
             type: StorageTypeKeys.ADD_USER,
             id: message.author.id,
         });
 
-        message.userConf = client.db.getState().users[message.author.id];
+        message.userConf = client.storage.getState().users[message.author.id];
     }
 
     if (command.guildConf && !message.guildConf) {
 
-        client.db.dispatch({
+        client.storage.dispatch({
             type: StorageTypeKeys.ADD_GUILD,
             id: message.guild.id,
         });
 
-        message.guildConf = client.db.getState().guilds[message.guild.id];
+        message.guildConf = client.storage.getState().guilds[message.guild.id];
     }
     //#endregion
 

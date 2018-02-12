@@ -3,8 +3,8 @@ import Storage from 'redux-state-save';
 import { rootReducer } from './rootReducer';
 import path = require('path');
 
-const storage = new Storage();
-storage.setConfig({
+const fileStorage = new Storage();
+fileStorage.setConfig({
     storage_type: 'file_storage',
     file_path: path.join(__dirname, '../../'),
     file_name: 'storage.json',
@@ -13,14 +13,14 @@ storage.setConfig({
 let store = createStore(
     rootReducer, 
     applyMiddleware(
-        storage.saveState()
+        fileStorage.saveState()
     )
 );
 
-store = storage.loadState(store);
+store = fileStorage.loadState(store);
 
 store.dispatch({
     type: 'NULL',
 });
 
-export const db = store;
+export const storage = store;
