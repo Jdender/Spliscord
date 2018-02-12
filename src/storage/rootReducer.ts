@@ -16,10 +16,22 @@ export function rootReducer(state = initialState, action: ActionsTypes) {
                 users: {
                     ...state.users,
                     [action.id]: {
-                        id: action.id
-                    }
-                }
+                        id: action.id,
+                    },
+                },
             };
+
+        case TypeKeys.SET_USER_PREFIX:
+            return {
+                ...state,
+                users: {
+                    ...state.users,
+                    [action.id]: {
+                        ...state.users[action.id],
+                        prefix: action.prefix,
+                    },
+                },
+            }
 
         case TypeKeys.ADD_GUILD:
             return {
@@ -27,10 +39,22 @@ export function rootReducer(state = initialState, action: ActionsTypes) {
                 guilds: {
                     ...state.guilds,
                     [action.id]: {
-                        id: action.id
-                    }
-                }
+                        id: action.id,
+                    },
+                },
             };
+
+        case TypeKeys.SET_GUILD_PREFIX:
+            return {
+                ...state,
+                guilds: {
+                    ...state.guilds,
+                    [action.id]: {
+                        ...state.guilds[action.id],
+                        prefix: action.prefix,
+                    },
+                },
+            }
 
         default:
             return state;
