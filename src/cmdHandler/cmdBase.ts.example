@@ -5,6 +5,10 @@ const $: Command = {
     aliases: [],
     cooldown: 3,
     description: '$',
+    args: false,
+    userConf: false,
+    guildConf: false,
+    guildOnly: false,
     execute(client: Client, message: CommandMessage) {
     },
 }
