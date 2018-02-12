@@ -7,6 +7,8 @@ Spliscord is a Discord bot made using the Discord.js wrapper for Discord's API. 
 * [TypeScript](https://www.typescriptlang.org/) - The JS superset this project is made in
 * [minimist](https://github.com/substack/minimist) - Used to parse command arguments
 * [Phin](https://github.com/ethanent/phin) - Used to interact with external HTTP APIs
+* [Redux](https://redux.js.org/) - Used as a state and storage container
+* [redux-state-save](https://github.com/bytefunc/redux-state-save) - Middleware to save Redux store to a JSON file
 
 ## Authors
 
