@@ -1,6 +1,6 @@
 export { Collection } from 'discord.js';
 export { BotConfig } from './config.i';
-export { walk } from '../util/walk';
+export { walk } from '../util/oneline';
 export { readdirAsync } from '../util/fsAsync';
 export { Command } from '../cmdHandler/commands.i';
 export { flattenDeep } from 'lodash';
