@@ -8,13 +8,31 @@ import {
     StorageTypeKeys,
 } from './handler.b';
 
+/* Function Map
+execute = (client, message) => command(client, message)
+
+execute = 
+|> Prep
+|> User Config
+|> Guild Config
+|> Prefix Checking
+|> Args & Cmd
+|> Guild Checking
+|> Arg Checking
+|> Config Checking
+|> Cooldowns
+|> Execute & Error Handler
+*/
+
 export function execute(client: Client, message: CommandMessage) {
 
+    //#region Prep
     if (message.author.id === '1') return console.warn(message.content); // Clyde
     if (message.author.bot) return; // Bot
 
 
     const prefixes = [];
+    //#endregion
 
 
     //#region User Config
@@ -58,7 +76,7 @@ export function execute(client: Client, message: CommandMessage) {
     //#endregion
 
 
-    //#region Args and Cmd
+    //#region Args & Cmd
     message.args = parseArgs(message.channel.type === 'text' ? message.content.slice(message.prefix.length).split(/ +/g) : message.content.split(/ +/g)); // Get Args 
     message.command = message.args._.shift().toLowerCase(); // Get Command Name
 
@@ -70,9 +88,36 @@ export function execute(client: Client, message: CommandMessage) {
     //#endregion
 
 
-    //#region Guild checking
+    //#region Guild Checking
     if (command.guildOnly && message.channel.type !== 'text') {
         return message.reply('I can\'t execute that command inside DMs.');
+    }
+    //#endregion
+
+
+    //#region Arg Checking
+    if (typeof command.args === 'boolean' && command.args === true && !message.args._.length) {
+
+        let reply = `You didn't provide any arguments.`;
+
+        if (command.usage) {
+            reply += `\nThe proper usage would be: \`${message.prefix}${command.name} ${command.usage}\``;
+        }
+
+        message.channel.send(reply);
+        return;
+    }
+
+    if (typeof command.args === 'number' && message.args._.length < command.args) {
+
+        let reply = `You didn't provide enough arguments. This command needs ${command.args}.`;
+
+        if (command.usage) {
+            reply += `\nThe proper usage would be: \`${message.prefix}${command.name} ${command.usage}\``;
+        }
+
+        message.channel.send(reply);
+        return;
     }
     //#endregion
 
@@ -96,33 +141,6 @@ export function execute(client: Client, message: CommandMessage) {
         });
 
         message.guildConf = client.storage.getState().guilds[message.guild.id];
-    }
-    //#endregion
-
-
-    //#region Arg checking
-    if (typeof command.args === 'boolean' && command.args === true && !message.args._.length) {
-
-        let reply = `You didn't provide any arguments.`;
-
-        if (command.usage) {
-            reply += `\nThe proper usage would be: \`${message.prefix}${command.name} ${command.usage}\``;
-        }
-
-        message.channel.send(reply);
-        return;
-    }
-
-    if (typeof command.args === 'number' && message.args._.length < command.args) {
-
-        let reply = `You didn't provide enough arguments. This command needs ${command.args}.`;
-
-        if (command.usage) {
-            reply += `\nThe proper usage would be: \`${message.prefix}${command.name} ${command.usage}\``;
-        }
-
-        message.channel.send(reply);
-        return;
     }
     //#endregion
 
