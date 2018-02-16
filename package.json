@@ -1,16 +1,15 @@
 {
     "name": "spliscord",
     "version": "0.2.0",
-    "description": "",
+    "description": "Spliscord is a Discord bot made using the Discord.js wrapper for Discord's API. Spliscord is actively developed with new features being added and tested almost every week.",
     "main": "dist/lib/main.js",
     "engines": {
         "node": "8.9.0"
     },
     "scripts": {
-        "pretest": "rd /s /q \"dist\" && tsc",
-        "test": "node dist/lib/main.js",
-        "build": "rd /s /q \"dist\" && tsc",
-        "start": "pm2 start dist/lib/main.js -n \"spliscord\" ",
+        "test": "mocha -r ts-node/register src/**/*.spec.ts",
+        "build": "tsc",
+        "start": "pm2 start src/main.ts -n \"spliscord\" ",
         "restart": "pm2 restart spliscord",
         "stop": "pm2 stop spliscord"
     },
@@ -47,9 +46,15 @@
         "zlib-sync": "^0.1.4"
     },
     "devDependencies": {
+        "@types/chai": "^4.1.2",
         "@types/lodash": "^4.14.101",
         "@types/minimist": "^1.2.0",
+        "@types/mocha": "^2.2.48",
         "@types/node": "^9.4.0",
+        "chai": "^4.1.2",
+        "mocha": "^5.0.1",
+        "pm2": "^2.9.3",
+        "ts-node": "^4.1.0",
         "typescript": "^2.7.1"
     }
 }

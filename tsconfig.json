@@ -6,10 +6,13 @@
         "module": "commonjs",
         "moduleResolution": "node",
         "sourceMap": true,
-        "sourceRoot": "src",
         "outDir": "dist"
     },
+    "include": [
+        "./src/**/*"
+    ],
     "exclude": [
+        "./src/**/*.spec.ts",
         "dist",
         "port",
         "node_modules"
