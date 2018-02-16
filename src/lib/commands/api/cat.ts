@@ -1,4 +1,4 @@
-import { Command, CommandMessage, Client, phin } from '../../cmdHandler/commands.b';
+import { Command, CommandMessage, Client, phin } from '../../cmdUtil/commands.b';
 
 const cat: Command = {
     name: 'api.cat',

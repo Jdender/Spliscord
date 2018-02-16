@@ -9,14 +9,14 @@ import {
 } from './handler.b';
 
 /* Function Map
-execute = (client, message) => command(client, message)
+execute = (client, rawMessage) => command(client, cmdMessage)
 
 execute = 
 |> Prep
 |> User Config
 |> Guild Config
 |> Prefix Checking
-|> Args & Cmd
+|> Args & Cmd Parse
 |> Guild Checking
 |> Arg Checking
 |> Config Checking
@@ -76,7 +76,7 @@ export function execute(client: Client, message: CommandMessage) {
     //#endregion
 
 
-    //#region Args & Cmd
+    //#region Args & Cmd Parse
     message.args = parseArgs(message.channel.type === 'text' ? message.content.slice(message.prefix.length).split(/ +/g) : message.content.split(/ +/g)); // Get Args 
     message.command = message.args._.shift().toLowerCase(); // Get Command Name
 

@@ -2,16 +2,15 @@
     "name": "spliscord",
     "version": "0.2.0",
     "description": "",
-    "main": "dist/main.js",
+    "main": "dist/lib/main.js",
     "engines": {
         "node": "8.9.0"
     },
     "scripts": {
         "pretest": "rd /s /q \"dist\" && tsc",
-        "test": "node dist/main.js",
-        "prestart": "rd /s /q \"dist\" && tsc",
-        "start": "pm2 start dist/main.js -n \"spliscord\" ",
-        "prerestart": "rd /s /q \"dist\" && tsc",
+        "test": "node dist/lib/main.js",
+        "build": "rd /s /q \"dist\" && tsc",
+        "start": "pm2 start dist/lib/main.js -n \"spliscord\" ",
         "restart": "pm2 restart spliscord",
         "stop": "pm2 stop spliscord"
     },

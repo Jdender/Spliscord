@@ -1,4 +1,4 @@
-import { Command, CommandMessage, Client } from '../cmdHandler/commands.b';
+import { Command, CommandMessage, Client } from '../cmdUtil/commands.b';
 
 const avatar: Command = {
     name: 'avatar',

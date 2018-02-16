@@ -1,4 +1,4 @@
-import { Command, CommandMessage, Client, Message, StorageTypeKeys } from '../../../cmdHandler/commands.b';
+import { Command, CommandMessage, Client, Message, StorageTypeKeys } from '../../../cmdUtil/commands.b';
 
 const set: Command = {
     name: 'config.guild.set',

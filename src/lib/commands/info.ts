@@ -1,4 +1,4 @@
-import { Command, CommandMessage, Client, Message } from '../cmdHandler/commands.b';
+import { Command, CommandMessage, Client, Message } from '../cmdUtil/commands.b';
 
 const info: Command = {
     name: 'info',
