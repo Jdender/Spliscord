@@ -1,43 +1,31 @@
-import { Events } from '../util/events';
 import { Client } from 'discord.js';
-const { on, once, registerEvents } = Events;
 
-export class Logger extends Client {
+interface LoggerClient extends Client {
+    prefixMention: RegExp;
+    inviteLink: string;
+}
 
-    public prefixMention: RegExp;
-    public inviteLink: string;
+export function logger(client: LoggerClient) {
 
-    constructor(...args: any[]) {
-        super(...args);
-    }
+    client.once('ready', () => {
+        client.prefixMention = new RegExp(`^<@!?${client.user.id}> `);
+        client.inviteLink = `https://discordapp.com/oauth2/authorize?client_id=${client.user.id}&scope=bot`;
+    });
 
-    public _registerEvents(): void {
-        registerEvents(this);
-    }
+    client.on('ready', () => {
+        console.info(`[info] Runing in ${client.channels.size} channels on ${client.guilds.size} guilds, for a total of ${client.users.size} users.`);
+    });
 
-    @once('ready')
-    private _onceReady(): void {
-        this.prefixMention = new RegExp(`^<@!?${this.user.id}> `);
-        this.inviteLink = `https://discordapp.com/oauth2/authorize?client_id=${this.user.id}&scope=bot`;
-    }
-
-    @on('ready')
-    private _onReady(): void {
-        console.info(`[info] Runing in ${this.channels.size} channels on ${this.guilds.size} guilds, for a total of ${this.users.size} users.`);
-    }
-
-    @on('debug')
-    private _onDebug(message: string): void {
+    client.on('debug', (message: string) => {
         console.info(message);
-    }
+    });
 
-    @on('warn')
-    private _onWarn(warning: string): void {
+    client.on('warn', (warning: string) => {
         console.warn(warning);
-    }
+    });
 
-    @on('error')
-    private _onError(error: string): void {
+    client.on('error', (error: string) => {
         console.error(error);
-    }
+    });
+
 }
