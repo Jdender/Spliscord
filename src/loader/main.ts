@@ -1,13 +1,14 @@
 import {
     Client,
-    Collection,
+    Store,
     Command,
     flattenDeep,
     walk,
+    TypeKeys,
 } from './loader.b';
 
 interface LoaderClient extends Client {
-    commands: Collection < string, Command >
+    cache: Store<any>;
 }
 
 export async function loader(client: LoaderClient) {
@@ -21,6 +22,9 @@ export async function loader(client: LoaderClient) {
 
         const { default: command } = require(`../../${file}`); // The `..` is needed.
 
-        client.commands.set(command.name, command);
+        client.cache.dispatch({
+            type: TypeKeys.SAVE_COMMAND,
+            cmd: command,
+        });
     }
 }
