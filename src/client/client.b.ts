@@ -4,5 +4,6 @@ export { readdirAsync } from '../util/fsAsync';
 export { Command } from '../cmdUtil/commands.i';
 export { logger } from '../logger/main';
 export { loader } from '../loader/main';
-export { execute as executeCmd } from '../handler/main';
+export { executer } from '../handler/main';
 export { storage } from '../storage/main';
+export { cache } from '../cache/main';

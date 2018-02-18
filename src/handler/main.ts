@@ -24,7 +24,7 @@ execute =
 |> Execute & Error Handler
 */
 
-export function execute(client: Client, message: CommandMessage) {
+export function executer(client: Client, message: CommandMessage) {
 
     //#region Prep
     if (message.author.id === '1') return console.warn(message.content); // Clyde

@@ -7,8 +7,9 @@ import {
     Command,
     logger,
     loader,
-    executeCmd,
+    executer,
     storage,
+    cache,
 } from './client.b';
 //#endregion
 
@@ -19,6 +20,7 @@ export class Spliscord extends Client {
     public cooldowns: Collection < string, Collection < string, any > > = new Collection();
 
     public storage = storage;
+    public cache = cache;
 
     public prefixMention: RegExp;
     public inviteLink: string;
@@ -29,7 +31,7 @@ export class Spliscord extends Client {
         logger(this);
         loader(this);
 
-        this.on('message', (message: any) => executeCmd(this, message));
+        this.on('message', (message: any) => executer(this, message));
 
         this.login(require(config.token.path)[config.token.name]);
     }
