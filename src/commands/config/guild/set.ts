@@ -5,7 +5,7 @@ const set: Command = {
     aliases: ['conf.guild.set', 'conf.g.set'],
     cooldown: 5,
     description: 'Use flags to set guild config options.',
-    perms: 0,
+    perms: 2,
     args: false,
     userConf: false,
     guildConf: true,
