@@ -5,6 +5,7 @@ const help: Command = {
     description: 'List all my commands or info about a specific command.',
     aliases: ['commands'],
     usage: '[command name]',
+    perms: 0,
     cooldown: 5,
     args: false,
     userConf: false,

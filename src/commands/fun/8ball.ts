@@ -22,6 +22,7 @@ const ball: Command = {
     name: 'fun.8ball',
     usage: '{question}',
     description: 'Asks the magic 8-ball a question',
+    perms: 0,
     cooldown: 3,
     args: false,
     userConf: false,

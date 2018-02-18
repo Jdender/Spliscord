@@ -11,6 +11,7 @@ export interface Command {
     guildOnly: boolean;
     userConf: boolean;
     guildConf: boolean;
+    perms: number;
     aliases ? : string[];
     usage ? : string;
 }

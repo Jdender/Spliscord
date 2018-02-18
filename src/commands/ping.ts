@@ -5,6 +5,7 @@ const ping: Command = {
     aliases: ['pong', 'latency'],
     cooldown: 3,
     description: 'Ping!',
+    perms: 0,
     args: false,
     userConf: false,
     guildConf: false,

@@ -5,6 +5,7 @@ const dog: Command = {
     aliases: ['api.woof','api.bark','api.doggo'],
     cooldown: 5,
     description: 'Get a random dog image from `random.dog`.',
+    perms: 0,
     args: false,
     userConf: false,
     guildConf: false,

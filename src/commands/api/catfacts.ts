@@ -5,6 +5,7 @@ const catfacts: Command = {
     aliases: ['api.catfact', 'api.factsrightmeow'],
     cooldown: 5,
     description: 'Get a random cat fact from cat-facts. (https://alexwohlbruck.github.io/cat-facts/).',
+    perms: 0,
     args: false,
     userConf: false,
     guildConf: false,

@@ -5,6 +5,7 @@ const info: Command = {
     aliases: ['information', 'about', ''],
     cooldown: 3,
     description: 'Ping!',
+    perms: 0,
     args: false,
     userConf: false,
     guildConf: false,
