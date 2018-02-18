@@ -56,6 +56,30 @@ export function rootReducer(state = initialState, action: ActionsTypes) {
                 },
             }
 
+        case TypeKeys.SET_GUILD_ADMIN_ROLE:
+        return {
+            ...state,
+            guilds: {
+                ...state.guilds,
+                [action.id]: {
+                    ...state.guilds[action.id],
+                    adminRole: action.role,
+                },
+            },
+        }
+
+        case TypeKeys.SET_GUILD_MOD_ROLE:
+        return {
+            ...state,
+            guilds: {
+                ...state.guilds,
+                [action.id]: {
+                    ...state.guilds[action.id],
+                    modRole: action.role,
+                },
+            },
+        }
+
         default:
             return state;
     }
