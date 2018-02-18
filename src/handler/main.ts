@@ -27,7 +27,7 @@ execute =
 |> Execute & Error Handler
 */
 
-export function executer(client: Client, message: CommandMessage) {
+export function handler(client: Client, message: CommandMessage) {
 
     //#region Prep
     if (message.author.id === '1') return console.warn(message.content); // Clyde
@@ -80,7 +80,12 @@ export function executer(client: Client, message: CommandMessage) {
 
 
     //#region Args & Cmd Parse
-    message.args = parseArgs(message.channel.type === 'text' ? message.content.slice(message.prefix.length).split(/ +/g) : message.content.split(/ +/g)); // Get Args 
+    message.args = parseArgs(
+        message.channel.type === 'text' ? // Get Args 
+        message.content.slice(message.prefix.length).split(/ +/g) :
+        message.content.split(/ +/g), {
+            string: ['prefix', 'admin', 'mod'] // List of flags to always treat as strings
+        });
     message.command = message.args._.shift().toLowerCase(); // Get Command Name
 
     const commands = client.cache.getState().commands;
