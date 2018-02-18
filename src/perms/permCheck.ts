@@ -12,7 +12,7 @@ export function permCheck(client: PermsClient, message: CommandMessage) {
 
     while (perms.length) {
         const currentLevel: PermsObject = perms.pop();
-        if (message.guild && currentLevel.guildOnly) continue;
+        if (!message.guild && currentLevel.guildOnly) continue;
         if (currentLevel.check(client, message)) {
             permLevel = currentLevel.level;
             break;
