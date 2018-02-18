@@ -80,9 +80,9 @@ export function executer(client: Client, message: CommandMessage) {
     message.args = parseArgs(message.channel.type === 'text' ? message.content.slice(message.prefix.length).split(/ +/g) : message.content.split(/ +/g)); // Get Args 
     message.command = message.args._.shift().toLowerCase(); // Get Command Name
 
-    const command = client.commands.get(message.command) ||
-        client.commands.find((cmd: any) => cmd.aliases && cmd.aliases.includes(message.command));
-    // `(cmd: any)` needed to make ts shut up.
+    const commands = client.cache.getState().commands;
+
+    const command = commands[message.command] || commands[Object.keys(commands).filter(key => commands[key].aliases && commands[key].aliases.includes(message.command))[0]];
 
     if (!command) return;
     //#endregion
