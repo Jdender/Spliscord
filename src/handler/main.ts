@@ -2,10 +2,12 @@ import {
     UserConfig,
     GuildConfig,
     CommandMessage,
+    Command,
     Collection,
     parseArgs,
     Client,
     StorageTypeKeys,
+    permCheck,
 } from './handler.b';
 
 /* Function Map
@@ -18,6 +20,7 @@ execute =
 |> Prefix Checking
 |> Args & Cmd Parse
 |> Guild Checking
+|> Perm Checking
 |> Arg Checking
 |> Config Checking
 |> Cooldowns
@@ -82,7 +85,7 @@ export function executer(client: Client, message: CommandMessage) {
 
     const commands = client.cache.getState().commands;
 
-    const command = commands[message.command] || commands[Object.keys(commands).filter(key => commands[key].aliases && commands[key].aliases.includes(message.command))[0]];
+    const command: Command = commands[message.command] || commands[Object.keys(commands).filter(key => commands[key].aliases && commands[key].aliases.includes(message.command))[0]];
 
     if (!command) return;
     //#endregion
@@ -90,7 +93,16 @@ export function executer(client: Client, message: CommandMessage) {
 
     //#region Guild Checking
     if (command.guildOnly && message.channel.type !== 'text') {
-        return message.reply('I can\'t execute that command inside DMs.');
+        return message.channel.send('I can\'t execute that command inside DMs.');
+    }
+    //#endregion
+
+
+    //#region Perm Checking
+    message.permLevel = permCheck(client, message);
+
+    if (message.permLevel < command.perms) {
+        return message.channel.send(`You do not have permission to use this command. You have perm level ${message.permLevel} and need ${command.perms}.`);
     }
     //#endregion
 
