@@ -1,8 +1,13 @@
-import { CommandMessage } from '../cmdUtil/commands.i';
-import { Client } from 'discord.js';
+import {
+    Client,
+    CommandMessage,
+    Store,
+    TypeKeys,
+} from './perms.b';
 
 export interface PermsClient extends Client {
     config: any;
+    storage: Store < any > ;
 }
 
 export interface PermsObject {
@@ -24,14 +29,18 @@ export const perms: PermsObject[] = [{
         level: 1,
         name: 'Server Moderator',
         guildOnly: true,
-        check: (client: PermsClient, message: CommandMessage) => false, //TODO
+        check: (client: PermsClient, message: CommandMessage) =>
+            (client.storage.getState().guilds[message.guild.id] && client.storage.getState().guilds[message.guild.id].modRole) ?
+            message.member.roles.has(client.storage.getState().guilds[message.guild.id].modRole) : true,
     },
     {
         // Admin of the server.
         level: 2,
         name: 'Server Administrator',
         guildOnly: true,
-        check: (client: PermsClient, message: CommandMessage) => false, //TODO
+        check: (client: PermsClient, message: CommandMessage) =>
+        (client.storage.getState().guilds[message.guild.id] && client.storage.getState().guilds[message.guild.id].adminRole) ?
+        message.member.roles.has(client.storage.getState().guilds[message.guild.id].adminRole) : true,
     },
     {
         // Owner of the server.
