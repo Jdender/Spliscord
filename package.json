@@ -7,10 +7,10 @@
         "node": "8.9.0"
     },
     "scripts": {
-        "test": "mocha -r ts-node/register src/**/*.spec.ts",
+        "test": "ts-node .",
+        "mocha": "mocha -r ts-node/register src/**/*.spec.ts",
         "build": "tsc",
-        "start": "ts-node .",
-        "-start": "pm2 start src/main.ts -n \"spliscord\" ",
+        "start": "pm2 start src/main.ts -n \"spliscord\" ",
         "restart": "pm2 restart spliscord",
         "stop": "pm2 stop spliscord"
     },
