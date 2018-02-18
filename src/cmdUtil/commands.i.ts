@@ -22,4 +22,5 @@ export interface CommandMessage extends Message {
     prefix: string;
     args: ParsedArgs;
     command: string;
+    permLevel: number;
 }
