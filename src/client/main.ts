@@ -7,7 +7,7 @@ import {
     Command,
     logger,
     loader,
-    executer,
+    handler,
     storage,
     cache,
 } from './client.b';
@@ -26,12 +26,12 @@ export class Spliscord extends Client {
     public inviteLink: string;
 
     public constructor(public config: BotConfig) {
-        super();
+        super(config.client);
 
         logger(this);
         loader(this);
 
-        this.on('message', (message: any) => executer(this, message));
+        this.on('message', (message: any) => handler(this, message));
 
         this.login(require(config.token.path)[config.token.name]);
     }
