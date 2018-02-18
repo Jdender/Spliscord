@@ -5,6 +5,7 @@ const $: Command = {
     aliases: [],
     cooldown: 3,
     description: '$',
+    perms: 0,
     args: false,
     userConf: false,
     guildConf: false,

@@ -13,7 +13,7 @@ const catfacts: Command = {
     async execute(client: Client, message: CommandMessage) {
 
         const response = await phin({
-            url: 'http://cat-fact.herokuapp.com/facts',
+            url: 'https://cat-fact.herokuapp.com/facts',
             parse: 'json',
         });
 
