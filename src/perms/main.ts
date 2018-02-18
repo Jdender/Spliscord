@@ -49,7 +49,7 @@ export const perms: PermsObject[] = [{
         check: (client: PermsClient, message: CommandMessage) => client.config.contributors.filter(contributor => contributor.id === message.author.id && contributor.roles.includes(4))[0],
     },
     {
-        // Bot Dev has some limited access like rebooting the bot or reloading commands.
+        // Bot Dev has some limited access like rebooting the bot or eval.
         level: 5,
         name: 'Bot Dev',
         guildOnly: false,
