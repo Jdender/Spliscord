@@ -2,7 +2,7 @@ import { Command, CommandMessage, Client, phin } from '../../cmdUtil/commands.b'
 
 const catfacts: Command = {
     name: 'api.catfacts',
-    aliases: ['api.catfact', 'api.factsrightmeow', 'api.factsfurever'],
+    aliases: ['api.catfact', 'api.factsrightmeow'],
     cooldown: 5,
     description: 'Get a random cat fact from cat-facts. (https://alexwohlbruck.github.io/cat-facts/).',
     args: false,
