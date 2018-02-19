@@ -1,10 +1,18 @@
-import { Message } from 'discord.js';
-import { UserConfig, GuildConfig } from '../client/config.i';
-import { ParsedArgs } from 'minimist';
+import {
+    Message,
+    UserConfig,
+    GuildConfig,
+    ParsedArgs,
+    CommandMessage,
+    Client,
+    DJSClient,
+} from './commands.b';
 
 export interface Command {
     name: string;
-    execute(...args: any[]): void | Promise < void > ;
+    execute(client: Client, message: CommandMessage): void | Promise < void > ;
+    init ? (client: DJSClient) : void | Promise < void > ;
+    shutdown ? (client: DJSClient) : void | Promise < void > ;
     description: string;
     cooldown: number;
     args: boolean | number;
@@ -23,4 +31,8 @@ export interface CommandMessage extends Message {
     args: ParsedArgs;
     command: string;
     permLevel: number;
+}
+
+export interface CommandFile {
+    default: Command;
 }
