@@ -8,7 +8,6 @@
     },
     "scripts": {
         "test": "ts-node .",
-        "mocha": "mocha -r ts-node/register src/**/*.spec.ts",
         "build": "tsc",
         "start": "pm2 start src/main.ts -n \"spliscord\" ",
         "restart": "pm2 restart spliscord",
@@ -32,13 +31,9 @@
     "homepage": "https://github.com/jdenderplays/Spliscord#readme",
     "dependencies": {
         "discord.js": "^11.3.0",
-        "lodash": "^4.17.5",
         "minimist": "^1.2.0",
         "node-opus": "^0.2.7",
-        "phin": "^2.9.0",
-        "redux": "^3.7.2",
-        "redux-state-save": "^1.0.0",
-        "reflect-metadata": "^0.1.12"
+        "phin": "^2.9.0"
     },
     "optionalDependencies": {
         "erlpack": "^0.1.2",
@@ -47,13 +42,8 @@
         "zlib-sync": "^0.1.4"
     },
     "devDependencies": {
-        "@types/chai": "^4.1.2",
-        "@types/lodash": "^4.14.104",
         "@types/minimist": "^1.2.0",
-        "@types/mocha": "^2.2.48",
         "@types/node": "^9.4.6",
-        "chai": "^4.1.2",
-        "mocha": "^5.0.1",
         "ts-node": "^4.1.0",
         "typescript": "^2.7.2"
     }
