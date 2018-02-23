@@ -1,0 +1,17 @@
+import { Command, CommandMessage, Client, Message } from '../cmdUtil/commands.b';
+
+const $: Command = {
+    name: '$',
+    aliases: [],
+    cooldown: 3,
+    description: '$',
+    perms: 0,
+    args: false,
+    userConf: false,
+    guildConf: false,
+    guildOnly: false,
+    execute(client: Client, message: CommandMessage) {
+    },
+}
+
+export default $;

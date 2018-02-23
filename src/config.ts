@@ -1,8 +1,6 @@
-import { BotConfig } from './configs.i';
-
-export const config: BotConfig = {
+export default {
     token: {
-        path: '../../tokens.json',
+        path: '../../../tokens.json',
         name: 'Spliscord',
     },
     client: {

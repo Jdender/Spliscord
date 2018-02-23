@@ -31,6 +31,8 @@
     "homepage": "https://github.com/jdenderplays/Spliscord#readme",
     "dependencies": {
         "discord.js": "^11.3.0",
+        "enmap": "^0.4.2",
+        "enmap-level": "^1.0.0",
         "minimist": "^1.2.0",
         "node-opus": "^0.2.7",
         "phin": "^2.9.0"
