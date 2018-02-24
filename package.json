@@ -2,14 +2,14 @@
     "name": "spliscord",
     "version": "0.2.0",
     "description": "Spliscord is a Discord bot made using the Discord.js wrapper for Discord's API. Spliscord is actively developed with new features being added and tested almost every week.",
-    "main": "src/main.ts",
+    "main": "src/init.ts",
     "engines": {
         "node": "8.9.0"
     },
     "scripts": {
         "test": "ts-node .",
         "build": "tsc",
-        "start": "pm2 start src/main.ts -n \"spliscord\" ",
+        "start": "pm2 start src/init.ts -n \"spliscord\" ",
         "restart": "pm2 restart spliscord",
         "stop": "pm2 stop spliscord"
     },
@@ -31,8 +31,7 @@
     "homepage": "https://github.com/jdenderplays/Spliscord#readme",
     "dependencies": {
         "discord.js": "^11.3.0",
-        "enmap": "^0.4.2",
-        "enmap-level": "^1.0.0",
+        "lowdb": "^1.0.0",
         "minimist": "^1.2.0",
         "node-opus": "^0.2.7",
         "phin": "^2.9.0"
@@ -44,8 +43,11 @@
         "zlib-sync": "^0.1.4"
     },
     "devDependencies": {
+        "@types/lodash": "^4.14.104",
+        "@types/lowdb": "^1.0.0",
         "@types/minimist": "^1.2.0",
         "@types/node": "^9.4.6",
+        "@types/reflect-metadata": "^0.1.0",
         "ts-node": "^4.1.0",
         "typescript": "^2.7.2"
     }
