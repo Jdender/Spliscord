@@ -17,6 +17,14 @@ export function loader < T extends Constructor < Spliscord > > (Main: T) {
 
         }
 
+        loadCommand(name: string) {
+
+        }
+
+        unloadCommand(name: string) {
+            
+        }
+
     }
     return Loader;
 }
