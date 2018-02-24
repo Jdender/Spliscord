@@ -16,6 +16,8 @@ export function logger < T extends Constructor < Spliscord > > (Main: T) {
         logOnReady() {
             console.info(`[info] Runing in ${this.channels.size} channels on ${this.guilds.size} servers, for a total of ${this.users.size} users.`);
 
+            this.user.setActivity(`@Spliscord help | ${this.guilds.size} Guilds, ${this.channels.size} Channels, ${this.users.size} Users.`);
+
             this.prefixMention = new RegExp(`^<@!?${this.user.id}> `);
             this.inviteLink = `https://discordapp.com/oauth2/authorize?client_id=${this.user.id}&scope=bot`;
         }
@@ -33,6 +35,16 @@ export function logger < T extends Constructor < Spliscord > > (Main: T) {
         @on('error')
         logOnError(error: string) {
             console.error(error);
+        }
+
+        @on('disconnect')
+        logOnDisconnect() {
+            console.warn('[warn] [internet] Bot disconnected.');
+        }
+
+        @on('reconnect')
+        logOnReconnect() {
+            console.info('[info] [internet] Bot reconnected.');
         }
         
     }
