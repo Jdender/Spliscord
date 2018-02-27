@@ -6,7 +6,7 @@ import { Message } from 'discord.js';
 const { on, once, registerEvents } = Events;
 
 
-export class Command {
+export interface Command {
     name: string;
     description: string;
     aliases: string[] | null;
@@ -27,7 +27,12 @@ export class Command {
 }
 
 
-class MessageCommandMeta {
+export class MessageCommandMeta {
+
+    constructor() {
+        //TODO
+    }
+
     command: string;
     permLevel: number;
     prefix: string;
@@ -52,7 +57,7 @@ export function handler < T extends Constructor < Spliscord > > (Main: T) {
             if (message.author.bot) return false; // Ignore Bots
             if (message.guild.me.permissionsIn(message.channel).missing(['SEND_MESSAGES'])) return false; // Ignore if can't respond
 
-            return true;
+            return true;//TODO
         }
 
     }
