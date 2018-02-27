@@ -1,12 +1,12 @@
-import { Events } from './events';
+import { Events } from './event-dec';
 import { Spliscord } from './client';
-import { BotConfig } from './configs';
+import { UserConfig, GuildConfig } from './configs';
 import { Constructor } from './oneline';
 import { Message } from 'discord.js';
 const { on, once, registerEvents } = Events;
 
 
-export interface Command {
+export class Command {
     name: string;
     description: string;
     aliases: string[] | null;
@@ -21,18 +21,19 @@ export interface Command {
         userConf: boolean;
     }
 
-    execute: (client: Spliscord, message: CommandMessage) => Promise < void > | void;
+    execute: (client: Spliscord, message: Message, meta: MessageCommandMeta) => Promise < void > | void;
     init: ((client: Spliscord) => Promise < void > | void) | null;
     shutdown: ((client: Spliscord) => Promise < void > | void) | null;
 }
 
-interface CommandMessage extends Message {
+
+class MessageCommandMeta {
     command: string;
     permLevel: number;
     prefix: string;
 
-    userConf: TODO;
-    guildConf: TODO;
+    userConf: UserConfig;
+    guildConf: GuildConfig;
 }
 
 
@@ -45,7 +46,7 @@ export function handler < T extends Constructor < Spliscord > > (Main: T) {
         }
 
         @on('message')
-        handleOnMessage(message: CommandMessage): boolean {
+        handleOnMessage(message: Message): boolean {
 
             if (message.author.id === '1') return (console.warn(message.content), false); // Warn then Ignore Clyde
             if (message.author.bot) return false; // Ignore Bots

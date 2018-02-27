@@ -1,4 +1,4 @@
-import { Events } from './events';
+import { Events } from './event-dec';
 import { Spliscord } from './client';
 import { BotConfig } from './configs';
 import { Constructor } from './oneline';

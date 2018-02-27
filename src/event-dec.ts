@@ -1,5 +1,5 @@
 // Will move to Yatsul soontm.
-import 'reflect-metadata';
+//import 'reflect-metadata';
 import { EventEmitter } from 'events';
 
 interface EventMeta {
