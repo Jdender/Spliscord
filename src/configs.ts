@@ -7,6 +7,7 @@ export interface BotConfig {
         name: string;
     };
     client: ClientOptions;
+    commandPath: string;
     contributors: {
         name: string;
         id: string;

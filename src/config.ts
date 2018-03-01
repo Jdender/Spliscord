@@ -6,6 +6,7 @@ export default {
     client: {
         disableEveryone: true,
     },
+    commandPath: './src/commands',
     contributors: [{
             name: 'jdenderplays',
             id: '250432205145243649',
