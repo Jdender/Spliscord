@@ -25,6 +25,9 @@ export class Spliscord extends Client {
         synchronize: true,
     });
 
+    commandPointers = new Collection < string,
+    string > ();
+
     commands = new Collection < string,
     Command > ();
 
