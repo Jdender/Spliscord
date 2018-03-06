@@ -1,4 +1,6 @@
-export default {
+import { BotConfig } from './configs';
+
+export const config: BotConfig = {
     token: {
         path: '../../tokens.json',
         name: 'Spliscord',
@@ -7,6 +9,7 @@ export default {
         disableEveryone: true,
     },
     commandPath: './src/commands',
+    maxSubCommandDepth: 3,
     contributors: [{
             name: 'jdenderplays',
             id: '250432205145243649',

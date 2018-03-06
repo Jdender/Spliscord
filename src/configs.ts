@@ -8,6 +8,7 @@ export interface BotConfig {
     };
     client: ClientOptions;
     commandPath: string;
+    maxSubCommandDepth: number;
     contributors: {
         name: string;
         id: string;
