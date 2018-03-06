@@ -4,7 +4,7 @@ export default class implements Command {
 
     name = 'ping';
     description = 'Ping!';
-    aliases = ['pong', 'latency'];
+    aliases = ['pong', 'latency', 'sub.ping', 'sub.pong'];
     usage = 'ping';
 
     cooldown = 3;
