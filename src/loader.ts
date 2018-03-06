@@ -5,6 +5,7 @@ import { Constructor, walkflat } from './oneline';
 import { Command } from './handler';
 const { on, once, registerEvents } = Events;
 
+
 export function loader < T extends Constructor < Spliscord > > (Main: T) {
     class Loader extends Main {
 
@@ -15,10 +16,25 @@ export function loader < T extends Constructor < Spliscord > > (Main: T) {
 
         @once('ready')
         async loadOnceReady() {
+
             await this.makePointers(this.config.commandPath);
 
             for (const name of this.commandPointers.keys())
                 await this.loadCommand(name);
+
+
+            this.commandNameCache =
+                this.commands
+                .array()
+                .map(command => command.name)
+                .concat(
+                    this.commands
+                    .array()
+                    .map(command => command.aliases)
+                    .reduce((names, aliases) => names.concat(aliases))
+                )
+                .map(name => name.split('.'));
+
         }
 
         async makePointers(dir: string) {
