@@ -28,6 +28,8 @@ export class Spliscord extends Client {
     commandPointers = new Collection < string,
     string > ();
 
+    commandNameCache: string[][] = [];
+
     commands = new Collection < string,
     Command > ();
 
