@@ -4,5 +4,5 @@ if ((version[0] as any) < 8 || ((version[1] as any) < 9)) throw new Error('Node 
 process.on('unhandledRejection', (e) => console.error(`Uncaught Promise Rejection:\n${e}`));
 
 import { Spliscord } from './client';
-import config from './config';
+import { config } from './config';
 const client = new Spliscord(config);
