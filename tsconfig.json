@@ -2,6 +2,9 @@
     "compilerOptions": {
         "locale": "en",
         "target": "ES6",
+        "lib": [
+            "es7"
+        ],
         "module": "commonjs",
         "moduleResolution": "node",
         "sourceMap": true,
