@@ -5,7 +5,7 @@ import { BotConfig, UserConfig, GuildConfig } from './configs';
 import { logger } from './logger';
 import { loader } from './loader';
 import { handler, Command } from './handler';
-import { createConnection } from 'typeorm';
+import { createConnection, getRepository, Repository, Connection } from 'typeorm';
 
 @loader
 @handler
@@ -16,14 +16,9 @@ export class Spliscord extends Client {
     prefixMention: RegExp;
     inviteLink: string;
 
-    connection = createConnection({
-        type: 'sqlite',
-        database: './store.sqlite',
-        entities: [
-            UserConfig, GuildConfig
-        ],
-        synchronize: true,
-    });
+    connection: Connection;
+    userConf: Repository < UserConfig > ;
+    guildConf: Repository < GuildConfig > ;
 
     commandPointers = new Collection < string,
     string > ();
@@ -39,7 +34,23 @@ export class Spliscord extends Client {
 
     constructor(public config: BotConfig) {
         super(config.client);
+    }
 
-        this.login(require(config.token.path)[config.token.name]);
+    async connect() {
+
+        this.connection = await createConnection({
+            name: 'spliscord',
+            type: 'sqlite',
+            database: './store.sqlite',
+            entities: [
+                UserConfig, GuildConfig
+            ],
+            synchronize: true,
+        });
+
+        this.userConf = this.connection.getRepository(UserConfig);
+        this.guildConf = this.connection.getRepository(GuildConfig);
+
+        this.login(require(this.config.token.path)[this.config.token.name]);
     }
 }

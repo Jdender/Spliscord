@@ -6,3 +6,4 @@ process.on('unhandledRejection', (e) => console.error(`Uncaught Promise Rejectio
 import { Spliscord } from './client';
 import { config } from './config';
 const client = new Spliscord(config);
+client.connect();
