@@ -10,7 +10,7 @@ export class MessageCommandMeta {
         let userConf = await client.userConf.findOneById(message.author.id);
 
         if (!userConf)
-            userConf = client.userConf.create({ id: message.author.id });
+            userConf = await client.userConf.save({ id: message.author.id });
 
 
         let guildConf: GuildConfig | 'DM' | undefined;
@@ -20,7 +20,7 @@ export class MessageCommandMeta {
             guildConf = await client.guildConf.findOneById(message.guild.id);
 
             if (!guildConf)
-                guildConf = client.guildConf.create({ id: message.guild.id });
+                guildConf = await client.guildConf.save({ id: message.guild.id });
         } else
             guildConf = 'DM';
 
