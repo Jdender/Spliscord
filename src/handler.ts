@@ -1,9 +1,8 @@
 import { Events } from './event-dec';
 import { Spliscord } from './client';
-import { UserConfig, GuildConfig } from './configs';
 import { Constructor } from './oneline';
 import { Message } from 'discord.js';
-import isEqual = require('lodash/isEqual');
+import { MessageCommandMeta } from './msgCmdMeta';
 const { on, once, registerEvents } = Events;
 
 
@@ -28,43 +27,6 @@ export interface Command {
 }
 
 
-export class MessageCommandMeta {
-
-    constructor(client: Spliscord, message: Message) {
-
-        this.prefix = ',';
-
-        this.command = this.findCommand(client, message);
-    }
-
-    private findCommand(client: Spliscord, message: Message): string {
-
-        const split = message.content.slice(this.prefix.length).split(/\s+/g);
-        const path = [];
-
-        let command = '';
-
-        for (let i = 0; i < client.config.maxSubCommandDepth && i < split.length; i++) {
-            path.push(split[i]);
-
-            for (const name of client.commandNameCache) {
-                if (isEqual(path, name))
-                    command = path.join('.');
-            }
-        }
-
-        return command;
-    }
-
-    command: string;
-    permLevel: number;
-    prefix: string;
-
-    userConf: UserConfig;
-    guildConf: GuildConfig;
-}
-
-
 export function handler < T extends Constructor < Spliscord > > (Main: T) {
     class Handler extends Main {
 
@@ -79,7 +41,14 @@ export function handler < T extends Constructor < Spliscord > > (Main: T) {
             if (message.author.id === '1') return (console.warn(message.content), false); // Warn then Ignore Clyde
             if (message.author.bot) return false; // Ignore Bots
 
-            const meta = new MessageCommandMeta(this, message);
+            let meta: MessageCommandMeta;
+
+            try {
+                meta = await MessageCommandMeta.construct(this, message);
+            } catch (e) {
+                if (e.name === 'ShortCircuit') return false;
+                else throw e;
+            }
 
             const command = this.commands.get(meta.command) || // The !! is casting to bool to toss the null type
                 this.commands.find(cmd => !!cmd.aliases && cmd.aliases.includes(meta.command));
