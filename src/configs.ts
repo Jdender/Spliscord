@@ -22,8 +22,8 @@ export class UserConfig {
     @PrimaryColumn('text')
     id: string;
 
-    @Column({type:'text', nullable: true})
-    prefix: string | null;
+    @Column({ type: 'text', nullable: true })
+    prefix ? : string;
 }
 
 @Entity()
@@ -32,12 +32,12 @@ export class GuildConfig {
     @PrimaryColumn('text')
     id: string;
 
-    @Column({type:'text', nullable: true})
-    prefix: string | null;
+    @Column({ type: 'text', nullable: true })
+    prefix ? : string;
 
-    @Column({type:'text', nullable: true})
-    adminRole: string | null;
+    @Column({ type: 'text', nullable: true })
+    adminRole ? : string;
 
-    @Column({type:'text', nullable: true})
-    modRole: string | null;
+    @Column({ type: 'text', nullable: true })
+    modRole ? : string;
 }
