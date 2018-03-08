@@ -9,7 +9,7 @@
     "scripts": {
         "test": "ts-node .",
         "build": "tsc",
-        "start": "pm2 start src/init.ts -n \"spliscord\" "
+        "start": "npm run build && node dist/init.js"
     },
     "repository": {
         "type": "git",
