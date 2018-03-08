@@ -41,7 +41,7 @@ export class Spliscord extends Client {
         this.connection = await createConnection({
             name: 'spliscord',
             type: 'sqlite',
-            database: './store.sqlite',
+            database: './.data/store.sqlite',
             entities: [
                 UserConfig, GuildConfig
             ],
