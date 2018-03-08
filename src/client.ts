@@ -51,6 +51,6 @@ export class Spliscord extends Client {
         this.userConf = this.connection.getRepository(UserConfig);
         this.guildConf = this.connection.getRepository(GuildConfig);
 
-        this.login(require(this.config.token.path)[this.config.token.name]);
+        this.login(process.env.TOKEN);
     }
 }

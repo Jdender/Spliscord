@@ -1,10 +1,6 @@
 import { BotConfig } from './configs';
 
 export const config: BotConfig = {
-    token: {
-        path: '../../tokens.json',
-        name: 'Spliscord',
-    },
     client: {
         disableEveryone: true,
     },

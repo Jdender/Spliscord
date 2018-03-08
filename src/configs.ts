@@ -2,10 +2,6 @@ import { ClientOptions } from 'discord.js';
 import { Entity, Column, PrimaryColumn } from 'typeorm';
 
 export interface BotConfig {
-    token: {
-        path: string;
-        name: string;
-    };
     client: ClientOptions;
     commandPath: string;
     maxSubCommandDepth: number;
