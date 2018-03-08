@@ -7,6 +7,10 @@ if (!process.env.TOKEN) {
     process.env.TOKEN = require('../../tokens.json')['Spliscord'];
 }
 
+if (process.env.PORT) {
+    import('./glitch');
+}
+
 import { Spliscord } from './client';
 import { config } from './config';
 const client = new Spliscord(config);
