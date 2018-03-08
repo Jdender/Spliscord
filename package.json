@@ -9,7 +9,7 @@
     "scripts": {
         "test": "ts-node .",
         "build": "tsc",
-        "start": "npm run build && node dist/init.js"
+        "start": "ts-node ."
     },
     "repository": {
         "type": "git",
@@ -30,6 +30,7 @@
     "dependencies": {
         "discord.js": "^11.3.0",
         "express": "^4.16.2",
+        "lodash": "^4.17.5",
         "minimist": "^1.2.0",
         "node-opus": "^0.2.7",
         "phin": "^2.9.0",
@@ -44,6 +45,7 @@
     },
     "devDependencies": {
         "@types/express": "^4.11.1",
+        "@types/lodash": "^4.14.104",
         "@types/minimist": "^1.2.0",
         "@types/node": "^9.4.6",
         "@types/reflect-metadata": "^0.1.0",
