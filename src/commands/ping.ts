@@ -1,14 +1,16 @@
-import { Command, MessageCommandMeta, Spliscord, Message } from '../command-barrel';
+import { Command, MessageCommandMeta, Spliscord, Message } from '../commandUtil';
 
 export default class implements Command {
 
     name = 'ping';
     description = 'Ping!';
-    aliases = ['pong', 'latency', 'sub.ping', 'sub.pong'];
+    aliases = ['pong', 'latency'];
     usage = 'ping';
 
     cooldown = 3;
     permissions = 0;
+
+    args = null;
 
     checks = {
         guildOnly: false,
