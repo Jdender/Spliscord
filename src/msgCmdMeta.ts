@@ -1,7 +1,10 @@
-import { Spliscord } from "./client";
-import { Message } from "discord.js";
-import { GuildConfig, UserConfig } from "./configs";
+import { Spliscord } from './client';
+import { Message } from 'discord.js';
+import { GuildConfig, UserConfig } from './configs';
 import isEqual = require('lodash/isEqual');
+
+//  String space thing          /(?:[^\s"]+|"([^"]*)")+/g
+//  Same but with `\`        /(?:[^\s"]+|"([^"\\]*(?:\\.[^"\\]*)*)")+/g
 
 export class MessageCommandMeta {
 
@@ -35,11 +38,12 @@ export class MessageCommandMeta {
 
         this.prefix = this.getPrefix(client, message, userConf, guildConf);
 
-        this.command = this.findCommand(client, message);
+        //TODO Add minimist thing
+        [this.command, this.args] = this.findCommand(client, message);
     }
 
     private getPrefix(client: Spliscord, message: Message, userConf: UserConfig, guildConf: GuildConfig | 'DM'): string {
-        
+
         const prefixes: string[] = [];
 
         if (userConf.prefix)
@@ -67,17 +71,22 @@ export class MessageCommandMeta {
         return prefix;
     }
 
-    private findCommand(client: Spliscord, message: Message): string {
+    private findCommand(client: Spliscord, message: Message): [string, string[]] {
 
-        const split = message.content.slice(this.prefix.length).split(/\s+/g);
+        const split =
+            message.content
+            .slice(this.prefix.length)
+            .multiSearch(/(?:[^\s"]+|"([^"]*)")+/g)
+            .map(m => m[1] == null ? m[0] : m[1]);
+
         const path = [];
 
         for (let i = 0; i < client.config.maxSubCommandDepth && i < split.length; i++) {
-            path.push(split[i]);
+            path.push(split.shift());
 
             for (const name of client.commandNameCache) {
                 if (isEqual(path, name))
-                return path.join('.');
+                    return [path.join('.'), split];
             }
         }
 
@@ -88,7 +97,7 @@ export class MessageCommandMeta {
     permLevel: number;
     prefix: string;
 
-    //args: todo;
+    args: string[];
 
     userConf: UserConfig;
     guildConf: GuildConfig | 'DM';
