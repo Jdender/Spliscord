@@ -3,7 +3,16 @@ import { Spliscord } from './client';
 import { Constructor } from './oneline';
 import { Message } from 'discord.js';
 import { MessageCommandMeta } from './msgCmdMeta';
+import { Opts } from 'minimist';
 const { on, once, registerEvents } = Events;
+
+
+interface MinimistArgs extends Opts {
+    type: 'minimist';
+}
+
+type ArgOptions = null |
+    MinimistArgs;
 
 
 export interface Command {
@@ -14,6 +23,8 @@ export interface Command {
 
     cooldown: number;
     permissions: number;
+
+    args: ArgOptions; //TODO Add minimist thing
 
     checks: {
         guildOnly: boolean;
@@ -54,6 +65,9 @@ export function handler < T extends Constructor < Spliscord > > (Main: T) {
                 this.commands.find(cmd => !!cmd.aliases && cmd.aliases.includes(meta.command));
 
             if (!command) return false;
+
+
+            console.log(`[cmd] ${message.author.username}(${message.author.id}) ran ${meta.command}`);
 
 
             try {
