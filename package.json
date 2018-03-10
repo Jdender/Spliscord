@@ -7,7 +7,7 @@
         "node": "8.9.0"
     },
     "scripts": {
-        "test": "ts-node .",
+        "test": "ts-node -r dotenv/config .",
         "build": "tsc",
         "start": "ts-node ."
     },
@@ -33,7 +33,6 @@
         "lodash": "^4.17.5",
         "minimist": "^1.2.0",
         "node-opus": "^0.2.7",
-        "phin": "^2.9.0",
         "sqlite3": "^3.1.13",
         "typeorm": "^0.1.13"
     },
@@ -49,6 +48,7 @@
         "@types/minimist": "^1.2.0",
         "@types/node": "^9.4.6",
         "@types/reflect-metadata": "^0.1.0",
+        "dotenv": "^5.0.1",
         "ts-node": "^4.1.0",
         "typescript": "^2.7.2"
     }
