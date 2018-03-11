@@ -7,14 +7,19 @@ import { Spliscord } from './client';
 import { inspect } from 'util';
 
 
+//#region Types
+export type Constructor < T > = new(...args: any[]) => T;
+
+export interface RecursiveArray < T > extends Array < T | RecursiveArray < T >> {}
+//#endregion
+
+
+//#region Functions
 export const readdirAsync = promisify(readdir);
 export const statAsync = promisify(stat);
 
 
-export type Constructor < T > = new(...args: any[]) => T;
-
-
-export const walk = async (dir: string): Promise < any > =>
+export const walk = async (dir: string): Promise < string | RecursiveArray < string > > =>
     (await statAsync(dir)).isDirectory() ?
     await Promise.all(
         (await readdirAsync(dir))
@@ -23,8 +28,9 @@ export const walk = async (dir: string): Promise < any > =>
     dir;
 
 
-export const walkflat = async (dir: string): Promise < string[] > =>
-    flattenDeep(await walk(dir));
+export const walkflat = async (dir: string, _w: string | RecursiveArray < string > ): Promise < string[] > =>
+    typeof(_w = await walk(dir)) === 'string' ? [] :
+    flattenDeep < string > (_w);
 
 
 export const pipe = (...funcs: Function[]) =>
@@ -43,13 +49,17 @@ export const clean = async (client: Spliscord, text: any, depth ? : number | nul
     .replace(/@/g, '@' + String.fromCharCode(8203))
     .replace(client.token, 'mfa.VkO_2v3T--NO--lWetW_tjND--TOKEN--QFTm--FOR--zq9PH--YOU--tG')
 )
+//#endregion
 
 
+//#region Strings
 declare global {
     interface String {
         multiSearch(pattern: RegExp): RegExpExecArray[]
+        toCammelCase(): string;
     }
 }
+
 
 String.prototype.multiSearch = function(pattern) {
     return this
@@ -57,3 +67,10 @@ String.prototype.multiSearch = function(pattern) {
         .map(match =>
             new RegExp(pattern.source, pattern.flags).exec(match) !);
 }
+
+
+String.prototype.toCammelCase = function() {
+    return this.replace(/\-(\w)/g,
+        (i, m) => m.toUpperCase())
+}
+//#endregion
