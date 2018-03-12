@@ -2,6 +2,7 @@ import { Spliscord } from './client';
 import { Message } from 'discord.js';
 import { GuildConfig, UserConfig } from './configs';
 import isEqual = require('lodash/isEqual');
+import { ParsedArgs } from 'minimist';
 
 //  String space thing          /(?:[^\s"]+|"([^"]*)")+/g
 //  Same but with `\`        /(?:[^\s"]+|"([^"\\]*(?:\\.[^"\\]*)*)")+/g
@@ -38,8 +39,7 @@ export class MessageCommandMeta {
 
         this.prefix = this.getPrefix(client, message, userConf, guildConf);
 
-        //TODO Add minimist thing
-        [this.command, this.args] = this.findCommand(client, message);
+        [this.command, this.rawArgs] = this.findCommand(client, message);
     }
 
     private getPrefix(client: Spliscord, message: Message, userConf: UserConfig, guildConf: GuildConfig | 'DM'): string {
@@ -81,12 +81,13 @@ export class MessageCommandMeta {
 
         const path = [];
 
-        for (let i = 0; i < client.config.maxSubCommandDepth && i < split.length; i++) {
+        for (let i = 0; i <= client.config.maxSubCommandDepth && i <= split.length; i++) {
             path.push(split.shift());
 
             for (const name of client.commandNameCache) {
                 if (isEqual(path, name))
                     return [path.join('.'), split];
+                // TODO Optimaze this thing
             }
         }
 
@@ -97,7 +98,8 @@ export class MessageCommandMeta {
     permLevel: number;
     prefix: string;
 
-    args: string[];
+    args: ParsedArgs;
+    rawArgs: string[];
 
     userConf: UserConfig;
     guildConf: GuildConfig | 'DM';
