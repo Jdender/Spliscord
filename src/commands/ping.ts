@@ -3,7 +3,7 @@ import { Command, MessageCommandMeta, Spliscord, Message } from '../commandUtil'
 export default class implements Command {
 
     name = 'ping';
-    description = 'Ping!';
+    description = 'Test the bot\'s latency.';
     aliases = ['pong', 'latency'];
     usage = 'ping';
 
@@ -14,8 +14,6 @@ export default class implements Command {
 
     checks = {
         guildOnly: false,
-        guildConf: false,
-        userConf: false,
     };
 
     async execute(client: Spliscord, message: Message, meta: MessageCommandMeta) {
