@@ -1,9 +1,9 @@
-import { MessageCommandMeta } from './handler';
+import { MessageCommandMeta } from './msgCmdMeta';
 import { Message } from 'discord.js';
 import { Spliscord } from './client';
 import includes = require('lodash/includes');
 
-interface PermsObject {
+export interface PermsObject {
     level: number;
     name: string;
     guildOnly: boolean;
@@ -61,20 +61,20 @@ export const perms: PermsObject[] = [{
         level: 4,
         name: 'Bot Support',
         guildOnly: false,
-        check: (client, message) => client.config.contributors.filter(contributor => contributor.id === message.author.id && includes(contributor.roles,4))[0] == null,
+        check: (client, message) => client.config.contributors.filter(contributor => contributor.id === message.author.id && includes(contributor.roles,4))[0] != null,
     },
     {
         // Bot Dev has some limited access like rebooting the bot or eval.
         level: 5,
         name: 'Bot Dev',
         guildOnly: false,
-        check: (client, message) => client.config.contributors.filter(contributor => contributor.id === message.author.id && includes(contributor.roles,5))[0] == null,
+        check: (client, message) => client.config.contributors.filter(contributor => contributor.id === message.author.id && includes(contributor.roles,5))[0] != null,
     },
     {
         // The power that be. Bot Heads have every permisson.
         level: 6,
         name: 'Bot Head',
         guildOnly: false,
-        check: (client, message) => client.config.contributors.filter(contributor => contributor.id === message.author.id && includes(contributor.roles,6))[0] == null,
+        check: (client, message) => client.config.contributors.filter(contributor => contributor.id === message.author.id && includes(contributor.roles,6))[0] != null,
     }
 ];
