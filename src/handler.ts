@@ -92,11 +92,16 @@ export function handler < T extends Constructor < Spliscord > > (Main: T) {
             //#endregion
 
 
-            //#region Args and perms
+            //#region Args, checks and perms
             meta.permLevel = permCheck(this, message, meta);
 
             if (meta.permLevel < command.permissions)
                 return message.channel.send(`You do not have permission to use this command. You have perm level ${meta.permLevel} and need ${command.permissions}.`), false;
+
+
+            if ((meta.guildConf === 'DM') && command.checks.guildOnly)
+                return message.channel.send('That command can only be used in a guild, not DMs.'), false;
+
 
             meta.args = parseArgs(meta.rawArgs, command.args || undefined);
             //#endregion
