@@ -8,7 +8,7 @@ import { inspect } from 'util';
 //#region Types
 export type Constructor < T > = new(...args: any[]) => T;
 
-export interface RecursiveArray < T > extends Array < T | RecursiveArray < T >> {}
+export interface RecursiveArray < T > extends Array < T | RecursiveArray < T >> {};
 //#endregion
 
 
@@ -27,9 +27,11 @@ export const walk = async (dir: string): Promise < string | RecursiveArray < str
 
 
 import flattenDeep = require('lodash/flattenDeep');
-export const walkflat = async (dir: string, _w: string | RecursiveArray < string > ): Promise < string[] > =>
-    typeof(_w = await walk(dir)) === 'string' ? [] :
-    flattenDeep < string > (_w);
+export const walkflat = async (dir: string ): Promise < string[] > =>
+    (async (_w: string | RecursiveArray < string >) =>
+        typeof(_w = await walk(dir)) === 'string' ? [] :
+        flattenDeep < string > (_w))
+    ('');
 
 
 export const pipe = (...funcs: Function[]) =>
@@ -47,7 +49,7 @@ export const clean = async ({ token }: { token: string }, text: any, depth ? : n
     .replace(/`/g, '`' + String.fromCharCode(8203))
     .replace(/@/g, '@' + String.fromCharCode(8203))
     .replace(token, 'mfa.VkO_2v3T--NO--lWetW_tjND--TOKEN--QFTm--FOR--zq9PH--YOU--tG')
-)
+);
 //#endregion
 
 
