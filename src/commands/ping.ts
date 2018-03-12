@@ -20,7 +20,7 @@ export default class implements Command {
 
         const pingMessage = await message.channel.send('Pinging...') as Message;
 
-        pingMessage.edit(`Ponged. | The message ping is **${Math.abs(pingMessage.createdTimestamp - message.createdTimestamp)} ms**. ${client.ping ? `The heartbeat ping is **${Math.round(client.ping)} ms**.` : ''}`);
+        pingMessage.edit(`Ponged. | Our message round-trip ping is **${Math.abs(pingMessage.createdTimestamp - message.createdTimestamp)} ms**. ${client.ping ? `My heartbeat ping to discord is **${Math.round(client.ping)} ms**.` : ''}`);
     }
 
     init = null;
