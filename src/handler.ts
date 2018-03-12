@@ -1,18 +1,12 @@
 import { Events } from './event-dec';
 import { Spliscord } from './client';
 import { Constructor } from './oneline';
-import { Message } from 'discord.js';
+import { Message, Collection } from 'discord.js';
 import { MessageCommandMeta } from './msgCmdMeta';
-import { Opts } from 'minimist';
+import { Opts as MinimistOpts } from 'minimist';
+import parseArgs = require('minimist');
+import { permCheck } from './perms';
 const { on, once, registerEvents } = Events;
-
-
-interface MinimistArgs extends Opts {
-    type: 'minimist';
-}
-
-type ArgOptions = null |
-    MinimistArgs;
 
 
 export interface Command {
@@ -24,12 +18,10 @@ export interface Command {
     cooldown: number;
     permissions: number;
 
-    args: ArgOptions; //TODO Add minimist thing
+    args: MinimistOpts | null;
 
     checks: {
         guildOnly: boolean;
-        guildConf: boolean;
-        userConf: boolean;
     }
 
     execute: (client: Spliscord, message: Message, meta: MessageCommandMeta) => Promise < void > | void;
@@ -49,9 +41,14 @@ export function handler < T extends Constructor < Spliscord > > (Main: T) {
         @on('message')
         async handleOnMessage(message: Message): Promise < boolean > {
 
-            if (message.author.id === '1') return (console.warn(message.content), false); // Warn then Ignore Clyde
-            if (message.author.bot) return false; // Ignore Bots
 
+            //#region Prepossessing checks
+            if (message.author.id === '1') return console.warn(message.content), false; // Warn then Ignore Clyde
+            if (message.author.bot) return false; // Ignore Bots
+            //#endregion
+
+
+            //#region Gen/Get meta
             let meta: MessageCommandMeta;
 
             try {
@@ -60,15 +57,53 @@ export function handler < T extends Constructor < Spliscord > > (Main: T) {
                 if (e.name === 'ShortCircuit') return false;
                 else throw e;
             }
+            //#endregion
 
+
+            //#region Find command
             const command = this.commands.get(meta.command) || // The !! is casting to bool to toss the null type
                 this.commands.find(cmd => !!cmd.aliases && cmd.aliases.includes(meta.command));
 
             if (!command) return false;
+            //#endregion
 
 
+            //#region Cooldowns
+            if (!this.cooldowns.has(command.name)) { // Make cooldown collecions here
+                this.cooldowns.set(command.name, new Collection < string, any > ()); // Don't want to waste mem for commands never used
+            }
+
+            const now = Date.now(); // Used more then once so set to a const
+            const timestamps = this.cooldowns.get(command.name) !;
+            const cooldownAmount = command.cooldown * 1000;
+
+            if (!timestamps.has(message.author.id)) {
+                timestamps.set(message.author.id, now);
+                setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
+            } else {
+                const expirationTime = timestamps.get(message.author.id) !+cooldownAmount;
+
+                if (now < expirationTime)
+                    return message.channel.send(`Please wait ${((expirationTime - now) / 1000).toFixed(1)} more second(s) before reusing the \`${command.name}\` command.`), false;
+
+                timestamps.set(message.author.id, now);
+                setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
+            }
+            //#endregion
+
+
+            //#region Args and perms
+            meta.permLevel = permCheck(this, message, meta);
+
+            if (meta.permLevel < command.permissions)
+                return message.channel.send(`You do not have permission to use this command. You have perm level ${meta.permLevel} and need ${command.permissions}.`), false;
+
+            meta.args = parseArgs(meta.rawArgs, command.args || undefined);
+            //#endregion
+
+
+            //#region Exec command
             console.log(`[cmd] ${message.author.username}(${message.author.id}) ran ${meta.command}`);
-
 
             try {
 
@@ -86,6 +121,7 @@ export function handler < T extends Constructor < Spliscord > > (Main: T) {
 
                 return false;
             }
+            //#endregion
 
         }
 
