@@ -1,5 +1,3 @@
-import 'reflect-metadata';
-
 import { Client, Collection } from 'discord.js';
 import { BotConfig, UserConfig, GuildConfig } from './configs';
 import { logger } from './logger';
