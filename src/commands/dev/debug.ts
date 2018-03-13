@@ -5,7 +5,7 @@ export default class implements Command {
     name = 'dev.debug';
     description = 'Dump a `util.inspect()` of the message\'s `meta` to the channel.';
     aliases = ['debug'];
-    usage = 'debug';
+    usage = '';
 
     cooldown = 3;
     permissions = 4;

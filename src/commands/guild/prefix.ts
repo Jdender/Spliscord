@@ -5,7 +5,7 @@ export default class implements Command {
     name = 'guild.prefix';
     description = 'Set the guild\'s prefix to call the bot.';
     aliases = ['this.prefix'];
-    usage = 'guild.prefix [prefix]';
+    usage = '{prefix}';
 
     cooldown = 3;
     permissions = 2;

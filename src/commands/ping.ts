@@ -5,7 +5,7 @@ export default class implements Command {
     name = 'ping';
     description = 'Test the bot\'s latency.';
     aliases = ['pong', 'latency'];
-    usage = 'ping';
+    usage = '';
 
     cooldown = 3;
     permissions = 0;

@@ -5,7 +5,7 @@ export default class implements Command {
     name = 'user.prefix';
     description = 'Set your user prefix to call the bot.';
     aliases = ['me.prefix'];
-    usage = 'user.prefix {prefix}';
+    usage = '{prefix}';
 
     cooldown = 3;
     permissions = 0;
