@@ -1,5 +1,7 @@
 import { Command, MessageCommandMeta, Spliscord, Message } from '../commandUtil';
 
+// Requested by Carolina Low(363760127553044483)
+
 export default class implements Command {
 
     name = 'bing';
