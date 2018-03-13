@@ -7,7 +7,6 @@ Spliscord is a Discord bot made using the Discord.js wrapper for Discord's API. 
 * [TypeScript](https://www.typescriptlang.org/) - JS superset with types
 * [ts-node](https://github.com/TypeStrong/ts-node/) - Runs TS without having to build
 * [minimist](https://github.com/substack/minimist) - Parses command arguments
-* [phin](https://github.com/ethanent/phin) - Interacts with external HTTP APIs
 * [TypeORM](http://typeorm.io/#/) - Reads and writes to the database
 * [squlite3](https://www.sqlite.org/) - Is the database; stores sql in a single file
 
