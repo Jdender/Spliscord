@@ -22,6 +22,11 @@ export function logger < T extends Constructor < Spliscord > > (Main: T) {
             this.inviteLink = `https://discordapp.com/oauth2/authorize?client_id=${this.user.id}&scope=bot`;
         }
 
+        @on('guildMemberAdd')
+        updateOnJoin() {
+            this.user.setActivity(`@Spliscord help | ${this.guilds.size} Guilds, ${this.channels.size} Channels, ${this.users.size} Users.`);
+        }
+
         @on('debug')
         logOnDebug(message: string) {
             console.info(message);
