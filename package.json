@@ -47,7 +47,6 @@
     "@types/lodash": "^4.14.104",
     "@types/minimist": "^1.2.0",
     "@types/node": "^9.4.6",
-    "@types/reflect-metadata": "^0.1.0",
     "dotenv": "^5.0.1",
     "ts-node": "^4.1.0",
     "typescript": "^2.7.2"
