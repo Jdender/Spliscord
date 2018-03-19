@@ -1,11 +1,12 @@
 import { Events } from './event-dec';
 import { Spliscord } from './client';
 import { Constructor } from './oneline';
-import { Message, Collection } from 'discord.js';
+import { Message, Collection, Guild, GuildMember } from 'discord.js';
 import { MessageCommandMeta } from './msgCmdMeta';
 import { Opts as MinimistOpts } from 'minimist';
 import parseArgs = require('minimist');
 import { permCheck } from './perms';
+import { GuildConfig } from './configs';
 const { on, once, registerEvents } = Events;
 
 
@@ -39,7 +40,7 @@ export function handler < T extends Constructor < Spliscord > > (Main: T) {
         }
 
         @on('message')
-        async handleOnMessage(message: Message): Promise < boolean > {
+        async handleCommand(message: Message): Promise < boolean > {
 
 
             //#region Prepossessing checks
@@ -128,6 +129,20 @@ export function handler < T extends Constructor < Spliscord > > (Main: T) {
             }
             //#endregion
 
+        }
+
+        @on('guildMemberAdd')
+        async handleOnJoinRole(member: GuildMember) {
+
+            const guildConf: GuildConfig = await this.guildConf.findOneById(member.guild.id) || await this.guildConf.save({ id: member.guild.id });
+
+            if (!guildConf.joinRole) return;
+
+            const role = member.guild.roles.get(guildConf.joinRole);
+
+            if (!role) return;
+
+            member.addRole(role);
         }
 
     }

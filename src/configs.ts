@@ -36,4 +36,7 @@ export class GuildConfig {
 
     @Column({ type: 'text', nullable: true })
     modRole ? : string;
+
+    @Column({ type: 'text', nullable: true })
+    joinRole ? : string;
 }
