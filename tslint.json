@@ -4,7 +4,7 @@
   ],
   "rules": {
     "quotemark": [true, "single", "avoid-escape", "avoid-template"],
-    "no-console": false,
+    "curly": [true, "as-needed"],
     "arrow-parens": false,
     "interface-name": false,
     "max-classes-per-file": false,
