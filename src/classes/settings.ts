@@ -3,7 +3,6 @@ import { Column, Entity, PrimaryColumn } from 'typeorm';
 
 export interface BotConfig {
     client: ClientOptions;
-    commandPath: string;
     maxSubCommandDepth: number;
     contributors: Array<{
         name: string;
