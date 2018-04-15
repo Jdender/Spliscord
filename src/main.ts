@@ -4,6 +4,7 @@ import klaw = require('klaw');
 import { createConnection } from 'typeorm';
 import { Logger } from './logger';
 import { GuildConfig, UserConfig } from './settings';
+import './utill';
 
 const client = new Client();
 client.logger = new Logger();
@@ -13,6 +14,12 @@ new Promise(resolve => client.once('ready', resolve))
 
 // tslint:disable-next-line:max-line-length
 .then(() => client.logger.ready(`Runing in ${client.channels.size} channels on ${client.guilds.size} servers, for a total of ${client.users.size} users.`))
+
+// Set some consts
+.then(() => {
+    client.prefixMention = new RegExp(`^<@!?${client.user.id}> `);
+    client.inviteLink = `https://discordapp.com/oauth2/authorize?client_id=${client.user.id}&scope=bot`;
+})
 
 .then(() => Promise.all([ // Run in parralel
 
