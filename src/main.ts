@@ -3,11 +3,18 @@ import { readdirSync, statSync  } from 'fs';
 import klaw = require('klaw');
 import { createConnection } from 'typeorm';
 import { Logger } from './logger';
+import { Registry } from './registry';
 import { GuildConfig, UserConfig } from './settings';
 import './utill';
 
 const client = new Client();
 client.logger = new Logger();
+client.registry = new Registry();
+
+// Register loggers
+client.on('debug', d => client.logger.debug(d));
+client.on('warn', w => client.logger.warn(w));
+client.on('error', e => client.logger.error(e));
 
 // Wait for the client to be ready
 new Promise(resolve => client.once('ready', resolve))
@@ -43,7 +50,7 @@ new Promise(resolve => client.once('ready', resolve))
 
         const items: string[] = []; // Need to say string[] so ts doesn't make it never[]
 
-        klaw('src/imports/wew') // Stream event emiter thing?
+        klaw('src/imports/') // Stream event emiter thing?
         .on('data', item => !item.stats.isDirectory() && items.push(item.path)) // If not dir add to item array
         .on('end', () => resolve(items)) // When done return item array
         .on('error', reject); // Just pass the raw reject function

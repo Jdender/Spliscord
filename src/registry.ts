@@ -33,11 +33,11 @@ interface CommandMeta {
     };
 }
 
-interface RegistryEvents {
+export declare interface Registry {
     on(event: string, listener: (order: Order) => void): this;
 }
 
-export class Registry extends EventEmitter implements RegistryEvents {
+export class Registry extends EventEmitter {
 
     private commands = new Collection<string, CommandMeta>();
 
