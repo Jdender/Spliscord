@@ -3,8 +3,8 @@ import { Observable } from 'rxjs/Observable';
 import { defer } from 'rxjs/observable/defer';
 import { fromEvent } from 'rxjs/observable/fromEvent';
 import { filter, flatMap, groupBy } from 'rxjs/operators';
-import { Order } from '../../registry';
-import { GuildConfig, UserConfig } from '../../settings';
+import { Order } from '../../classes/registry';
+import { GuildConfig, UserConfig } from '../../classes/settings';
 
 export default (client: Client) =>
     fromEvent<Message>(client, 'message').pipe(

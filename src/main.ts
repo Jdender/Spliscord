@@ -1,10 +1,11 @@
 import { Client } from 'discord.js';
 import { readdirSync, statSync  } from 'fs';
 import klaw = require('klaw');
+import 'reflect-metadata';
 import { createConnection } from 'typeorm';
-import { Logger } from './logger';
-import { Registry } from './registry';
-import { GuildConfig, UserConfig } from './settings';
+import { Logger } from './classes/logger';
+import { Registry } from './classes/registry';
+import { GuildConfig, UserConfig } from './classes/settings';
 import './utill';
 
 const client = new Client();
