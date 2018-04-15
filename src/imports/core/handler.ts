@@ -1,24 +1,10 @@
 import { Client, Message } from 'discord.js';
-import { ParsedArgs } from 'minimist';
 import { Observable } from 'rxjs/Observable';
 import { defer } from 'rxjs/observable/defer';
 import { fromEvent } from 'rxjs/observable/fromEvent';
 import { filter, flatMap, groupBy } from 'rxjs/operators';
+import { Order } from '../../registry';
 import { GuildConfig, UserConfig } from '../../settings';
-
-interface Order {
-    message: Message;
-
-    command: string;
-    permLevel: number;
-    prefix: string;
-
-    args: ParsedArgs;
-    rawArgs: string[];
-
-    userConf: UserConfig;
-    guildConf: GuildConfig | 'DM';
-}
 
 export default (client: Client) =>
     fromEvent<Message>(client, 'message').pipe(
