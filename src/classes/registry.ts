@@ -3,6 +3,7 @@ import { EventEmitter } from 'events';
 import { Opts as MinimistOpts, ParsedArgs } from 'minimist';
 import { GuildConfig, UserConfig } from './settings';
 
+// This is the object commands get when ran
 export interface Order {
     message: Message;
 
@@ -17,6 +18,7 @@ export interface Order {
     guildConf: GuildConfig | 'DM';
 }
 
+// This is the info of the command it's self
 interface CommandMeta {
     name: string;
     description: string;
@@ -33,10 +35,13 @@ interface CommandMeta {
     };
 }
 
+// To type the EventEmitter
 export declare interface Registry {
     on(event: string, listener: (order: Order) => void): this;
+    once(event: string, listener: (order: Order) => void): this;
 }
 
+// The Registry stores commands, may add more to it after
 export class Registry extends EventEmitter {
 
     private commands = new Collection<string, CommandMeta>();

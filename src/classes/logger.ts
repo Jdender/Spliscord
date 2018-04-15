@@ -2,10 +2,12 @@ import chalk from 'chalk';
 import moment = require('moment');
 import { inspect } from 'util';
 
+// Type of the log type table
 interface Colors {
     [index: string]: [string, typeof chalk.blue, typeof console.log];
 }
 
+// The Logger is used for printing to the console
 export class Logger {
 
     // Table of tags, colors, and methods
