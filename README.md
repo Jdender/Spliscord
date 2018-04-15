@@ -4,6 +4,7 @@ Spliscord is a Discord bot made using the Discord.js wrapper for Discord's API. 
 ## Built With
 
 * [Discord.js](https://discord.js.org) - JS wrapper around the Discord API 
+* [RxJS](http://reactivex.io/rxjs/) - Stream utill libary using the Observable pattern
 * [TypeScript](https://www.typescriptlang.org/) - JS superset with types
 * [ts-node](https://github.com/TypeStrong/ts-node/) - Runs TS without having to build
 * [minimist](https://github.com/substack/minimist) - Parses command arguments
