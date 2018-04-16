@@ -90,7 +90,14 @@ function getCommandName(client: Client, message: Message, prefix: string): [stri
 
 // TODO
 function checkPerms(client: Client, message: Message, required: number): number | null {
-    return 0;
+
+    const permLevel = client.auth.checkPerms(client, message);
+
+    if (permLevel < required)
+        // tslint:disable-next-line:max-line-length
+        return message.channel.send(`You do not have permission to use this command. You have permission level ${permLevel} and need ${required}.`), null;
+
+    return permLevel;
 }
 
 // Put all the functions together to make an order
@@ -109,6 +116,9 @@ async function order(client: Client, message: Message): Promise<Order | null> {
     const [commandName, rawArgs] = commandArgs;
 
     const command = client.registry.getCommand(commandName);
+
+    if ((guildConf === 'DM') && command.checks.guildOnly)
+        return message.channel.send('That command can only be used in a guild, not DMs.'), null;
 
     const permLevel = checkPerms(client, message, command.permissions);
 
