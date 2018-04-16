@@ -50,6 +50,11 @@ export class Registry extends EventEmitter {
         this.commands.set(command.name, command);
     }
 
+    public getCommand(name: string): CommandMeta {
+        return this.commands.get(name)
+        || this.commands.find(cmd => cmd.aliases.includes(name));
+    }
+
     public get commandNames(): string[] {
         return this.commands
         .array()
@@ -67,8 +72,4 @@ export class Registry extends EventEmitter {
         .map(name => name.split('.'));
     }
 
-    public getCommand(name: string): CommandMeta {
-        return this.commands.get(name)
-        || this.commands.find(cmd => cmd.aliases.includes(name));
-    }
 }
