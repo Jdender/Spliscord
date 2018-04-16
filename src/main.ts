@@ -3,12 +3,14 @@ import { readdirSync, statSync  } from 'fs';
 import klaw = require('klaw');
 import 'reflect-metadata';
 import { createConnection } from 'typeorm';
+import { config } from '../config';
 import { Logger } from './classes/logger';
 import { Registry } from './classes/registry';
 import { GuildConfig, UserConfig } from './classes/settings';
 import './utill';
 
-const client = new Client();
+const client = new Client(config.client);
+client.config = config;
 client.logger = new Logger();
 client.registry = new Registry();
 
