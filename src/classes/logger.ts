@@ -21,12 +21,12 @@ export class Logger {
     };
 
     // Public methods to log with
-    public log = (text: string) => this._log('log', text);
-    public warn = (text: string) => this._log('warn', text);
-    public error = (text: string | Error) => this._log('error', text);
-    public debug = (text: string) => this._log('debug', text);
-    public cmd = (text: string) => this._log('cmd', text);
-    public ready = (text: string) => this._log('ready', text);
+    public log = (text: any) => this._log('log', text);
+    public warn = (text: any) => this._log('warn', text);
+    public error = (text: any) => this._log('error', text);
+    public debug = (text: any) => this._log('debug', text);
+    public cmd = (text: any) => this._log('cmd', text);
+    public ready = (text: any) => this._log('ready', text);
 
     // Main function
     private _log(type: string, content: any) {
