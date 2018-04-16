@@ -1,9 +1,9 @@
 import { Client } from 'discord.js';
-import { readdirSync, statSync  } from 'fs';
 import klaw = require('klaw');
 import 'reflect-metadata';
 import { createConnection } from 'typeorm';
 import { config } from '../config';
+import { Auth } from './classes/auth';
 import { Logger } from './classes/logger';
 import { Registry } from './classes/registry';
 import { GuildConfig, UserConfig } from './classes/settings';
@@ -11,6 +11,7 @@ import './utill';
 
 const client = new Client(config.client);
 client.config = config;
+client.auth = new Auth();
 client.logger = new Logger();
 client.registry = new Registry();
 
