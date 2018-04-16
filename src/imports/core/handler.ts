@@ -1,8 +1,8 @@
 import { Client, Message } from 'discord.js';
+import parseArgs = require('minimist');
 import { Observable } from 'rxjs/Observable';
-import { defer } from 'rxjs/observable/defer';
 import { fromEvent } from 'rxjs/observable/fromEvent';
-import { filter, flatMap, groupBy } from 'rxjs/operators';
+import { filter, flatMap, groupBy, tap } from 'rxjs/operators';
 import { Order } from '../../classes/registry';
 import { GuildConfig, UserConfig } from '../../classes/settings';
 
@@ -64,6 +64,34 @@ function getPrefix(
     return prefix || null;
 }
 
+function getCommandName(client: Client, message: Message, prefix: string): [string, string[]] | null {
+
+    // NOTE: This function is really inefficient and should be redone at some point
+
+    const split =
+    message.content
+    .slice(prefix.length)
+    .multiSearch(/(?:[^\s"]+|"([^"]*)")+/g)
+    .map(m => m[1] == null ? m[0] : m[1]);
+
+    const path: string[] = [];
+
+    for (let i = 0; i <= client.config.maxSubCommandDepth && i <= split.length; i++) {
+        path.push(split.shift()!);
+
+        for (const name of client.registry.commandNamesSplit)
+            if (path.equals(name))
+                return [path.join('.'), split];
+    }
+
+    return null;
+}
+
+// TODO
+function checkPerms(client: Client, message: Message, required: number): number | null {
+    return 0;
+}
+
 // Put all the functions together to make an order
 async function order(client: Client, message: Message): Promise<Order | null> {
 
@@ -72,6 +100,20 @@ async function order(client: Client, message: Message): Promise<Order | null> {
     const prefix = getPrefix(client, message, userConf, guildConf);
 
     if (!prefix) return null;
+
+    const commandArgs = getCommandName(client, message, prefix);
+
+    if (!commandArgs) return null;
+
+    const [commandName, rawArgs] = commandArgs;
+
+    const command = client.registry.getCommand(commandName);
+
+    const permLevel = checkPerms(client, message, command.permissions);
+
+    if (typeof permLevel !== 'number') return null;
+
+    const args = parseArgs(rawArgs, command.args || undefined);
 
     return {
         message,
@@ -87,8 +129,21 @@ async function order(client: Client, message: Message): Promise<Order | null> {
 
 // The the order stream
 export default (client: Client) =>
-    fromEvent<Message>(client, 'message').pipe(
+
+    fromEvent<Message>(client, 'message')
+    .pipe(
         filter(msg => !msg.author.bot), // Filter out bots
         flatMap(msg => order(client, msg)), // Map to orders
-        filter(ord => ord != null), // Filter out null orders
-    );
+        filter((ord): ord is Order => ord !== null), // Filter out null orders
+        tap(ord => client.logger.cmd(
+            // tslint:disable-next-line:max-line-length
+            `${ord.message.author.username}(${ord.message.author.id}) ran ${ord.command.name} in ${ord.message.guild.name}(${ord.message.guild.id})`,
+        )),
+        tap(ord => client.registry.emit(ord.command.name, ord)), // Run the command
+    )
+    // DO NOT REMOVE THIS SUBSCRIBE
+    // I don't know why it is needed
+    // But for some reson it doesn't work without it
+    // I know it should, but it doesn't
+    // Trust me I just wasted a hour on this
+    .subscribe();
