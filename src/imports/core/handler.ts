@@ -135,15 +135,21 @@ export default (client: Client) =>
         filter(msg => !msg.author.bot), // Filter out bots
         flatMap(msg => order(client, msg)), // Map to orders
         filter((ord): ord is Order => ord !== null), // Filter out null orders
-        tap(ord => client.logger.cmd(
-            // tslint:disable-next-line:max-line-length
-            `${ord.message.author.username}(${ord.message.author.id}) ran ${ord.command.name} in ${ord.message.guild.name}(${ord.message.guild.id})`,
-        )),
-        tap(ord => client.registry.emit(ord.command.name, ord)), // Run the command
     )
-    // DO NOT REMOVE THIS SUBSCRIBE
-    // I don't know why it is needed
-    // But for some reson it doesn't work without it
-    // I know it should, but it doesn't
-    // Trust me I just wasted a hour on this
-    .subscribe();
+    .subscribe(ord => {
+
+        client.logger.cmd(
+        // tslint:disable-next-line:max-line-length
+        `${ord.message.author.username}(${ord.message.author.id}) ran ${ord.command.name} in ${ord.message.guild.name}(${ord.message.guild.id})`,
+        );
+
+        try {
+            // Run command with order
+            client.registry.emit(ord.command.name, ord);
+        } catch (e) {
+
+            client.logger.error(e);
+
+            ord.message.channel.send(e.stack || e.message);
+        }
+    });
