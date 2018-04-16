@@ -7,7 +7,7 @@ import { GuildConfig, UserConfig } from './settings';
 export interface Order {
     message: Message;
 
-    command: string;
+    command: CommandMeta;
     permLevel: number;
     prefix: string;
 
@@ -48,5 +48,27 @@ export class Registry extends EventEmitter {
 
     public addCommand(command: CommandMeta) {
         this.commands.set(command.name, command);
+    }
+
+    public get commandNames(): string[] {
+        return this.commands
+        .array()
+        .map(command => command.name)
+        .concat(
+            this.commands
+            .array()
+            .map(command => command.aliases)
+            .reduce((names, aliases) => names.concat(aliases)),
+        );
+    }
+
+    public get commandNamesSplit(): string[][] {
+        return this.commandNames
+        .map(name => name.split('.'));
+    }
+
+    public getCommand(name: string): CommandMeta {
+        return this.commands.get(name)
+        || this.commands.find(cmd => cmd.aliases.includes(name));
     }
 }
