@@ -71,8 +71,9 @@ function getCommandName(client: Client, message: Message, prefix: string): [stri
     const split =
     message.content
     .slice(prefix.length)
-    .multiSearch(/(?:[^\s"]+|"([^"]*)")+/g)
-    .map(m => m[1] == null ? m[0] : m[1]);
+    .match(/(?:[^\s"]+|"([^"]*)")+/g)!
+    .map(match => (/(?:[^\s"]+|"([^"]*)")+/g).exec(match))
+    .map(match => match![1] == null ? match![0] : match![1]);
 
     const path: string[] = [];
 
