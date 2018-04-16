@@ -100,7 +100,7 @@ async function order(client: Client, message: Message): Promise<Order | null> {
 
     const prefix = getPrefix(client, message, userConf, guildConf);
 
-    if (!prefix) return null;
+    if (prefix === null) return null;
 
     const commandArgs = getCommandName(client, message, prefix);
 
@@ -112,7 +112,7 @@ async function order(client: Client, message: Message): Promise<Order | null> {
 
     const permLevel = checkPerms(client, message, command.permissions);
 
-    if (typeof permLevel !== 'number') return null;
+    if (permLevel === null) return null;
 
     const args = parseArgs(rawArgs, command.args || undefined);
 
@@ -141,7 +141,7 @@ export default (client: Client) =>
 
         client.logger.cmd(
         // tslint:disable-next-line:max-line-length
-        `${ord.message.author.username}(${ord.message.author.id}) ran ${ord.command.name} in ${ord.message.guild.name}(${ord.message.guild.id})`,
+        `${ord.message.author.username}(${ord.message.author.id}) ran ${ord.command.name} in ${ord.guildConf === 'DM' ? 'DMs' : `${ord.message.guild.name}(${ord.message.guild.id})`}`,
         );
 
         try {
