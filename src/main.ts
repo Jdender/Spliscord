@@ -23,11 +23,14 @@ client.on('error', e => client.logger.error(e));
 // Wait for the client to be ready
 new Promise(resolve => client.once('ready', resolve))
 
-// tslint:disable-next-line:max-line-length
-.then(() => client.logger.ready(`Runing in ${client.channels.size} channels on ${client.guilds.size} servers, for a total of ${client.users.size} users.`))
-
 // Set some consts
 .then(() => {
+
+    // tslint:disable-next-line:max-line-length
+    client.logger.ready(`Runing in ${client.channels.size} channels on ${client.guilds.size} servers, for a total of ${client.users.size} users.`);
+    // tslint:disable-next-line:max-line-length
+    client.user.setActivity(`@Spliscord help | ${client.guilds.size} Guilds, ${client.channels.size} Channels, ${client.users.size} Users.`);
+
     client.prefixMention = new RegExp(`^<@!?${client.user.id}> `);
     client.inviteLink = `https://discordapp.com/oauth2/authorize?client_id=${client.user.id}&scope=bot`;
 })
