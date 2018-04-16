@@ -55,13 +55,15 @@ export class Registry extends EventEmitter {
         || this.commands.find(cmd => cmd.aliases.includes(name));
     }
 
-    public get commandNames(): string[] {
+    public get commandRawNames(): string[] {
         return this.commands
-        .array()
-        .map(command => command.name)
+        .map(command => command.name);
+    }
+
+    public get commandNames(): string[] {
+        return this.commandRawNames
         .concat(
             this.commands
-            .array()
             .map(command => command.aliases)
             .reduce((names, aliases) => names.concat(aliases)),
         );
