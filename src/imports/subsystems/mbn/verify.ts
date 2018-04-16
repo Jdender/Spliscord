@@ -12,6 +12,7 @@ export default (client: Client) =>
             return message.channel.send('You\'re already verified!');
 
         message.member.removeRole(message.guild.roles.get('425092490916397067')!);
+        message.member.addRole(message.guild.roles.get('415221406452809728')!);
 
         message.reply('Welcome, you\'re verified!');
     });
