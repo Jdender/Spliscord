@@ -15,7 +15,7 @@ export default (client: Client) => {
         },
     });
 
-    client.registry.on('user.prefix', async ({message, args}) => {
+    client.registry.on('guild.prefix', async ({message, args}) => {
 
         await client.guildConf.updateById(message.guild.id, { prefix: args._[0] });
 
