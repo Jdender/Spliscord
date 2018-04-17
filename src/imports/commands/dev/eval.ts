@@ -6,7 +6,7 @@ export default (client: Client) => {
         name: 'dev.eval.js',
         description: 'Run some JavaScript in the bot\'s context.',
         aliases: [],
-        usage: '[...code]',
+        usage: '<...code>',
         cooldown: 0,
         permissions: 5,
         args: null,

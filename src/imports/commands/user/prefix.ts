@@ -6,7 +6,7 @@ export default (client: Client) => {
         name: 'user.prefix',
         description: 'Set your user prefix to call the bot.',
         aliases: ['me.prefix'],
-        usage: '{prefix}',
+        usage: '[prefix]',
         cooldown: 3,
         permissions: 0,
         args: null,

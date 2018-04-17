@@ -6,7 +6,7 @@ export default (client: Client) => {
         name: 'guild.prefix',
         description: 'Set the guild\'s prefix to call the bot.',
         aliases: ['this.prefix'],
-        usage: '{prefix}',
+        usage: '[prefix]',
         cooldown: 3,
         permissions: 2,
         args: null,

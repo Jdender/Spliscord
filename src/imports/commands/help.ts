@@ -6,7 +6,7 @@ export default (client: Client) => {
         name:  'help',
         description:  'List all my commands or info about a specific command.',
         aliases: ['commands'],
-        usage: '{command name}',
+        usage: '[Command name]',
         cooldown: 10,
         permissions: 0,
         args: null,
@@ -24,6 +24,7 @@ export default (client: Client) => {
             data.push('Here\'s a list of all my commands:');
             data.push(client.registry.commandRawNames.join(',\n'));
             data.push(`\nYou can send \`${prefix}help [command name]\` to get info on a specific command.`);
+            data.push('The key for the usage fields is `[optional] <required> [<optional>, <but both needed>]`');
 
             message.author.send(data.join('\n'), { split: true })
                 .then(() => {

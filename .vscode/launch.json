@@ -5,8 +5,7 @@
             "name": "Launch Program",
             "type": "node",
             "request": "launch",
-            "args": ["${workspaceRoot}/src/main.ts"],
-            "runtimeArgs": ["-r", "ts-node/register"],
+            "args": ["-r", "ts-node/register", "${workspaceRoot}/src/main.ts"],
             "cwd": "${workspaceRoot}",
             "protocol": "inspector"
         }
