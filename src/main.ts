@@ -15,6 +15,10 @@ client.auth = new Auth();
 client.logger = new Logger();
 client.registry = new Registry();
 
+// When node
+process.on('unhandledRejection', e => (client.logger.error(e), process.exit(1)));
+process.on('uncaughtException', e => (client.logger.error(e), process.exit(1)));
+
 // Register loggers
 client.on('debug', d => client.logger.debug(d));
 client.on('warn', w => client.logger.warn(w));
