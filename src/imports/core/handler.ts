@@ -17,7 +17,7 @@ async function getConf(client: Client, message: Message): Promise<[UserConfig, G
 
     // Get guildConf or make guildConf
     await client.guildConf.findOneById(message.guild.id)
-    || await client.guildConf.save({ id: message.guild.id });
+    || await client.guildConf.save({ id: message.guild.id }) as GuildConfig;
 
     return [userConf, guildConf];
 }
@@ -147,7 +147,7 @@ export default (client: Client) =>
         flatMap(msg => order(client, msg)), // Map to orders
         filter((ord): ord is Order => ord !== null), // Filter out null orders
     )
-    .subscribe(ord => {
+    .subscribe(async ord => {
 
         client.logger.cmd(
         // tslint:disable-next-line:max-line-length
@@ -161,6 +161,6 @@ export default (client: Client) =>
 
             client.logger.error(e);
 
-            ord.message.channel.send(e.stack || e.message);
+            ord.message.channel.send(await String.clean(e.stack || e));
         }
     });

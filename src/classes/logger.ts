@@ -37,7 +37,7 @@ export class Logger {
         if (content instanceof Error) content = content.stack || content.message; // Turn errors into strings
         if (typeof content !== 'string') content = inspect(content); // Turn objects into strings
         // Remove token just in case
-        content = content.replace(process.env.TOKEN!, 'mfa.VkOb2v3T--NO--lWetW8tjND--TOKEN--QFTm--FOR--zq9PH--YOU--tG');
+        content = content.replace(process.env.TOKEN, 'mfa.VkOb2v3T--NO--lWetW8tjND--TOKEN--QFTm--FOR--zq9PH--YOU--tG');
 
         // Log the final message
         put(`<${timestamp}>: [${tag}] ${color(content)}`);
