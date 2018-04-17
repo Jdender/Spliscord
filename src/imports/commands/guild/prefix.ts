@@ -20,8 +20,9 @@ export default (client: Client) => {
         await client.guildConf.updateById(message.guild.id, { prefix: args._[0] });
 
         if (!args._[0])
+            await
             message.channel.send('Okay, I removed the guild\'s prefix. You can still use a guild prefix or a ping.');
         else
-            message.channel.send(`Okay, I set the guild\'s prefix to \`${args._[0]}\`.`);
+            await message.channel.send(`Okay, I set the guild\'s prefix to \`${args._[0]}\`.`);
     });
 };

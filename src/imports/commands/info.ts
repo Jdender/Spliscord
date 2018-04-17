@@ -15,8 +15,8 @@ export default (client: Client) => {
         },
     });
 
-    client.registry.on('info', ({message}) =>
-    message.channel.send(
+    client.registry.on('info', async ({message}) =>
+    await message.channel.send(
 `**Spliscord** - Made by jdender~/House Master (Dual mains)
 
 Invite Link: <${client.inviteLink}>
