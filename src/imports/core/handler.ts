@@ -154,12 +154,13 @@ export default (client: Client) =>
         `${ord.message.author.username}(${ord.message.author.id}) ran ${ord.command.name} in ${ord.guildConf === 'DM' ? 'DMs' : `${ord.message.guild.name}(${ord.message.guild.id})`}`,
         );
 
-        // Run command with order
-        const error = await client.registry.emit(ord.command.name, ord);
+        try {
+            // Run command with order
+            client.registry.emit(ord.command.name, ord);
+        } catch (e) {
 
-        if (error) {
-            client.logger.error(error);
+            client.logger.error(e);
 
-            ord.message.channel.send(await String.clean(error.stack || error));
+            ord.message.channel.send(await String.clean(e.stack || e));
         }
     });

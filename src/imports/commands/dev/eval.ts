@@ -25,9 +25,9 @@ export default (client: Client) => {
             const code = args.join(' ');
             const evaled = eval(code); // tslint:disable-line:no-eval
 
-            await message.channel.send(await String.clean(evaled), { code: 'js' });
+            message.channel.send(await String.clean(evaled), { code: 'js' });
         } catch (err) {
-            await message.channel.send(`\`ERROR\` \`\`\`xl\n${await String.clean(err)}\n\`\`\``);
+            message.channel.send(`\`ERROR\` \`\`\`xl\n${await String.clean(err)}\n\`\`\``);
         }
     });
 

@@ -15,7 +15,7 @@ export default (client: Client) => {
         },
     });
 
-    client.registry.on('help', async ({message, args, prefix}) => {
+    client.registry.on('help', ({message, args, prefix}) => {
 
         const data: string[] = [];
 
@@ -38,7 +38,7 @@ export default (client: Client) => {
             const command = client.registry.getCommand(args._[0]);
 
             if (!command)
-                return await message.channel.send('That\'s not a command I have.');
+                return message.channel.send('That\'s not a command I have.');
 
             data.push(`**Name:** ${command.name}`);
             data.push(`**Description:** ${command.description}`);
@@ -48,7 +48,7 @@ export default (client: Client) => {
 
             data.push(`**Cooldown:** ${command.cooldown} second(s)`);
 
-            await message.channel.send(data.join('\n'), { split: true });
+            message.channel.send(data.join('\n'), { split: true });
         }
     });
 
