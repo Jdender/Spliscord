@@ -53,5 +53,7 @@ export default (client: Client) => {
             }, '[role.colorme] Create color role.'));
 
         message.member.setRoles(roles);
+
+        message.channel.send(`Swoosh! You're now painted ${hex}.`);
     });
 };
