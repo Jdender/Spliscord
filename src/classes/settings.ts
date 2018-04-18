@@ -38,4 +38,7 @@ export class GuildConfig {
 
     @Column({ type: 'text', nullable: true })
     public joinRole?: string;
+
+    @Column({ type: 'integer', nullable: true })
+    public allowRoleColorme?: boolean;
 }
