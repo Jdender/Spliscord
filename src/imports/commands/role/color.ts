@@ -54,6 +54,6 @@ export default (client: Client) => {
 
         message.member.setRoles(roles);
 
-        message.channel.send(`Swoosh! You're now painted ${hex}.`);
+        message.channel.send(`Swoosh! You're now painted \`${hex}\`.`);
     });
 };
