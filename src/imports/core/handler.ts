@@ -117,9 +117,6 @@ async function order(client: Client, message: Message): Promise<Order | null> {
 
     const command = client.registry.getCommand(commandName);
 
-    if ((guildConf === 'DM') && command.checks.guildOnly)
-        return message.channel.send('That command can only be used in a guild, not DMs.'), null;
-
     const permLevel = checkPerms(client, message, command.permissions);
 
     if (permLevel === null) return null;
@@ -154,13 +151,6 @@ export default (client: Client) =>
         `${ord.message.author.username}(${ord.message.author.id}) ran ${ord.command.name} in ${ord.guildConf === 'DM' ? 'DMs' : `${ord.message.guild.name}(${ord.message.guild.id})`}`,
         );
 
-        try {
-            // Run command with order
-            client.registry.emit(ord.command.name, ord);
-        } catch (e) {
-
-            client.logger.error(e);
-
-            ord.message.channel.send(await String.clean(e.stack || e));
-        }
+        // Run command with order
+        client.registry.emit(ord.command.name, ord);
     });
