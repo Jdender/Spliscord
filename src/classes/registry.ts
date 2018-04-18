@@ -1,4 +1,5 @@
 import { Collection, Message } from 'discord.js';
+import { EventEmitter } from 'events';
 import { Opts as MinimistOpts, ParsedArgs } from 'minimist';
 import { GuildConfig, UserConfig } from './settings';
 
@@ -34,39 +35,16 @@ interface CommandMeta {
     };
 }
 
-interface Events {
-    [index: string]: Array<(order: Order) => Promise<any>>;
+// To type the EventEmitter
+export declare interface Registry {
+    on(event: string, listener: (order: Order) => void): this;
+    once(event: string, listener: (order: Order) => void): this;
 }
 
 // The Registry stores commands, may add more to it after
-export class Registry {
+export class Registry extends EventEmitter {
 
     private commands = new Collection<string, CommandMeta>();
-
-    private events: Events = {};
-
-    public on(event: string, listener: (order: Order) => Promise<any>): this {
-
-        if (!this.events[event])
-            this.events[event] = [];
-
-        this.events[event].push(listener);
-
-        return this;
-    }
-
-    public async emit(event: string, order: Order) {
-
-        const listeners = this.events[event];
-
-        if (listeners)
-        for (const listener of listeners)
-        try {
-            await listener(order);
-        } catch (e) {
-            return e;
-        }
-    }
 
     public addCommand(command: CommandMeta) {
         this.commands.set(command.name, command);
