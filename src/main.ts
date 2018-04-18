@@ -1,3 +1,6 @@
+process.on('unhandledRejection', e => console.error(`UNHANDLED REJECTION: ${e}`)); // tslint:disable-line:no-console
+process.on('uncaughtException', e => console.error(`UNCAUGHT EXCEPTION: ${e}`)); // tslint:disable-line:no-console
+
 import { Client } from 'discord.js';
 import klaw = require('klaw');
 import 'reflect-metadata';
@@ -15,14 +18,11 @@ client.auth = new Auth();
 client.logger = new Logger();
 client.registry = new Registry();
 
-// When node
-process.on('unhandledRejection', e => (client.logger.error(e), process.exit(1)));
-process.on('uncaughtException', e => (client.logger.error(e), process.exit(1)));
-
 // Register loggers
 client.on('debug', d => client.logger.debug(d));
 client.on('warn', w => client.logger.warn(w));
 client.on('error', e => client.logger.error(e));
+client.registry.on('error', e => client.logger.error(e));
 
 // Wait for the client to be ready
 new Promise(resolve => client.once('ready', resolve))
