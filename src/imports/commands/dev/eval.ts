@@ -12,7 +12,7 @@ export default (client: Client) => {
         args: null,
     });
 
-    client.registry.on('dev.eval.js', async ({message, prefix}) => {
+    client.registry.on('dev.eval.js', async ({message, prefix, ...order}) => {
         try {
             const args = message.channel.type === 'text'
             ? message.content.slice(prefix.length).split(/\s+/g)
