@@ -52,7 +52,7 @@ export default (client: Client) => {
                 hoist: false,
             }, '[role.colorme] Create color role.'));
 
-        message.member.setRoles(roles);
+        message.member.setRoles(roles, '[role.colorme] Set color roles.');
 
         message.channel.send(`Swoosh! You're now painted \`${hex}\`.`);
     });
