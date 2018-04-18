@@ -29,10 +29,6 @@ interface CommandMeta {
     permissions: number;
 
     args: MinimistOpts | null;
-
-    checks: {
-        guildOnly: boolean;
-    };
 }
 
 // To type the EventEmitter

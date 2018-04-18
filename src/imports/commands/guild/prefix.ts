@@ -10,12 +10,12 @@ export default (client: Client) => {
         cooldown: 3,
         permissions: 2,
         args: null,
-        checks: {
-            guildOnly: true,
-        },
     });
 
-    client.registry.on('guild.prefix', async ({message, args}) => {
+    client.registry.on('guild.prefix', async ({message, args, guildConf}) => {
+
+        if (guildConf === 'DM')
+            return message.channel.send('That command can only be used in a guild, not DMs.');
 
         await client.guildConf.updateById(message.guild.id, { prefix: args._[0] });
 

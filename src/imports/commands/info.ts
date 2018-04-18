@@ -10,9 +10,6 @@ export default (client: Client) => {
         cooldown: 3,
         permissions: 0,
         args: null,
-        checks: {
-            guildOnly: false,
-        },
     });
 
     client.registry.on('info', ({message}) =>

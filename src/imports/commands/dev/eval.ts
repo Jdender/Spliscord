@@ -10,9 +10,6 @@ export default (client: Client) => {
         cooldown: 0,
         permissions: 5,
         args: null,
-        checks: {
-            guildOnly: false,
-        },
     });
 
     client.registry.on('dev.eval.js', async ({message, prefix}) => {
