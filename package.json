@@ -8,9 +8,10 @@
   },
   "scripts": {
     "test": "ts-node -r dotenv/config .",
-    "build": "tsc",
     "lint": "tslint -c tslint.json 'src/**/*.ts'",
-    "start": "ts-node ."
+    "start": "yarn build && ts-node .",
+    "build": "parcel build public/index.html",
+    "parcel": "parcel public/index.html"
   },
   "repository": {
     "type": "git",
@@ -31,6 +32,7 @@
   "dependencies": {
     "discord.js": "^11.3.0",
     "express": "^4.16.2",
+    "font-awesome": "^4.7.0",
     "klaw": "^2.1.1",
     "minimist": "^1.2.0",
     "moment": "^2.22.0",
@@ -53,9 +55,9 @@
     "@types/minimist": "^1.2.0",
     "@types/node": "^9.4.6",
     "@types/tinycolor2": "^1.4.0",
+    "dotenv": "^5.0.1",
     "node-sass": "^4.8.3",
     "parcel-bundler": "^1.7.1",
-    "dotenv": "^5.0.1",
     "ts-node": "^4.1.0",
     "tslint": "^5.9.1",
     "typescript": "^2.7.2"

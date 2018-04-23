@@ -10,11 +10,41 @@
     <title>Page Title</title>
     
     <link rel="stylesheet"  href="style.scss" />
-    <script src="main.ts" defer></script>
+    <script defer src="main.ts"></script>
 
+    <script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js" integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+" crossorigin="anonymous"></script>
 </head>
 
 <body>
+
+    <div data-controller="topbar" class="hbox topbar">
+
+        <button class="topbar__button">
+            <i class="fas fa-cogs"></i>
+            Config
+        </button>
+
+        <button class="topbar__button">
+            <i class="fas fa-book"></i>
+            Manual
+        </button>
+
+        <span class="grow"></span>
+        <b class="topbar__title">Spliscord</b>
+        <span class="grow"></span>
+
+        <button class="topbar__button">
+            <i class="fab fa-discord"></i>
+            Discord
+        </button>
+
+        <button class="topbar__button">
+            <i class="fab fa-github"></i>
+            GitHub
+        </button>
+
+    </div>
+
 </body>
 
 </html>

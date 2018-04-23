@@ -1,9 +1,4 @@
-* {
-    margin: 0;
-    padding: 0;
-}
-
-// Flex box util
+// Flex box
 %flex { display: flex; }
 .hbox { @extend %flex; flex-direction: row; }
 .vbox { @extend %flex; flex-direction: column; }
@@ -12,3 +7,16 @@
 // Other util
 .scroll { overflow: auto; }
 .fill { position: absolute; top: 0; bottom: 0; left: 0; right:0; }
+
+.topbar  {
+
+    &__title {
+        font-size: 200%; 
+        line-height: 140%;
+    }
+
+    &__button {
+        font-size: 150%; 
+        line-height: 140%;
+    }
+}

@@ -1,5 +1,8 @@
 ### Node ###
 
+# Parcel
+.cache
+
 # Logs
 logs
 npm-debug.log*
