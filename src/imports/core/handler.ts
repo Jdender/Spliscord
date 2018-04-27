@@ -88,7 +88,6 @@ function getCommandName(client: Client, message: Message, prefix: string): [stri
     return null;
 }
 
-// TODO
 function checkPerms(client: Client, message: Message, required: number): number | null {
 
     const permLevel = client.auth.checkPerms(client, message);
@@ -136,7 +135,8 @@ async function order(client: Client, message: Message): Promise<Order | null> {
 }
 
 // The the order stream
-export default (client: Client) =>
+export default () => null;
+export const rewrote =  (client: Client) =>
 
     fromEvent<Message>(client, 'message')
     .pipe(
