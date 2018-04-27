@@ -30,6 +30,7 @@
   },
   "homepage": "https://github.com/jdenderplays/Spliscord#readme",
   "dependencies": {
+    "chalk": "^2.4.1",
     "discord.js": "^11.3.0",
     "express": "^4.16.2",
     "font-awesome": "^4.7.0",
