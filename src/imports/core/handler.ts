@@ -88,7 +88,6 @@ function getCommandName(client: Client, message: Message, prefix: string): [stri
     return null;
 }
 
-// TODO
 function checkPerms(client: Client, message: Message, required: number): number | null {
 
     const permLevel = client.auth.checkPerms(client, message);

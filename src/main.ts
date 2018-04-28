@@ -1,5 +1,5 @@
-process.on('unhandledRejection', e => console.error(`UNHANDLED REJECTION: ${e}`)); // tslint:disable-line:no-console
-process.on('uncaughtException', e => console.error(`UNCAUGHT EXCEPTION: ${e}`)); // tslint:disable-line:no-console
+process.on('unhandledRejection', e => console.error(`UNHANDLED REJECTION: ${e.stack || e}`)); // tslint:disable-line
+process.on('uncaughtException', e => console.error(`UNCAUGHT EXCEPTION: ${e.stack || e}`)); // tslint:disable-line
 
 import { Client } from 'discord.js';
 import klaw = require('klaw');
