@@ -135,7 +135,8 @@ async function order(client: Client, message: Message): Promise<Order | null> {
 }
 
 // The the order stream
-export default (client: Client) =>
+export default () => null;
+export const rewrote =  (client: Client) =>
 
     fromEvent<Message>(client, 'message')
     .pipe(
