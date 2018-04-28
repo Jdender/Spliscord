@@ -9,7 +9,7 @@
   "scripts": {
     "test": "ts-node -r dotenv/config .",
     "lint": "tslint -c tslint.json 'src/**/*.ts'",
-    "start": "yarn build && ts-node .",
+    "start": "npm run build && ts-node .",
     "build": "parcel build public/index.html",
     "parcel": "parcel public/index.html"
   },
