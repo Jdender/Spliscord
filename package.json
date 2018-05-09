@@ -18,11 +18,7 @@
     "url": "git+https://github.com/jdenderplays/Spliscord.git"
   },
   "contributors": [
-    {
-      "name": "jdenderplays",
-      "email": "jdenderplays@gmail.com",
-      "url": "https://github.com/jdenderplays"
-    }
+    "jdender~ <jdenderplays@gmail.com> (https://github.com/jdenderplays)"
   ],
   "license": "AGPL-3.0",
   "bugs": {
@@ -40,7 +36,6 @@
     "node-opus": "^0.2.7",
     "rxjs": "^5.5.10",
     "sqlite3": "^4.0.0",
-    "stimulus": "^1.0.1",
     "tinycolor2": "^1.4.1",
     "typeorm": "^0.1.13"
   },
