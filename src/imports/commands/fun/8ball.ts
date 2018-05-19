@@ -1,6 +1,5 @@
 import { Client, Message } from 'discord.js';
 
-// tslint:disable-next-line:no-var-requires
 const list = require('../../../../resources/8ball.json') as string[];
 
 export default (client: Client) => {

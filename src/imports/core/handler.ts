@@ -93,7 +93,6 @@ function checkPerms(client: Client, message: Message, required: number): number 
     const permLevel = client.auth.checkPerms(client, message);
 
     if (permLevel < required)
-        // tslint:disable-next-line:max-line-length
         return message.channel.send(`You do not have permission to use this command. You have permission level ${permLevel} and need ${required}.`), null;
 
     return permLevel;
@@ -146,7 +145,6 @@ export default (client: Client) =>
     .subscribe(async ord => {
 
         client.logger.cmd(
-        // tslint:disable-next-line:max-line-length
         `${ord.message.author.username}(${ord.message.author.id}) ran ${ord.command.name} in ${ord.guildConf === 'DM' ? 'DMs' : `${ord.message.guild.name}(${ord.message.guild.id})`}`,
         );
 

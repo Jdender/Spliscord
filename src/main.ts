@@ -1,5 +1,5 @@
-process.on('unhandledRejection', e => console.error(`UNHANDLED REJECTION: ${e.stack || e}`)); // tslint:disable-line
-process.on('uncaughtException', e => console.error(`UNCAUGHT EXCEPTION: ${e.stack || e}`)); // tslint:disable-line
+process.on('unhandledRejection', e => console.error(`UNHANDLED REJECTION: ${e.stack || e}`)); 
+process.on('uncaughtException', e => console.error(`UNCAUGHT EXCEPTION: ${e.stack || e}`));
 
 import { Client } from 'discord.js';
 import klaw = require('klaw');
@@ -30,9 +30,7 @@ new Promise(resolve => client.once('ready', resolve))
 // Set some consts
 .then(() => {
 
-    // tslint:disable-next-line:max-line-length
     client.logger.ready(`Runing in ${client.channels.size} channels on ${client.guilds.size} servers, for a total of ${client.users.size} users.`);
-    // tslint:disable-next-line:max-line-length
     client.user.setActivity(`@Spliscord help | ${client.guilds.size} Guilds, ${client.channels.size} Channels, ${client.users.size} Users.`);
 
     client.prefixMention = new RegExp(`^<@!?${client.user.id}> `);
@@ -73,7 +71,7 @@ new Promise(resolve => client.once('ready', resolve))
 ]))
 
 // Run their default exports with the client as an arg after imported and db is ready
-.then(([, files]) => files.forEach(file => file.default(client)))
+.then(([, files]) => files.forEach(file => file.default && file.default(client)))
 .catch(client.logger.error);
 
 client.login(process.env.TOKEN);

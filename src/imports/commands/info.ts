@@ -14,7 +14,7 @@ export default (client: Client) => {
 
     client.registry.on('info', ({message}) =>
     message.channel.send(
-`**Spliscord** - Made by jdender~/House Master (Dual mains)
+`**Spliscord** - Made by Jdender~/House Master (Dual mains)
 
 Invite Link: <${client.inviteLink}>
 GitHub: <${require('../../../package.json').homepage}>

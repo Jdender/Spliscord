@@ -20,7 +20,7 @@ export default (client: Client) => {
 
             args.splice(0, 3);
             const code = args.join(' ');
-            const evaled = eval(code); // tslint:disable-line:no-eval
+            const evaled = eval(code);
 
             message.channel.send(await String.clean(evaled), { code: 'js' });
         } catch (err) {
