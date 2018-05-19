@@ -3,19 +3,18 @@ Spliscord is a Discord bot made using the Discord.js wrapper for Discord's API. 
 
 ## Built With
 
-* [Discord.js](https://discord.js.org) - JS wrapper around the Discord API 
-* [RxJS](http://reactivex.io/rxjs/) - Stream utill libary using the Observable pattern
-* [TypeScript](https://www.typescriptlang.org/) - JS superset with types
-* [ts-node](https://github.com/TypeStrong/ts-node/) - Runs TS without having to build
-* [minimist](https://github.com/substack/minimist) - Parses command arguments
-* [TypeORM](http://typeorm.io/#/) - Reads and writes to the database
-* [squlite3](https://www.sqlite.org/) - Is the database; stores sql in a single file
+* [Discord.js](https://discord.js.org) - Discord API wrapper for JavaScript
+* [TypeScript](https://www.typescriptlang.org/) - Typed JavaScript superset
+* [ts-node](https://github.com/TypeStrong/ts-node/) - JIT compiler for typescript
+* [minimist](https://github.com/substack/minimist) - Command arguments parser
+* [TypeORM](http://typeorm.io/#/) - Typescript database ORM
+* [squlite3](https://www.sqlite.org/) - Single file SQL database
 
 ## Authors
 
-* **Jdender** - *Full stack & Initial work* - [jdenderplays](https://github.com/jdenderplays)
+* **Jdender~** - *Full stack & Initial work* - [jdenderplays](https://github.com/jdenderplays)
 
-Also check the list of [contributors](https://github.com/jdenderplays/Spliscord/contributors) who did minor contributions.
+Also, check the list of [contributors](https://github.com/jdenderplays/Spliscord/contributors) who did minor contributions.
 
 ## License
 

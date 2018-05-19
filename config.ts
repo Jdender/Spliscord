@@ -6,7 +6,7 @@ export const config: BotConfig = {
     },
     maxSubCommandDepth: 3,
     contributors: [{
-            name: 'jdenderplays',
+            name: 'Jdender~',
             id: '250432205145243649',
             roles: [4, 5, 6],
         },

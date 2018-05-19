@@ -1,8 +1,5 @@
 ### Node ###
 
-# Parcel
-.cache
-
 # Logs
 logs
 npm-debug.log*
@@ -29,7 +26,6 @@ yarn-error.log*
 # dotenv environment variables file(s)
 .env
 .env.*
-!.env.example
 
 # Build generated
 dist/
