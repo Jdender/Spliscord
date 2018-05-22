@@ -85,7 +85,7 @@ export class Auth {
             if (!message.guild && currentLevel.guildOnly)
                 continue;
 
-            if (currentLevel.check(client, message, guildConf)) {
+            if (currentLevel.check(client, message, guildConf as GuildConfig)) {
                 permLevel = currentLevel.level;
                 break;
             }

@@ -15,7 +15,7 @@ export interface BotConfig {
 export class UserConfig {
 
     @PrimaryColumn('text')
-    public id: string;
+    public id!: string;
 
     @Column({ type: 'text', nullable: true })
     public prefix?: string;
@@ -25,7 +25,7 @@ export class UserConfig {
 export class GuildConfig {
 
     @PrimaryColumn('text')
-    public id: string;
+    public id!: string;
 
     @Column({ type: 'text', nullable: true })
     public prefix?: string;

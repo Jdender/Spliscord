@@ -1,4 +1,4 @@
-import { BotConfig } from './src/classes/settings';
+import { BotConfig } from './src/core/settings';
 
 export const config: BotConfig = {
     client: {

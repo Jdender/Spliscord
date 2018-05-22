@@ -3,8 +3,8 @@ import parseArgs = require('minimist');
 import { Observable } from 'rxjs/Observable';
 import { fromEvent } from 'rxjs/observable/fromEvent';
 import { filter, flatMap, groupBy, tap } from 'rxjs/operators';
-import { Order } from '../../classes/registry';
-import { GuildConfig, UserConfig } from '../../classes/settings';
+import { Order } from './registry';
+import { GuildConfig, UserConfig } from './settings';
 
 async function getConf(client: Client, message: Message): Promise<[UserConfig, GuildConfig | 'DM']> {
     // Get userConf or make userConf

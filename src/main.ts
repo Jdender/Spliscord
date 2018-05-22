@@ -6,10 +6,10 @@ import klaw = require('klaw');
 import 'reflect-metadata';
 import { createConnection } from 'typeorm';
 import { config } from '../config';
-import { Auth } from './classes/auth';
-import { Logger } from './classes/logger';
-import { Registry } from './classes/registry';
-import { GuildConfig, UserConfig } from './classes/settings';
+import { Auth } from './core/auth';
+import { Logger } from './core/logger';
+import { Registry } from './core/registry';
+import { GuildConfig, UserConfig } from './core/settings';
 import './utill';
 
 const client = new Client(config.client);
