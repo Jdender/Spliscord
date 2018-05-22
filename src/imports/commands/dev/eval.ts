@@ -1,4 +1,5 @@
 import { Client } from 'discord.js';
+import { clean } from '../../../utill';
 
 export default (client: Client) => {
 
@@ -22,9 +23,9 @@ export default (client: Client) => {
             const code = args.join(' ');
             const evaled = eval(code);
 
-            message.channel.send(await String.clean(evaled), { code: 'js' });
+            message.channel.send(await clean(evaled), { code: 'js' });
         } catch (err) {
-            message.channel.send(`\`ERROR\` \`\`\`xl\n${await String.clean(err)}\n\`\`\``);
+            message.channel.send(`\`ERROR\` \`\`\`xl\n${await clean(err)}\n\`\`\``);
         }
     });
 
