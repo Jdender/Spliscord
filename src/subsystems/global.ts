@@ -1,7 +1,9 @@
 import { Client } from 'discord.js';
-import { GuildConfig } from '../../classes/settings';
+import { GuildConfig } from '../core/settings';
 
-export default (client: Client) =>
+export default (client: Client) => {
+
+    // Join role
     client.on('guildMemberAdd', async member => {
 
         const guildConf: GuildConfig =
@@ -16,3 +18,9 @@ export default (client: Client) =>
 
         member.addRole(role);
     });
+
+    // Activity updater
+    client.on('guildMemberAdd', () =>
+        client.user.setActivity(`@Spliscord help | ${client.guilds.size} Guilds, ${client.channels.size} Channels, ${client.users.size} Users.`),
+    );
+}

@@ -3,6 +3,8 @@ import { Client } from 'discord.js';
 // Requested by MBN(339586884772823043)<Guild>
 
 export default (client: Client) =>
+
+    // Verify system
     client.on('message', message => {
 
         if (message.channel.id !== '427303825171415050') return;
