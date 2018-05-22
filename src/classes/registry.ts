@@ -19,7 +19,7 @@ export interface Order {
 }
 
 // This is the info of the command it's self
-interface CommandMeta {
+export interface CommandMeta {
     name: string;
     description: string;
     aliases: string[];
