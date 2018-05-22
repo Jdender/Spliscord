@@ -1,6 +1,6 @@
 import { Client, Message } from 'discord.js';
 
-const ball8list = require('../../../resources/8ball.json') as string[];
+const ball8list = require('../../resources/8ball.json') as string[];
 
 export default (client: Client) => {
 

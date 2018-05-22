@@ -4,16 +4,16 @@ import { clean } from '../utill';
 export default (client: Client) => {
 
     client.registry.addCommand({
-        name: 'dev.eval.js',
+        name: 'dev.eval',
         description: 'Run some JavaScript in the bot\'s context.',
-        aliases: [],
+        aliases: ['eval'],
         usage: '<...code>',
         cooldown: 0,
         permissions: 5,
         args: null,
     });
 
-    client.registry.on('dev.eval.js', async ({message, prefix, ...order}) => {
+    client.registry.on('dev.eval', async ({message, prefix, ...order}) => {
         try {
             const args = message.channel.type === 'text'
             ? message.content.slice(prefix.length).split(/\s+/g)

@@ -17,7 +17,7 @@ export default (client: Client) => {
 
     client.registry.on('kick', async ({message, args}) => {
 
-        const member = resolveMember(args[0], message);
+        const member = resolveMember(args._[0], message);
 
         if (!member) 
             return message.channel.send('Unable to resolve mention or user id.');
@@ -25,7 +25,7 @@ export default (client: Client) => {
         if (!member.kickable)
             return message.channel.send('I cannot kick this user. Do they have a higher role? Do I have kick permissions?');
 
-        const reason = `${message.author.tag} : ${args[1] || 'No reason provided'}`;
+        const reason = `${message.author.tag} : ${args._[1] || 'No reason provided'}`;
         
         await member.kick(reason)
         .catch(error => message.channel.send(`I couldn't kick because of : ${error}`));
@@ -46,7 +46,7 @@ export default (client: Client) => {
 
     client.registry.on('ban', async ({message, args}) => {
 
-        const member = resolveMember(args[0], message);
+        const member = resolveMember(args._[0], message);
 
         if (!member) 
             return message.channel.send('Unable to resolve mention or user id.');
@@ -54,7 +54,7 @@ export default (client: Client) => {
         if (!member.bannable)
             return message.channel.send('I cannot ban this user. Do they have a higher role? Do I have ban permissions?');
 
-        const reason = `${message.author.tag} : ${args[1] || 'No reason provided'}`;
+        const reason = `${message.author.tag} : ${args._[1] || 'No reason provided'}`;
         
         await member.ban(reason)
         .catch(error => message.channel.send(`I couldn't ban because of : ${error}`));
