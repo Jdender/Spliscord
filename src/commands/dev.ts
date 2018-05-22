@@ -1,5 +1,5 @@
 import { Client } from 'discord.js';
-import { clean } from '../../utill';
+import { clean } from '../utill';
 
 export default (client: Client) => {
 

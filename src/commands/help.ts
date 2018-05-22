@@ -3,6 +3,25 @@ import { Client, Message } from 'discord.js';
 export default (client: Client) => {
 
     client.registry.addCommand({
+        name: 'info',
+        description: 'Get various links for the bot.',
+        aliases: ['invite', 'link', 'links'],
+        usage: '',
+        cooldown: 3,
+        permissions: 0,
+        args: null,
+    });
+
+    client.registry.on('info', ({message}) =>
+    message.channel.send(
+`**Spliscord** - Made by Jdender~/House Master (Dual mains)
+
+Invite Link: <${client.inviteLink}>
+GitHub: <${require('../../../package.json').homepage}>
+        `));
+
+
+    client.registry.addCommand({
         name:  'help',
         description:  'List all my commands or info about a specific command.',
         aliases: ['commands'],

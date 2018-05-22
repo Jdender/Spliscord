@@ -1,5 +1,5 @@
 import { Client, Message, RichEmbedOptions } from 'discord.js';
-import { CommandMeta } from '../../classes/registry';
+import { CommandMeta } from '../core/registry';
 import snekfetch = require('snekfetch');
 
 // Embed Reaction Menu Image Pager

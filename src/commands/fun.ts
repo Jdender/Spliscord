@@ -1,6 +1,6 @@
 import { Client, Message } from 'discord.js';
 
-const list = require('../../../resources/8ball.json') as string[];
+const ball8list = require('../../../resources/8ball.json') as string[];
 
 export default (client: Client) => {
 
@@ -20,7 +20,7 @@ export default (client: Client) => {
             return message.channel.send('You need to ask a question.');
 
         message.channel.send(
-            list[Math.floor(Math.random() * list.length)],
+            ball8list[Math.floor(Math.random() * ball8list.length)],
         );
     });
 };
