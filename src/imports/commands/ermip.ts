@@ -67,6 +67,8 @@ async function createErmip
         },
         ['❌']() {
 
+            clearTimeout(timerHandle);
+
             menu.edit({
                 embed: { 
                     ...embed,
