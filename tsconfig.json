@@ -9,6 +9,6 @@
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true
     },
-    "include": [ "./src/**/*" ],
+    "include": [ "./src/**/*", "./discord.d.ts" ],
     "exclude": [ "node_modules" ]
 }

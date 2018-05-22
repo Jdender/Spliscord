@@ -88,9 +88,9 @@ function getCommandName(client: Client, message: Message, prefix: string): [stri
     return null;
 }
 
-function checkPerms(client: Client, message: Message, required: number): number | null {
+function checkPerms(client: Client, message: Message, required: number, guildConf: GuildConfig | 'DM'): number | null {
 
-    const permLevel = client.auth.checkPerms(client, message);
+    const permLevel = client.auth.checkPerms(client, message, guildConf);
 
     if (permLevel < required)
         return message.channel.send(`You do not have permission to use this command. You have permission level ${permLevel} and need ${required}.`), null;
@@ -115,7 +115,7 @@ async function order(client: Client, message: Message): Promise<Order | null> {
 
     const command = client.registry.getCommand(commandName);
 
-    const permLevel = checkPerms(client, message, command.permissions);
+    const permLevel = checkPerms(client, message, command.permissions, guildConf);
 
     if (permLevel === null) return null;
 

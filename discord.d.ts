@@ -1,8 +1,8 @@
 import { Repository } from 'typeorm';
-import { Auth } from './classes/auth';
-import { Logger } from './classes/logger';
-import { Registry } from './classes/registry';
-import { BotConfig, GuildConfig, UserConfig } from './classes/settings';
+import { Auth } from './src/classes/auth';
+import { Logger } from './src/classes/logger';
+import { Registry } from './src/classes/registry';
+import { BotConfig, GuildConfig, UserConfig } from './src/classes/settings';
 
 declare module 'discord.js' {
 

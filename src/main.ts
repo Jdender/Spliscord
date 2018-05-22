@@ -17,7 +17,7 @@ client.config = config;
 client.auth = new Auth();
 client.logger = new Logger();
 client.registry = new Registry();
-
+ 
 // Register loggers
 client.on('debug', d => client.logger.debug(d));
 client.on('warn', w => client.logger.warn(w));
@@ -44,9 +44,7 @@ new Promise(resolve => client.once('ready', resolve))
         name: 'spliscord',
         database: './.data/store.sqlite',
         type: 'sqlite',
-        entities: [
-            UserConfig, GuildConfig,
-        ],
+        entities: [ UserConfig, GuildConfig ],
         synchronize: true,
     })
     .then(db => {
@@ -59,7 +57,7 @@ new Promise(resolve => client.once('ready', resolve))
 
         const items: string[] = []; // Need to say string[] so ts doesn't make it never[]
 
-        klaw('src/imports/') // Stream event emiter thing?
+        klaw('src/') // Stream event emiter thing?
         .on('data', item => !item.stats.isDirectory() && items.push(item.path)) // If not dir add to item array
         .on('end', () => resolve(items)) // When done return item array
         .on('error', reject); // Just pass the raw reject function
