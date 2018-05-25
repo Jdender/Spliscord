@@ -1,10 +1,8 @@
 import { Client, Message } from 'discord.js';
-import parseArgs = require('minimist');
-import { Observable } from 'rxjs/Observable';
-import { fromEvent } from 'rxjs/observable/fromEvent';
-import { filter, flatMap, groupBy, tap } from 'rxjs/operators';
 import { Order } from './registry';
 import { GuildConfig, UserConfig } from './settings';
+import { arrayEquals } from './util';
+import parseArgs = require('minimist');
 
 async function getConf(client: Client, message: Message): Promise<[UserConfig, GuildConfig | 'DM']> {
     // Get userConf or make userConf
@@ -81,7 +79,7 @@ function getCommandName(client: Client, message: Message, prefix: string): [stri
         path.push(split.shift()!);
 
         for (const name of client.registry.commandNamesSplit)
-            if (path.equals(name))
+            if (arrayEquals(path, name))
                 return [path.join('.'), split];
     }
 
@@ -136,18 +134,18 @@ async function order(client: Client, message: Message): Promise<Order | null> {
 // The the order stream
 export default (client: Client) =>
 
-    fromEvent<Message>(client, 'message')
-    .pipe(
-        filter(msg => !msg.author.bot), // Filter out bots
-        flatMap(msg => order(client, msg)), // Map to orders
-        filter((ord): ord is Order => ord !== null), // Filter out null orders
-    )
-    .subscribe(async ord => {
+    client.on('message', async msg => {
+
+        if (msg.author.bot) return;
+
+        const ord = await order(client, msg)
+
+        if (!ord) return;
 
         client.logger.cmd(
-        `${ord.message.author.username}(${ord.message.author.id}) ran ${ord.command.name} in ${ord.guildConf === 'DM' ? 'DMs' : `${ord.message.guild.name}(${ord.message.guild.id})`}`,
+            `${ord.message.author.tag}(${ord.message.author.id}) ran ${ord.command.name} in ${ord.guildConf === 'DM' ? 'DMs' : `${ord.message.guild.name}(${ord.message.guild.id})`}`,
         );
-
+    
         // Run command with order
         client.registry.emit(ord.command.name, ord);
     });
