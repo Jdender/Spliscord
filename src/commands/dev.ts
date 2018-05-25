@@ -1,12 +1,12 @@
 import { Client } from 'discord.js';
-import { clean } from '../utill';
+import { clean } from '../core/util';
 
 export default (client: Client) => {
 
     client.registry.addCommand({
         name: 'dev.eval',
         description: 'Run some JavaScript in the bot\'s context.',
-        aliases: ['eval'],
+        aliases: [],
         usage: '<...code>',
         cooldown: 0,
         permissions: 5,
@@ -19,7 +19,7 @@ export default (client: Client) => {
             ? message.content.slice(prefix.length).split(/\s+/g)
             : message.content.split(/\s+/g);
 
-            args.splice(0, 3);
+            args.splice(0, 2);
             const code = args.join(' ');
             const evaled = eval(code);
 
