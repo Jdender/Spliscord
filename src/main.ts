@@ -10,7 +10,7 @@ import { Auth } from './core/auth';
 import { Logger } from './core/logger';
 import { Registry } from './core/registry';
 import { GuildConfig, UserConfig } from './core/settings';
-import './utill';
+import './core/util';
 
 const client = new Client(config.client);
 client.config = config;

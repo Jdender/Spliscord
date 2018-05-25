@@ -1,5 +1,6 @@
 import { Client, Message, RichEmbedOptions } from 'discord.js';
 import { CommandMeta } from '../core/registry';
+import { forAwaitEach } from '../core/util';
 import snekfetch = require('snekfetch');
 
 // Embed Reaction Menu Image Pager
@@ -20,7 +21,7 @@ async function createErmip
 
     const menu = await message.channel.send({ embed }) as Message;
 
-    await reactions.forAwaitEach(async emoji => await menu.react(emoji));
+    await forAwaitEach(reactions, emoji => menu.react(emoji));
 
     const collector = menu.createReactionCollector(
         (reaction, user) => 

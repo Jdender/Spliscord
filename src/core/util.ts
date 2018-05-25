@@ -12,31 +12,25 @@ export const clean = async (text: any): Promise<string> => {
     .replace(process.env.TOKEN, 'mfa.VkOb2v3T--NO--lWetW8tjND--TOKEN--QFTm--FOR--zq9PH--YOU--tG');
 };
 
-declare global {
+type forAwaitEachCallback = (val: any, index: number, array: any[]) => Promise<any>;
 
-    interface Array<T> {
-        forAwaitEach(callback: (val: any, index: number, array: any[]) => Promise<any>): Promise<void>;
-        equals(array: any[]): boolean;
-    }
-}
-
-Array.prototype.forAwaitEach = async function (callback) {
-    for (let index = 0; index < this.length; index++) {
-      await callback(this[index], index, this)
+export async function forAwaitEach(array: any[], callback: forAwaitEachCallback) {
+    for (let index = 0; index < array.length; index++) {
+      await callback(array[index], index, array)
     }
 };
 
 // From https://stackoverflow.com/a/14853974
-Array.prototype.equals = function (array) {
+export function arrayEquals(that: any[], array: any[]) {
 
     if (!array)
         return false;
 
-    if (this.length !== array.length)
+    if (that.length !== array.length)
         return false;
 
-    for (let i = 0; i < this.length; i++)
-        if (this[i] !== array[i])
+    for (let i = 0; i < that.length; i++)
+        if (that[i] !== array[i])
             return false;
 
     return true;
