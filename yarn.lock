@@ -58,7 +58,7 @@ diff@^3.1.0:
   version "3.5.0"
   resolved "https://registry.yarnpkg.com/diff/-/diff-3.5.0.tgz#800c0dd1e0a8bfbc95835c202ad220fe317e5a12"
 
-discord.js@discordjs/discord.js:
+"discord.js@github:discordjs/discord.js#master":
   version "12.0.0-dev"
   resolved "https://codeload.github.com/discordjs/discord.js/tar.gz/faf27fabc055cb3850e823cf36c0af21c0139c35"
   dependencies:
@@ -96,6 +96,10 @@ homedir-polyfill@^1.0.1:
   resolved "https://registry.yarnpkg.com/homedir-polyfill/-/homedir-polyfill-1.0.1.tgz#4c2bbc8a758998feebf5ed68580f76d46768b4bc"
   dependencies:
     parse-passwd "^1.0.0"
+
+importful@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/importful/-/importful-1.0.0.tgz#722fe4149bcc22f65e04b6e13449594a0634cc8f"
 
 klasa@dirigeants/klasa:
   version "0.5.0-dev"

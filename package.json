@@ -2,7 +2,7 @@
   "name": "spliscord",
   "version": "0.2.0",
   "description": "Spliscord is a Discord bot made using the Discord.js wrapper for Discord's API. Spliscord is actively developed with new features being added and tested almost every week.",
-  "main": "src/main.ts",
+  "main": "src/root.ts",
   "engines": {
     "node": "10.x"
   },
@@ -20,7 +20,8 @@
   },
   "homepage": "https://github.com/jdenderplays/Spliscord#readme",
   "dependencies": {
-    "discord.js": "discordjs/discord.js",
+    "discord.js": "github:discordjs/discord.js#master",
+    "importful": "^1.0.0",
     "klasa": "dirigeants/klasa"
   },
   "optionalDependencies": {
