@@ -1,5 +1,5 @@
 import { KlasaClient, Store, Piece, PieceOptions } from 'klasa';
-import importful from 'importful';
+import importful from 'importful'; // TODO: Fix importful not publishing .d.ts
 import { join as joinPath } from 'path';
 
 // INFO: KlasaClient options at the bottom of this file
@@ -54,5 +54,5 @@ export class Client extends KlasaClient {
 export const client = new Client({
     clientOptions: {},
     prefix: '`',
-    readyMessage: (client: Client) => `${client.user.tag}, Runing in ${client.channels.size} channels on ${client.guilds.size} servers, for a total of ${client.users.size} users.`
+    readyMessage: (client: Client) => `${client.user.tag}, Runing in ${client.channels.size} channels on ${client.guilds.size} servers, for a total of ${client.users.size} users.`,
 });
