@@ -1,6 +1,6 @@
 import { Client } from '../structures/Client';
 import { Command, KlasaMessage } from 'klasa';
-const ball8: string[] = require('../../resources/8ball.json');
+import ball8 = require( '../../resources/8ball.json');
 
 
 const ranks = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
