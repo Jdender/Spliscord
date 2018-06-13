@@ -10,6 +10,20 @@ const statuses = {
     offline: '<:offline:313956277237710868> Offline'
 };
 
+const verificationLevels = [
+    'None',
+    'Low',
+    'Medium',
+    '(╯°□°）╯︵ ┻━┻',
+    '┻━┻ ﾐヽ(ಠ益ಠ)ノ彡┻━┻'
+];
+
+const filterLevels = [
+    'Off',
+    'No Role',
+    'Everyone'
+];
+
 const timestamp = new Timestamp('d MMMM YYYY');
 
 type Target = GuildMember | Guild;
@@ -20,7 +34,7 @@ export default (client: Client) => {
     @client.RegisterPiece({
         type: 'commands',
         name: 'fetch',
-        usage: '[targetMember:member|targetGuild:guild]'
+        usage: '[TargetMember:member|TargetGuild:guild]'
     })
     class Fetch extends Command {
         
@@ -28,13 +42,18 @@ export default (client: Client) => {
 
             let embed: MessageEmbed | null = null;
 
+            // Detect what type of target
             if (target instanceof GuildMember) embed = this.member(target);
             if (target instanceof Guild) embed = this.guild(target);
     
-            return embed ? message.sendEmbed(embed) : message.send('Target not found');
+            // See if a target was found
+            return embed ? 
+            message.sendEmbed(embed) : 
+            message.send('No fetchable target found.');
         }
 
-        member(target: GuildMember) {
+        // Fetch info for members
+        private member(target: GuildMember) {
             return new MessageEmbed()
             .setColor(target.displayHexColor || 0xFFFFFF)
             .setThumbnail(target.user.displayAvatarURL())
@@ -48,13 +67,19 @@ export default (client: Client) => {
             .addField('❯ Hoist Role', target.roles.hoist ? target.roles.hoist.name : 'None', true);
         }
 
-        guild(target: Guild) {
+        // Fetch info for guilds
+        private guild(target: Guild) {
             return new MessageEmbed()
-            .setColor(0xFFFFFF)
-            .setThumbnail(target.iconURL())
-            .addField('❯ Name', target.name, true)
-            .addField('❯ ID', target.id, true)
-            .addField('❯ Server Created Date', timestamp.display(target.createdTimestamp), true);
+			.setColor(0x00AE86)
+			.setThumbnail(target.iconURL())
+			.addField('❯ Name', target.name, true)
+			.addField('❯ ID', target.id, true)
+			.addField('❯ Creation Date', timestamp.display(target.createdAt), true)
+			.addField('❯ Region', target.region, true)
+			.addField('❯ Explicit Filter', filterLevels[target.explicitContentFilter], true)
+			.addField('❯ Verification Level', verificationLevels[target.verificationLevel], true)
+			.addField('❯ Owner', target.owner ? target.owner.user.tag : 'None', true)
+			.addField('❯ Members', target.memberCount, true);
         }
     }
 };
