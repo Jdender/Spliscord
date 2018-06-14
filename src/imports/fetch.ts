@@ -70,7 +70,7 @@ export default (client: Client) => {
         // Fetch info for guilds
         private guild(target: Guild) {
             return new MessageEmbed()
-			.setColor(0x00AE86)
+			.setColor(0xFFFFFF)
 			.setThumbnail(target.iconURL())
 			.addField('❯ Name', target.name, true)
 			.addField('❯ ID', target.id, true)

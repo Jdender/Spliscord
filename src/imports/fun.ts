@@ -24,6 +24,7 @@ export default (client: Client) => {
 
             const lines = [];
     
+            // Make rank-suit pairs for Amount arg
             for (let i = 0; i < amount; ++i)
                 lines.push(`**${random(ranks)}**${random(suits)}`);
     
@@ -40,6 +41,7 @@ export default (client: Client) => {
     class Ball8 extends Command {
 
         async run(message: KlasaMessage) {
+            // Send a random response
             return message.send(random(ball8));
         }
 
