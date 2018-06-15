@@ -1,8 +1,11 @@
 import applyOptions from '../util/applyOptions';
 import { Monitor, KlasaMessage } from 'klasa';
 
+// Requested by MBN(339586884772823043)<Guild>
+
 @applyOptions({
     name: 'mbn_verify',
+    ignoreOthers: false,
 })
 export default class extends Monitor {
 
