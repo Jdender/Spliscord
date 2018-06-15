@@ -7,13 +7,10 @@ yarn-error.log*
 # Dependency directories
 /node_modules
 
-# Databases
-/.data
+# Database
+provider/
 
-# Yarn Integrity file
-.yarn-integrity
-
-# dotenv environment variables file(s)
+# Environment variables files
 .env
 .env.*
 
@@ -24,10 +21,6 @@ build/
 # Temp folder for porting
 port/
 
-### VisualStudioCode ###
-
+# Editor config
 .vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
+
