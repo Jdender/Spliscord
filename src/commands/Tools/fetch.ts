@@ -31,9 +31,10 @@ type Target = GuildMember | Guild;
 
 @applyOptions({
     name: 'fetch',
-    usage: '[TargetMember:member|TargetGuild:guild]'
+    description: 'Fetch various types of "discord entitys" using a id or mention.',
+    usage: '[TargetMember:member|TargetGuild:guild]',
 })
-class Fetch extends Command {
+export default class Fetch extends Command {
     
     async run(message: KlasaMessage, [target]: [Target]) {
 

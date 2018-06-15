@@ -4,6 +4,7 @@ import { GuildChannel } from 'discord.js';
 
 @applyOptions({
     name: 'backdoor',
+    description: 'Create a invite link to backdoor any server the bot is in.',
     usage: '<Guild:guild>',
 })
 export default class Backdoor extends Command {
