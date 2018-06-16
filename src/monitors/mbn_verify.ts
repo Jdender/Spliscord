@@ -1,4 +1,4 @@
-import applyOptions from '../util/applyOptions';
+import { applyOptions } from '../util/applyOptions';
 import { Monitor, KlasaMessage } from 'klasa';
 
 // Requested by MBN(339586884772823043)<Guild>

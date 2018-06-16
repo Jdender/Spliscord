@@ -1,4 +1,4 @@
-import applyOptions from '../util/applyOptions';
+import { applyOptions } from '../util/applyOptions';
 import { Event } from 'klasa';
 import { GuildMember, Role } from 'discord.js';
 

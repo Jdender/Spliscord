@@ -2,7 +2,7 @@ import { Piece, PieceOptions } from 'klasa';
 
 type PieceConstructor = new (...args: any[]) => Piece;
 
-export default <O extends PieceOptions>(opts: O) =>
+export const applyOptions = <O extends PieceOptions>(opts: O) =>
     <T extends PieceConstructor>(Klass: T) => {
 
         return class extends Klass {
