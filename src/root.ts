@@ -15,4 +15,12 @@ const client = new KlasaClient(config)
 import reporter from './util/errorReporter';
 if (process.env.NODE_ENV === 'production') reporter(client);
 
+// Start bot
 client.login(process.env.TOKEN!);
+
+// Express server for glitch
+import express = require('express');
+if (process.env.PORT)
+    express()
+    .get('/', (_, res: any) => res.sendStatus(200))
+    .listen(process.env.PORT);
