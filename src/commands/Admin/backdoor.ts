@@ -6,8 +6,9 @@ import { GuildChannel } from 'discord.js';
     name: 'backdoor',
     description: 'Create a invite link to backdoor any server the bot is in.',
     usage: '<Guild:guild>',
+    permissionLevel: 9,
 })
-export default class Backdoor extends Command {
+export default class extends Command {
 
     async run(message: KlasaMessage, [guild]: [KlasaGuild]) {
 
