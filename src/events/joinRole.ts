@@ -26,6 +26,6 @@ export default class extends Event {
         if (!schema) return;
 
         if (!schema.has('joinrole'))
-            await schema.add('joinrole', { type: 'Role' });
+            await schema.add('joinrole', { type: 'role' });
     }
 }

@@ -7,7 +7,7 @@ import ball8 = require( '../../../resources/8ball.json');
     description: 'Asks the magic 8ball a question.',
     usage: '<Question:string>',
 })
-export default class Ball8 extends Command{
+export default class extends Command{
 
     async run(message: KlasaMessage) {
         // Send a random response
