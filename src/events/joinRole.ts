@@ -12,7 +12,9 @@ export default class extends Event {
 
         if (!member.guild.me.hasPermission('MANAGE_ROLES')) return;
         
-        const role = this.client.gateways.guilds.get(member.guild.id).get('joinrole') as Role;
+        const id = this.client.gateways.guilds.get(member.guild.id).get('joinrole');
+
+        const role = member.guild.roles.get(id);
         
         if (!role || !role.editable) return;
 
