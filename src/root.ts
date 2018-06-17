@@ -9,5 +9,10 @@ import { KlasaClient } from 'klasa';
 import { config } from './config';
 
 // Change klasa client options here
-new KlasaClient(config)
-.login(process.env.TOKEN!);
+const client = new KlasaClient(config)
+
+// Use webhook error reporter if in prod
+import reporter from './util/errorReporter';
+if (process.env.NODE_ENV === 'production') reporter(client);
+
+client.login(process.env.TOKEN!);
