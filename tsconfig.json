@@ -1,7 +1,7 @@
 {
     "compilerOptions": {
         "locale": "en",
-        "target": "es6",
+        "target": "es2018",
         "lib": [ "es7" ],
         "module": "commonjs",
         "moduleResolution": "node",
