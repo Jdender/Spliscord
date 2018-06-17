@@ -1,5 +1,8 @@
 import { KlasaClient, PermissionLevels, KlasaClientOptions } from 'klasa';
 
+// Bool to change config if in prod or not
+const prod = process.env.NODE_ENV === 'production';
+
 // Declare bot operators using ids and comments
 const operators = [
     '250432205145243649' // Jdender~
@@ -7,8 +10,8 @@ const operators = [
 
 // Change bot config here
 export const config: KlasaClientOptions = {
-    prefix: '`',
-    readyMessage: (client: KlasaClient) => `${client.user.tag}, Runing in ${client.channels.size} channels on ${client.guilds.size} servers, for a total of ${client.users.size} users.`,
+    prefix: prod ? ',' : '`', // Use "," in prod, "`" in dev
+    readyMessage: client => `${client.user.tag}, Runing in ${client.channels.size} channels on ${client.guilds.size} servers, for a total of ${client.users.size} users.`,
 };
 
 // Permissions levels
