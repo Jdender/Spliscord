@@ -6,10 +6,8 @@ process
 
 import './util/patchStore';
 import { KlasaClient } from 'klasa';
+import { config } from './config';
 
 // Change klasa client options here
-new KlasaClient({
-    prefix: '`',
-    readyMessage: (client: KlasaClient) => `${client.user.tag}, Runing in ${client.channels.size} channels on ${client.guilds.size} servers, for a total of ${client.users.size} users.`,
-})
+new KlasaClient(config)
 .login(process.env.TOKEN!);
