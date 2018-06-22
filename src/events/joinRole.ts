@@ -12,7 +12,7 @@ export default class extends Event {
 
         if (!member.guild.me.hasPermission('MANAGE_ROLES')) return;
         
-        const id = this.client.gateways.guilds.get(member.guild.id).get('joinrole');
+        const id = this.client.gateways.guilds.get(member.guild.id).get('joinRole');
 
         const role = member.guild.roles.get(id);
         
@@ -27,7 +27,7 @@ export default class extends Event {
 
         if (!schema) return;
 
-        if (!schema.has('joinrole'))
-            await schema.add('joinrole', { type: 'role' });
+        if (!schema.has('joinRole'))
+            await schema.add('joinRole', { type: 'role' });
     }
 }
