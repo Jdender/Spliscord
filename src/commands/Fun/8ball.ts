@@ -14,6 +14,7 @@ export default class extends Command{
         return message.send(this.response);
     }
 
+    // Return a random response
     get response() {
         return ball8[Math.floor(Math.random() * ball8.length)];
     }

@@ -22,6 +22,7 @@ export default class extends Command {
         return message.send(lines.join(', '));
     }
 
+    // Return a random element from a array
     random<T>(arr: T[]): T {
         
         return arr[Math.floor(Math.random() * arr.length)];

@@ -12,8 +12,10 @@ export default class extends Command {
 
     async run(message: KlasaMessage, [guild]: [KlasaGuild]) {
 
+        // Create a invite from the resolved channel
+        // If it errors the catch block returns null
         const { code } = 
-        await this.genInvite(this.resolveChannel(guild))
+        await this.createInvite(this.resolveChannel(guild))
         .catch(() => ({ code: null }));
 
         if (!code) return message.send('Unable to create invite link.');
@@ -21,7 +23,8 @@ export default class extends Command {
         return message.send(`Created backdoor invite: https://discord.gg/${code}`);
     }
 
-    private genInvite(channel: GuildChannel) {
+    // Create a invite
+    private createInvite(channel: GuildChannel) {
 
         return channel.createInvite({
             temporary: false,
@@ -30,6 +33,7 @@ export default class extends Command {
         });
     }
 
+    // Find a channel that the bot can make a invite in
     private resolveChannel(guild: KlasaGuild) {
 
         return guild.channels.find(
