@@ -8,18 +8,19 @@ const suits = ['♠️', '♦', '♥️', '♠️'];
     name: 'card',
     description: 'Draws random cards from a deck.',
     usage: '<Amount:int{1,10}>',
+    aliases: ['cards', 'randomcard', 'randomcards'],
 })
 export default class extends Command {
 
-    async run(message: KlasaMessage, [amount]: [number]) {
-
-        const lines = [];
+    async run(message: KlasaMessage, [length]: [number]) {
 
         // Make rank-suit pairs for Amount arg
-        for (let i = 0; i < amount; ++i)
-            lines.push(`**${this.random(ranks)}**${this.random(suits)}`);
-
-        return message.send(lines.join(', '));
+        return message.send(
+            Array
+            .from({ length })
+            .map(() => `**${this.random(ranks)}**${this.random(suits)}`)
+            .join(', ')
+        );
     }
 
     // Return a random element from a array

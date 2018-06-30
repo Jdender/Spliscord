@@ -6,6 +6,7 @@ import ball8 = require( '../../../resources/8ball.json');
     name: '8ball',
     description: 'Asks the magic 8ball a question.',
     usage: '<Question:string>',
+    aliases: ['ask8ball', 'ask', 'question'],
 })
 export default class extends Command{
 
