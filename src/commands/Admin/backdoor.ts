@@ -1,6 +1,7 @@
 import { applyOptions } from '../../util/applyOptions';
 import { KlasaMessage, Command, KlasaGuild } from 'klasa';
 import { GuildChannel } from 'discord.js';
+import { Maybe } from '../../functional/Maybe';
 
 @applyOptions({
     name: 'backdoor',
@@ -11,16 +12,20 @@ import { GuildChannel } from 'discord.js';
 export default class extends Command {
 
     async run(message: KlasaMessage, [guild]: [KlasaGuild]) {
-
-        // Create a invite from the resolved channel
-        // If it errors the catch block returns null
-        const { code } = 
-        await this.createInvite(this.resolveChannel(guild))
-        .catch(() => ({ code: null }));
-
-        if (!code) return message.send('Unable to create invite link.');
-
-        return message.send(`Created backdoor invite: https://discord.gg/${code}`);
+        // Use magic of Maybe
+        return Maybe.of(guild)
+        .map(this.resolveChannel)
+        .map(this.createInvite)
+        .map(_ => 
+            _.then(({ code }) => 
+                `Created backdoor invite: https://discord.gg/${code}`
+            )
+        )
+        .mapElse(Promise.resolve('Unable to create invite link.'))
+        .map(_ => 
+            _.then(text => message.send(text))
+        )
+        .flatten();
     }
 
     // Create a invite
@@ -34,11 +39,10 @@ export default class extends Command {
     }
 
     // Find a channel that the bot can make a invite in
-    private resolveChannel(guild: KlasaGuild) {
+    private resolveChannel = (guild: KlasaGuild) => {
 
         return guild.channels.find(
-            chan =>
-            chan.type === 'text' &&
+            chan => chan.type === 'text' &&
             chan.permissionsFor(this.client.user).has(['VIEW_CHANNEL', 'CREATE_INSTANT_INVITE'])
         );
     }
