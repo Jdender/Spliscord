@@ -8,7 +8,7 @@
   },
   "scripts": {
     "test": "ts-node -r dotenv/config .",
-    "start": "tsc; node dist/src/root.js"
+    "start": "ts-node ."
   },
   "repository": "https://github.com/jdenderplays/Spliscord.git",
   "contributors": [
@@ -25,6 +25,7 @@
     "express": "^4.16.3",
     "klasa": "dirigeants/klasa",
     "tinycolor2": "^1.4.1",
+    "ts-node": "^4.1.0",
     "typescript": "^2.9.0"
   },
   "optionalDependencies": {
@@ -35,7 +36,6 @@
   "devDependencies": {
     "@types/node": "^9.4.6",
     "@types/tinycolor2": "^1.4.0",
-    "dotenv": "^5.0.1",
-    "ts-node": "^4.1.0"
+    "dotenv": "^5.0.1"
   }
 }
