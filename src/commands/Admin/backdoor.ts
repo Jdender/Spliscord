@@ -17,15 +17,13 @@ export default class extends Command {
         .map(this.resolveChannel)
         .map(this.createInvite)
         .map(_ => 
-            _.then(({ code }) => 
-                `Created backdoor invite: https://discord.gg/${code}`
-            )
+            _.then(({ code }) => `Created backdoor invite: https://discord.gg/${code}`)
         )
         .orElse(Promise.resolve('Unable to create invite link.'))
         .map(_ => 
             _.then(text => message.send(text))
         )
-        .flatten();
+        .flatten() || null;
     }
 
     // Create a invite

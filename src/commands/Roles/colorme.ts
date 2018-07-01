@@ -18,7 +18,9 @@ export default class extends Command {
         const roles = await this.getRoles(message, color);
 
         // Set the members roles to the array made earlyer
-        message.member.roles.set(roles, 'Set color roles');
+        await message.member.roles.set(roles, 'Set color roles');
+
+        await Promise.all(this.removeExtra(message));
 
         return message.send(`Swoosh! You're now painted \`${color}\`.`);
     }
@@ -56,6 +58,14 @@ export default class extends Command {
             },
             reason: 'Create color role',
         });
+    }
+
+    // Remove any unused color roles in guild
+    removeExtra(message: KlasaMessage) {
+        return message.guild.roles // Guild roles
+        .filter(role => role.name.startsWith('§#')) // Filter for color roles
+        .filter(role => role.members.size === 0) // Filter for empty roles
+        .map(role => role.delete('Unused color role')); // Delete roles
     }
 
     async init() {
