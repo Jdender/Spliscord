@@ -13,7 +13,7 @@ export default class extends Command {
 
     async run(message: KlasaMessage, [guild]: [KlasaGuild]) {
         // Use magic of Maybe
-        return Maybe.of(guild)
+        return Maybe(guild)
         .map(this.resolveChannel)
         .map(this.createInvite)
         .map(_ => 
@@ -21,7 +21,7 @@ export default class extends Command {
                 `Created backdoor invite: https://discord.gg/${code}`
             )
         )
-        .mapElse(Promise.resolve('Unable to create invite link.'))
+        .orElse(Promise.resolve('Unable to create invite link.'))
         .map(_ => 
             _.then(text => message.send(text))
         )

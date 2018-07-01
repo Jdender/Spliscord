@@ -2,35 +2,25 @@ interface Maybe<T> {
     flatten(): T;
     isNothing(): boolean;
     map<R>(f: (val: T) => R): Maybe<R>;
-    mapElse<R>(orElse: R): Maybe<T> | Maybe<R>;
+    orElse<R>(orElse: R): Maybe<T> | Maybe<R>;
 }
 
 const isNullOrUndefined = (value: any) => (value === null || value === undefined);
 
-export const Maybe = {
+export const Maybe = 
+<T>(value: T, isNothing = isNullOrUndefined): Maybe<T> => ({
 
-    of: <T>(val: T) => Maybe.create(val),
+    flatten: () => value,
 
-    create: <T>(value: T, isNothing = isNullOrUndefined): Maybe<T> => ({
-
-            flatten() {
-                return value;
-            },
+    isNothing: () => isNothing(value),
         
-            isNothing() {
-                return isNothing(value);
-            },
-        
-            map<R>(f: (val: T) => R): Maybe<R> {
-                return this.isNothing()
-                ? Maybe.of(null) as any
-                : Maybe.of(f(value));
-            },
-        
-            mapElse<R>(orElse: R) {
-                return this.isNothing()
-                ? Maybe.of(orElse)
-                : this;
-            },
-    }),
-};
+    map: <R>(f: (val: T) => R): Maybe<R> => 
+        isNothing(value)
+        ? Maybe(null) as any
+        : Maybe(f(value)),
+    
+    orElse: <R>(orElse: R) => 
+        isNothing(value)
+        ? Maybe(orElse)
+        : Maybe(value),
+});
