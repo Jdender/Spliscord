@@ -11,12 +11,12 @@ export default (client: KlasaClient) => {
 
     // Handle uncaught errors using process
     process
-    .on('unhandledRejection', e => reporter.send(`UNHANDLED REJECTION: ${e.stack || e}`)) 
-    .on('uncaughtException', e => reporter.send(`UNCAUGHT EXCEPTION: ${e.stack || e}`));
+    .on('unhandledRejection', e => reporter.send(`UNHANDLED REJECTION: ${e.stack || e.message || e}`)) 
+    .on('uncaughtException', e => reporter.send(`UNCAUGHT EXCEPTION: ${e.stack || e.message || e}`));
 
     // Handle klasa errors using client
     client
-    .on('warn', (e: any) => reporter.send(`KLASA WARNING: ${e.stack || e}`))
-    .on('error', (e: any) => reporter.send(`KLASA ERROR: ${e.stack || e}`))
-    .on('wtf', (e: any) => reporter.send(`KLASA WTF ERROR: ${e.stack || e}`))
+    .on('warn', (e: any) => reporter.send(`KLASA WARNING: ${e.stack || e.message || e}`))
+    .on('error', (e: any) => reporter.send(`KLASA ERROR: ${e.stack || e.message || e}`))
+    .on('wtf', (e: any) => reporter.send(`KLASA WTF ERROR: ${e.stack || e.message || e}`))
 }

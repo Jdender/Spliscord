@@ -14,12 +14,12 @@ export const Maybe =
 
     isNothing: () => isNothing(value),
         
-    map: <R>(f: (val: T) => R): Maybe<R> => 
+    map: f => 
         isNothing(value)
         ? Maybe(null) as any
         : Maybe(f(value)),
     
-    orElse: <R>(orElse: R) => 
+    orElse: orElse => 
         isNothing(value)
         ? Maybe(orElse)
         : Maybe(value),
