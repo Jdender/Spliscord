@@ -54,23 +54,23 @@ export default class extends Command {
     }
 
     // Get public role ids from config and map them to roles
-    private getPublicRoles(message: KlasaMessage): Role[] {
+    private getPublicRoles = (message: KlasaMessage): Role[] =>
 
-        return message.guildConfigs
+        message.guildConfigs
         .get('publicRoles')
         .map((id: string) => message.guild.roles.get(id));
-    }
+    
 
     // Find a role that matched the provided name
-    private findPublicRole(message: KlasaMessage, name: string) {
+    private findPublicRole = (message: KlasaMessage, name: string) => 
 
-        return this
+        this
         .getPublicRoles(message)
         .find(role => role.name === name);
-    }
+    
 
     // Custom 'publicrole' arg type
-    private async publicRoleResolver(arg: string, _: any, message: KlasaMessage, [action]: string[]) {
+    private publicRoleResolver = async (arg: string, _: any, message: KlasaMessage, [action]: string[]) => {
 
         // If we are listing we don't need the role name
         if (action === 'list') return '';
@@ -89,7 +89,7 @@ export default class extends Command {
     async init() {
 
         // Register arg type
-        this.createCustomResolver('publicrole', this.publicRoleResolver.bind(this));
+        this.createCustomResolver('publicrole', this.publicRoleResolver);
 
         const { schema } = this.client.gateways.guilds;
 

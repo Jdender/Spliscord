@@ -34,7 +34,7 @@ export default class extends Command {
         // The .then above this returns a member
         // And removeExtra takes a member
         // So we can just pass it to .then
-        .then(this.removeExtra)
+        .then(this.removeExtra(color))
 
         // Last but not least
         // Send a message confirming the color
@@ -46,37 +46,37 @@ export default class extends Command {
     }
 
     // Get the roles of the member with the color role included
-    async getNewRoles(message: KlasaMessage, color: string) {
+    private getNewRoles = async (message: KlasaMessage, color: string) =>
 
         // See if there is a color role with the same color
         // If existing make an array with it and all the non color roles
         // If not create one and do the same
-        return [
+        [
             ...this.getMemberNonColorRoles(message),
             // Find *or* create one
             this.findExistingColorRole(message, color) || await this.createColorRole(message, color),
         ];
-    }
+    
 
     // Try to find a color role with the same color
-    findExistingColorRole(message: KlasaMessage, color: string) {
+    private findExistingColorRole = (message: KlasaMessage, color: string) => 
 
-        return message.guild.roles
+        message.guild.roles
         .find(role => role.name === `§${color}`); // Find using color role name format
-    }
+    
 
     // The roles the member allredy has, filtering out any existing color roles
-    getMemberNonColorRoles(message: KlasaMessage) {
+    private getMemberNonColorRoles = (message: KlasaMessage) => 
 
-        return message.member.roles
+        message.member.roles
         .filter(role => !role.name.startsWith('§#')) // Use name to determine color role or not
         .array(); // We want to return a array not a collection
-    }
+    
 
     // Creates a role with color and name
-    createColorRole(message: KlasaMessage, color: string) {
+    private createColorRole = (message: KlasaMessage, color: string) =>
 
-        return message.guild.roles.create({
+        message.guild.roles.create({
             data: {
                 name: `§${color}`, // Use color role name format
                 color,
@@ -85,16 +85,18 @@ export default class extends Command {
             },
             reason: 'Create color role',
         });
-    }
 
+
+    // This function is curryed using arrows
     // Remove any unused color roles in guild
-    removeExtra(member: GuildMember) {
+    private removeExtra = (color: string) => (member: GuildMember) =>
 
-        return member.guild.roles // Guild roles
+        member.guild.roles // Guild roles
+        .filter(role => role.name !== `§${color}`) // Filter out just created
         .filter(role => role.name.startsWith('§#')) // Filter for color roles
         .filter(role => role.members.size === 0) // Filter for empty roles
         .map(role => role.delete('Unused color role')); // Delete roles
-    }
+    
 
     async init() {
 
