@@ -10,80 +10,82 @@ import { Role } from 'discord.js';
     requiredPermissions: ['MANAGE_ROLES'],
     subcommands: true,
 } as CommandOptions)
+
+/*
+This also has a quirky way to store things.
+
+SettingsGateway can't store real key-value pairs
+so each guild config has two arrays, 'publicRoleIds' and 'publicRoleNames'.
+The way the names and role ids are bound together is array index
+e.g. names[2] is the name for the role ids[2].
+
+You can't edit thease arrays using the normal conf command;
+you have to use the roleme conf to keep it in sync.
+*/
+
 export default class extends Command {
 
     // Add a member to a public role
-    async add(message: KlasaMessage, [role]: [Role]) {
+    add = (message: KlasaMessage, [role]: [Role]) => 
 
         // Add role to member, send a message if we can't
-        const result = await message.member.roles.add(role)
+        message.member.roles.add(role)
+        .then(() => message.send(`Added you to: ${role.name}`))
         .catch(() => message.send('I don\'t have permisson to do that.'));
-
-        // If the catch block ran return
-        if (result instanceof KlasaMessage) return;
-
-        // Send scusses message
-        return message.send(`Added you to: ${role.name}`);
-    }
+    
 
     // Same as add but taking
-    async take(message: KlasaMessage, [role]: [Role]) {
+    take = (message: KlasaMessage, [role]: [Role]) =>
 
-        const result = await message.member.roles.remove(role)
+        message.member.roles.remove(role)
+        .then(() => message.send(`Removed you from: ${role.name}`))
         .catch(() => message.send('I don\'t have permisson to do that.'));
-
-        if (result instanceof KlasaMessage) return;
-
-        return message.send(`Removed you from: ${role.name}`);
-    }
+    
 
     // List all public roles in the guild
-    async list(message: KlasaMessage) {
+    list = (message: KlasaMessage) => {
 
         // Get the names of all the guild's public roles
-        const publicRoles = this
-        .getPublicRoles(message)
-        .map(role => role.name);
+        const roleNames = message.guildConfigs.get('publicRoleNames') as string[];
 
-        // If the guild has none
-        if (!publicRoles[0])
-            return message.send('This guild has no public roles to list.');
-            
-        // Send list
-        return message.send(publicRoles.join(', '));
+        return message.send(
+
+            // Cast to boolean, if length is zero it will be false
+            !!roleNames.length
+            ? roleNames.join(', ') // Send list
+            : 'This guild has no public roles to list.' // If the guild has none     
+        );
     }
-
-    // Get public role ids from config and map them to roles
-    private getPublicRoles = (message: KlasaMessage): Role[] =>
-
-        message.guildConfigs
-        .get('publicRoles')
-        .map((id: string) => message.guild.roles.get(id));
-    
-
-    // Find a role that matched the provided name
-    private findPublicRole = (message: KlasaMessage, name: string) => 
-
-        this
-        .getPublicRoles(message)
-        .find(role => role.name === name);
-    
 
     // Custom 'publicrole' arg type
     private publicRoleResolver = async (arg: string, _: any, message: KlasaMessage, [action]: string[]) => {
 
         // If we are listing we don't need the role name
-        if (action === 'list') return '';
+        if (action === 'list') return 0;
 
-        if (!arg)
-            throw 'You need to provide a role.';
+        if (!arg) throw 'You need to provide a role.';
 
-        const publicRole = this.findPublicRole(message, arg);
+        const roleNames = message.guildConfigs.get('publicRoleNames') as string[];
 
-        if (!publicRole)
-            throw 'That public role was not found.'
+        const roleIndex = roleNames.indexOf(arg);
 
-        return publicRole;
+        if (roleIndex  === -1)
+            throw 'That public role was not found.';
+
+        const roleIds = message.guildConfigs.get('publicRoleIds') as string[];
+
+        const role = message.guild.roles.get(roleIds[roleIndex]);
+
+        if (!role || roleNames.length !== roleIds.length) {
+
+            this.client.emit('error', new Error('Roleme desync'));
+
+            throw 'Somehow this guild\'s public role storage has gotten out of sync.' +
+                'This is not supposed to normaly happen, as we have guards against it.' +
+                'A error has been sent to my server, please wait while the devs look into this.';
+        }
+
+        return role;
     }
 
     async init() {
@@ -96,8 +98,11 @@ export default class extends Command {
         if (!schema) return;
 
         // Add publicRoles key if not existing
-        if (!schema.has('publicRoles'))
-            await schema.add('publicRoles', { type: 'role', array: true });
+        if (!schema.has('publicRoleIds'))
+            await schema.add('publicRoleIds', { type: 'role', array: true, configurable: false });
+
+        if (!schema.has('publicRoleNames'))
+            await schema.add('publicRoleNames', { type: 'string', array: true, configurable: false });
     }
 
 }
