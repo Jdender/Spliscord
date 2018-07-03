@@ -1,5 +1,7 @@
 # Spliscord
-Spliscord is a Discord bot made using the Discord.js wrapper for Discord's API. Spliscord is actively developed with new features being added and tested almost every week.
+Spliscord is a Discord bot made using TypeScript and the Discord.js wrapper for Discord's API. They are actively developed with new features being added and tested almost every week.
+
+Spliscord has various commands and systems, ranging from self-roles, being able to color your self, and even a reimplementation of @someone. All configure able with both guild and user config. You can always suggest an idea, we even can work on server specific systems.
 
 ## Authors
 
@@ -9,7 +11,7 @@ Also, check the list of [contributors](https://github.com/jdenderplays/Spliscord
 
 ## License
 
-This project is licensed under the AGPL 3.0 License - see the [license](LICENSE) file for details.
+This project is licensed under the AGPL 3.0 License - see the [license](https://github.com/jdenderplays/Spliscord/blob/master/LICENSE) file for details.
 
 ## Acknowledgments
 
