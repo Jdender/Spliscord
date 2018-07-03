@@ -9,6 +9,8 @@ export default class extends Monitor {
 
     async run(message: KlasaMessage) {
 
+        if (!message.guild) return;
+
         if (!message.guildConfigs.get('allowSomeone')) return;
 
         if (!/@someone/.test(message.content)) return;
