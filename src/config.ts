@@ -5,7 +5,8 @@ const prod = process.env.NODE_ENV === 'production';
 
 // Declare bot operators using ids and comments
 const operators = [
-    '250432205145243649' // Jdender~
+    '250432205145243649', // Jdender~
+    '271434593939226624', // House
 ];
 
 // Change bot config here
