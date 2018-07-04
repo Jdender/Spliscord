@@ -25,7 +25,9 @@ export default class extends Event {
         .set('Authorization', process.env.API_BOTSFORDISCORD)
         .send({
             server_count: this.client.guilds.size,
-        });
+        })
+        // Throw error in next tick becuase of event loop
+        .catch(err => process.nextTick(() => { throw err; }));
 
     async init() {
 
