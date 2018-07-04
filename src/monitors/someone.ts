@@ -13,7 +13,7 @@ export default class extends Monitor {
 
         if (!message.guildConfigs.get('allowSomeone')) return;
 
-        if (!/@someone/.test(message.content)) return;
+        if (!/@someone/i.test(message.content)) return;
 
         message.send(this.getMention(message));
     }
