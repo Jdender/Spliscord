@@ -58,6 +58,12 @@
     "@types/express-serve-static-core" "*"
     "@types/mime" "*"
 
+"@types/snekfetch@^4.0.1":
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/@types/snekfetch/-/snekfetch-4.0.1.tgz#497035dfec05cf8b1db50872a5da2177fc877bee"
+  dependencies:
+    "@types/node" "*"
+
 "@types/strip-bom@^3.0.0":
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@types/strip-bom/-/strip-bom-3.0.0.tgz#14a8ec3956c2e81edb7520790aecf21c290aebd2"
@@ -318,9 +324,9 @@ ipaddr.js@1.6.0:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/ipaddr.js/-/ipaddr.js-1.6.0.tgz#e3fa357b773da619f26e95f049d055c72796f86b"
 
-klasa@dirigeants/klasa:
+"klasa@github:dirigeants/klasa#master":
   version "0.5.0-dev"
-  resolved "https://codeload.github.com/dirigeants/klasa/tar.gz/647dff23355e384fe44bc005283ced28ff981c6b"
+  resolved "https://codeload.github.com/dirigeants/klasa/tar.gz/e3fc0d6ed87625393a42584fc375e2b6f127d0b9"
   dependencies:
     fs-nextra "^0.3.2"
 
