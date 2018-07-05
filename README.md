@@ -1,6 +1,8 @@
 # Spliscord
 Spliscord is a Discord bot made using TypeScript and the Klasa framework for Discord.js. They are being actively developed with new features added and tested almost every week.
 
+[![Discord](https://discordapp.com/api/guilds/411973008236740619/embed.png)](https://discord.gg/jqrUHPe)
+
 Spliscord has various commands and systems, ranging from self-roles, being able to color your self, and even a reimplementation of @someone. All configure able with both guild and user config. You can always suggest an idea, we even can work on server specific systems.
 
 ## Authors
