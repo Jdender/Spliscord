@@ -1,5 +1,5 @@
 import { applyOptions } from '../../util/applyOptions';
-import { Command, KlasaMessage, Timestamp } from 'klasa';
+import { Command, KlasaMessage} from 'klasa';
 
 import cheerio = require('cheerio');
 import snekfetch = require('snekfetch');
@@ -8,15 +8,16 @@ import querystring = require('querystring');
 @applyOptions({
     name: 'google',
     description: 'Get the fisrt url that shows up from searching a query.',
-    usage: '<Search:string>',
+    usage: '<Search:string> [...]',
     aliases: ['search'],
-    quotedStringSupport: true,
 })
 export default class extends Command {
 
-    async run(message: KlasaMessage, [query]: [string]) {
+    async run(message: KlasaMessage, [...search]: string[]) {
+
+        const query = encodeURIComponent(search.join('\s'));
         
-        const searchUrl = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
+        const searchUrl = `https://www.google.com/search?q=${query}`;
 
         return snekfetch
             .get(searchUrl)
