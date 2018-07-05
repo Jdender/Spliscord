@@ -1,3 +1,8 @@
+/*
+This is the ofical klasas help command
+Any changes I made are marked with a comment
+*/
+
 const { Command, util } = require('klasa');
 
 module.exports = class extends Command {
