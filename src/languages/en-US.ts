@@ -43,7 +43,7 @@ export default class extends Language {
 			RESOLVER_MINMAX_MAX: (name, max, suffix) => `${name} must be less than ${max}${suffix}.`,
 			REACTIONHANDLER_PROMPT: 'Which page would you like to jump to?',
 			COMMANDMESSAGE_MISSING: 'Missing one or more required arguments after end of input.',
-			COMMANDMESSAGE_MISSING_REQUIRED: (name) => `${name} is a required argument.`,
+			COMMANDMESSAGE_MISSING_REQUIRED: (name) => `You need to pass a ${name} argument for this command.`,
 			COMMANDMESSAGE_MISSING_OPTIONALS: (possibles) => `Missing a required option: (${possibles})`,
 			COMMANDMESSAGE_NOMATCH: (possibles) => `Your option didn't match any of the possibilities: (${possibles})`,
 			MONITOR_COMMAND_HANDLER_REPROMPT: (tag, error, time) => `${tag} | **${error}** | You have **${time}** seconds to respond to this prompt with a valid argument. Type **"ABORT"** to abort this prompt.`, // eslint-disable-line max-len
@@ -51,7 +51,7 @@ export default class extends Language {
 			MONITOR_COMMAND_HANDLER_ABORTED: 'Aborted',
 			INHIBITOR_COOLDOWN: (remaining) => `You have just used this command. You can use this command again in ${remaining} second${remaining === 1 ? '' : 's'}.`,
 			INHIBITOR_DISABLED: 'This command is currently disabled',
-			INHIBITOR_MISSING_BOT_PERMS: (missing) => `Insufficient permissions, missing: **${missing}**`,
+			INHIBITOR_MISSING_BOT_PERMS: (missing) => `I have insufficient permissions in this server to do that, missing: **${missing}**`,
 			INHIBITOR_NSFW: 'You may not use NSFW commands in this channel.',
 			INHIBITOR_PERMISSIONS: 'You do not have permission to use this command',
 			INHIBITOR_REQUIRED_CONFIGS: (configs) => `The guild is missing the **${configs.join(', ')}** guild setting${configs.length !== 1 ? 's' : ''} and thus the command cannot run.`,
