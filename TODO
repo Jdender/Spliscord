@@ -1,0 +1,7 @@
+* Use clientConfig from SettingsGateway insted of arrays in config.ts
+
+* Add a normal way to add public roles
+
+* Make a limit of one reminder per user
+
+* Make embed help
