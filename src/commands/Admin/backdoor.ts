@@ -7,7 +7,7 @@ import { Maybe } from '../../functional/Maybe';
     name: 'backdoor',
     description: 'Create a invite link to backdoor any server the bot is in.',
     usage: '<Guild:guild>',
-    permissionLevel: 9,
+    permissionLevel: 8,
 })
 export default class extends Command {
 

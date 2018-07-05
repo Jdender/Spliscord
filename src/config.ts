@@ -1,4 +1,4 @@
-import { KlasaClient, PermissionLevels, KlasaClientOptions } from 'klasa';
+import { PermissionLevels, KlasaClientOptions } from 'klasa';
 
 // Bool to change config if in prod or not
 const prod = process.env.NODE_ENV === 'production';
@@ -7,6 +7,10 @@ const prod = process.env.NODE_ENV === 'production';
 const operators = [
     '250432205145243649', // Jdender~
     '271434593939226624', // House
+];
+
+const support = [
+    '305066695737868288', // NekoCookie
 ];
 
 // Change bot config here
@@ -23,6 +27,9 @@ config.permissionLevels = new PermissionLevels()
 
 // Guild owner
 .add(7, (_, message) => message.guild && message.member === message.guild.owner, { fetch: true })
+
+// Support
+.add(8, (_, message) => support.includes(message.author.id))
 
 // Bot operators
 .add(9, (_, message) => operators.includes(message.author.id), { break: true })
