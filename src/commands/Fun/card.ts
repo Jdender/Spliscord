@@ -2,7 +2,7 @@ import { applyOptions } from '../../util/applyOptions';
 import { Command, KlasaMessage } from 'klasa';
 
 const ranks = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
-const suits = ['♠️', '♦', '♥️', '♠️'];
+const suits = ['♠️', '♦', '♥️', '♣'];
 
 @applyOptions({
     name: 'card',
