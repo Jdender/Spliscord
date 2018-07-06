@@ -1,4 +1,4 @@
-import { applyOptions } from '../../util/applyOptions';
+import { applyOptions } from '../../../util/applyOptions';
 import { Command, KlasaMessage } from 'klasa';
 import { MessageAttachment } from 'discord.js';
 

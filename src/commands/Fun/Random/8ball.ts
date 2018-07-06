@@ -1,6 +1,6 @@
-import { applyOptions } from '../../util/applyOptions';
+import { applyOptions } from '../../../util/applyOptions';
 import { Command, KlasaMessage } from 'klasa';
-import ball8 = require( '../../../resources/8ball.json');
+import ball8 = require( '../../../../resources/8ball.json');
 
 @applyOptions({
     name: '8ball',
