@@ -1,8 +1,8 @@
 import { applyOptions } from '../../util/applyOptions';
 import { Command, KlasaMessage} from 'klasa';
 
+import fetch from 'node-fetch';
 import cheerio = require('cheerio');
-import snekfetch = require('snekfetch');
 import querystring = require('querystring');
 
 @applyOptions({
@@ -19,9 +19,8 @@ export default class extends Command {
         
         const searchUrl = `https://www.google.com/search?q=${query}`;
 
-        return snekfetch
-            .get(searchUrl)
-            .then(res => res.body as string)
+        return fetch(searchUrl)
+            .then(res => res.text())
             .then(this.cherrioGoogle)
             .then(this.parseQuery)
             .then(result => message.send(`I found a result:\n${result}`))
