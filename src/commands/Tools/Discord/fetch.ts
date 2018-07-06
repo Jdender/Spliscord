@@ -1,4 +1,4 @@
-import { applyOptions } from '../../util/applyOptions';
+import { applyOptions } from '../../../util/applyOptions';
 import { Command, KlasaMessage, Timestamp } from 'klasa';
 import { MessageEmbed, GuildMember, Guild } from 'discord.js';
 
