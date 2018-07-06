@@ -12,8 +12,6 @@ export default class extends Command {
 
     async run(message: KlasaMessage, [when, ...text]: string[]) {
 
-        this.client.schedule.execute
-
         const reminder = await this.client.schedule.create('reminder', when, {
 			data: {
                 message,

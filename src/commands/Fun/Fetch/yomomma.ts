@@ -19,7 +19,7 @@ export default class extends Command {
             .then(body => body.joke as string)
             .catch(() => null);
 
-        if (!joke) return message.send('Unable to fetch dog image.');
+        if (!joke) return message.send('Unable to find a yomomma joke.');
 
         return message.send(joke);
     }
