@@ -6,7 +6,7 @@ import fetch from 'node-fetch';
 
 @applyOptions({
     name: 'dog',
-    description: 'Grabs a random dog image from random.cat.',
+    description: 'Grabs a random dog image from dog.ceo.',
     aliases: ['randomdog', 'woof'],
 })
 export default class extends Command {
