@@ -54,8 +54,16 @@ export default class extends Monitor {
         if (!message.member.roles.has(config.beforeRole) && message.member.roles.has(config.afterRole))
             return message.channel.send('You\'re already verified!');
 
+        const roles = [
+            ...message.member.roles
+            .filter(role => role.id === config.beforeRole)
+            .array(),
+
+            message.guild.roles.get(config.afterRole)!,
+        ];
+
         // Set roles
-        await message.member.roles.set([config.afterRole], 'Verify');
+        await message.member.roles.set(roles, 'Verify');
 
         message.reply('Welcome, you\'re verified!');
     }
