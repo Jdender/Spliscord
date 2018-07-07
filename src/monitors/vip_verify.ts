@@ -39,6 +39,9 @@ export default class extends Monitor {
 
     async run(message: KlasaMessage) {
 
+        // If not a guild
+        if (!message.guild) return;
+
         const config = vipVerifyConfig[message.guild.id];
 
         // If not a vip verify server
