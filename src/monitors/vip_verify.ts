@@ -56,7 +56,7 @@ export default class extends Monitor {
 
         const roles = [
             ...message.member.roles
-            .filter(role => role.id === config.beforeRole)
+            .filter(role => role.id !== config.beforeRole)
             .array(),
 
             message.guild.roles.get(config.afterRole)!,
