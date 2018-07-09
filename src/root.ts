@@ -17,6 +17,3 @@ if (process.env.NODE_ENV === 'production') reporter(client);
 
 // Start bot
 client.login(process.env.TOKEN!);
-
-// Express server for glitch
-if (process.env.PORT) import('./util/expressGlitch');
