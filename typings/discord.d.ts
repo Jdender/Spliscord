@@ -70,6 +70,7 @@ declare module 'discord.js' {
 		constructor(client: Client, data: object);
 		public readonly createdAt: Date;
 		public readonly createdTimestamp: number;
+		public deleted: boolean;
 		public id: Snowflake;
 		public type: 'dm' | 'group' | 'text' | 'voice' | 'category' | 'unknown';
 		public delete(reason?: string): Promise<Channel>;
@@ -299,28 +300,23 @@ declare module 'discord.js' {
 		public deleteAll(): Promise<V>[];
 		public equals(collection: Collection<any, any>): boolean;
 		public every(fn: (value: V, key: K, collection: Collection<K, V>) => boolean, thisArg?: any): boolean;
-		public exists(prop: keyof V, value: any): boolean;
-		public exists(fn: (value: V, key: K, collection: Collection<K, V>) => boolean): V;
 		public filter(fn: (value: V, key: K, collection: Collection<K, V>) => boolean, thisArg?: any): Collection<K, V>;
-		public filterArray(fn: (value: V, key: K, collection: Collection<K, V>) => boolean, thisArg?: any): V[];
-		public find(prop: keyof V, value: any): V;
 		public find(fn: (value: V, key: K, collection: Collection<K, V>) => boolean): V;
-		public findAll(prop: keyof V, value: any): V[];
-		public findKey(prop: keyof V, value: any): K;
 		public findKey(fn: (value: V, key: K, collection: Collection<K, V>) => boolean): K;
-		public first(): V;
+		public first(): V | undefined;
 		public first(count: number): V[];
-		public firstKey(): K;
+		public firstKey(): K | undefined;
 		public firstKey(count: number): K[];
 		public keyArray(): K[];
-		public last(): V;
+		public last(): V | undefined;
 		public last(count: number): V[];
-		public lastKey(): K;
+		public lastKey(): K | undefined;
 		public lastKey(count: number): K[];
 		public map<T>(fn: (value: V, key: K, collection: Collection<K, V>) => T, thisArg?: any): T[];
-		public random(): V;
+		public partition(fn: (value: V, key: K, collection: Collection<K, V>) => boolean): [Collection<K, V>, Collection<K, V>]
+		public random(): V | undefined;
 		public random(count: number): V[];
-		public randomKey(): K;
+		public randomKey(): K | undefined;
 		public randomKey(count: number): K[];
 		public reduce<T>(fn: (accumulator: any, value: V, key: K, collection: Collection<K, V>) => T, initialValue?: any): T;
 		public some(fn: (value: V, key: K, collection: Collection<K, V>) => boolean, thisArg?: any): boolean;
@@ -428,6 +424,8 @@ declare module 'discord.js' {
 		public channels: GuildChannelStore;
 		public readonly createdAt: Date;
 		public readonly createdTimestamp: number;
+		public defaultMessageNotifications: DefaultMessageNotifications | number;
+		public deleted: boolean;
 		public embedEnabled: boolean;
 		public emojis: GuildEmojiStore;
 		public explicitContentFilter: number;
@@ -547,7 +545,7 @@ declare module 'discord.js' {
 		public equals(channel: GuildChannel): boolean;
 		public fetchInvites(): Promise<Collection<string, Invite>>;
 		public lockPermissions(): Promise<GuildChannel>;
-		public overwritePermissions(userOrRole: RoleResolvable | UserResolvable, options: PermissionOverwriteOptions, reason?: string): Promise<void>;
+		public overwritePermissions(userOrRole: RoleResolvable | UserResolvable, options: Partial<PermissionObject>, reason?: string): Promise<void>;
 		public permissionsFor(memberOrRole: GuildMemberResolvable | RoleResolvable): Permissions;
 		public setName(name: string, reason?: string): Promise<GuildChannel>;
 		public setParent(channel: GuildChannel | Snowflake, options?: { lockPermissions?: boolean, reason?: string }): Promise<GuildChannel>;
@@ -561,6 +559,7 @@ declare module 'discord.js' {
 
 		public readonly createdAt: Date;
 		public readonly createdTimestamp: number;
+		public deleted: boolean;
 		public guild: Guild;
 		public managed: boolean;
 		public requiresColons: boolean;
@@ -575,6 +574,7 @@ declare module 'discord.js' {
 		constructor(client: Client, data: object, guild: Guild);
 		public readonly bannable: boolean;
 		public readonly deaf: boolean;
+		public deleted: boolean;
 		public readonly displayColor: number;
 		public readonly displayHexColor: string;
 		public readonly displayName: string;
@@ -653,6 +653,7 @@ declare module 'discord.js' {
 		public readonly createdAt: Date;
 		public createdTimestamp: number;
 		public readonly deletable: boolean;
+		public deleted: boolean;
 		public readonly editable: boolean;
 		public readonly editedAt: Date;
 		public editedTimestamp: number;
@@ -875,6 +876,7 @@ declare module 'discord.js' {
 		public color: number;
 		public readonly createdAt: Date;
 		public readonly createdTimestamp: number;
+		public deleted: boolean;
 		public readonly editable: boolean;
 		public guild: Guild;
 		public readonly hexColor: string;
@@ -921,6 +923,7 @@ declare module 'discord.js' {
 		public eval(script: string): Promise<any>;
 		public eval<T>(fn: (client: Client) => T): Promise<T[]>;
 		public fetchClientValue(prop: string): Promise<any>;
+		public kill(): void;
 		public respawn(delay?: number, waitForReady?: boolean): Promise<ChildProcess>;
 		public send(message: any): Promise<Shard>;
 		public spawn(waitForReady?: boolean): Promise<ChildProcess>;
@@ -1034,34 +1037,9 @@ declare module 'discord.js' {
 	}
 
 	export class Structures {
-		static get(structure: 'GuildEmoji'): typeof GuildEmoji;
-		static get(structure: 'DMChannel'): typeof DMChannel;
-		static get(structure: 'GroupDMChannel'): typeof GroupDMChannel;
-		static get(structure: 'TextChannel'): typeof TextChannel;
-		static get(structure: 'VoiceChannel'): typeof VoiceChannel;
-		static get(structure: 'CategoryChannel'): typeof CategoryChannel;
-		static get(structure: 'GuildChannel'): typeof GuildChannel;
-		static get(structure: 'GuildMember'): typeof GuildMember;
-		static get(structure: 'Guild'): typeof Guild;
-		static get(structure: 'Message'): typeof Message;
-		static get(structure: 'MessageReaction'): typeof MessageReaction;
-		static get(structure: 'Presence'): typeof Presence;
-		static get(structure: 'Role'): typeof Role;
-		static get(structure: 'User'): typeof User;
+		static get<K extends keyof Extendable>(structure: K): Extendable[K];
 		static get(structure: string): Function;
-		static extend<T extends typeof GuildEmoji>(structure: 'GuildEmoji', extender: (baseClass: typeof GuildEmoji) => T): T;
-		static extend<T extends typeof DMChannel>(structure: 'DMChannel', extender: (baseClass: typeof DMChannel) => T): T;
-		static extend<T extends typeof GroupDMChannel>(structure: 'GroupDMChannel', extender: (baseClass: typeof GroupDMChannel) => T): T;
-		static extend<T extends typeof VoiceChannel>(structure: 'VoiceChannel', extender: (baseClass: typeof VoiceChannel) => T): T;
-		static extend<T extends typeof CategoryChannel>(structure: 'CategoryChannel', extender: (baseClass: typeof CategoryChannel) => T): T;
-		static extend<T extends typeof GuildChannel>(structure: 'GuildChannel', extender: (baseClass: typeof GuildChannel) => T): T;
-		static extend<T extends typeof GuildMember>(structure: 'GuildMember', extender: (baseClass: typeof GuildMember) => T): T;
-		static extend<T extends typeof Guild>(structure: 'Guild', extender: (baseClass: typeof Guild) => T): T;
-		static extend<T extends typeof Message>(structure: 'Message', extender: (baseClass: typeof Message) => T): T;
-		static extend<T extends typeof MessageReaction>(structure: 'MessageReaction', extender: (baseClass: typeof MessageReaction) => T): T;
-		static extend<T extends typeof Presence>(structure: 'Presence', extender: (baseClass: typeof Presence) => T): T;
-		static extend<T extends typeof Role>(structure: 'Role', extender: (baseClass: typeof Role) => T): T;
-		static extend<T extends typeof User>(structure: 'User', extender: (baseClass: typeof User) => T): T;
+		static extend<K extends keyof Extendable, T extends Extendable[K]>(structure: K, extender: (baseClass: Extendable[K]) => T): T;
 		static extend<T extends Function>(structure: string, extender: (baseClass: typeof Function) => T): T;
 	}
 
@@ -1128,7 +1106,6 @@ declare module 'discord.js' {
 	}
 
 	export class Util {
-		public static arraysEqual(a: any[], b: any[]): boolean;
 		public static basename(path: string, ext?: string): string;
 		public static binaryToID(num: string): Snowflake;
 		public static delayFor(ms: number): Promise<void>;
@@ -1644,12 +1621,14 @@ declare module 'discord.js' {
 
 	type DeconstructedSnowflake = {
 		timestamp: number;
-		date: Date;
+		readonly date: Date;
 		workerID: number;
 		processID: number;
 		increment: number;
 		binary: string;
 	};
+
+	type DefaultMessageNotifications = 'ALL' | 'MENTIONS';
 
 	type GuildEmojiEditData = {
 		name?: string;
@@ -1659,6 +1638,23 @@ declare module 'discord.js' {
 	type EmojiIdentifierResolvable = string | EmojiResolvable;
 
 	type EmojiResolvable = Snowflake | GuildEmoji | ReactionEmoji;
+
+	type Extendable = {
+		GuildEmoji: typeof GuildEmoji;
+		DMChannel: typeof DMChannel;
+		GroupDMChannel: typeof GroupDMChannel;
+		TextChannel: typeof TextChannel;
+		VoiceChannel: typeof VoiceChannel;
+		CategoryChannel: typeof CategoryChannel;
+		GuildChannel: typeof GuildChannel;
+		GuildMember: typeof GuildMember;
+		Guild: typeof Guild;
+		Message: typeof Message;
+		MessageReaction: typeof MessageReaction;
+		Presence: typeof Presence;
+		Role: typeof Role;
+		User: typeof User;
+	}
 
 	type FetchMemberOptions = {
 		user: UserResolvable;
@@ -1960,67 +1956,9 @@ declare module 'discord.js' {
 
 	type OverwriteType = 'member' | 'role';
 
-	type PermissionFlags = {
-		CREATE_INSTANT_INVITE?: number;
-		KICK_MEMBERS?: number;
-		BAN_MEMBERS?: number;
-		ADMINISTRATOR?: number;
-		MANAGE_CHANNELS?: number;
-		MANAGE_GUILD?: number;
-		ADD_REACTIONS?: number;
-		VIEW_AUDIT_LOG?: number;
-		VIEW_CHANNEL?: number;
-		SEND_MESSAGES?: number;
-		SEND_TTS_MESSAGES?: number;
-		MANAGE_MESSAGES?: number;
-		EMBED_LINKS?: number;
-		ATTACH_FILES?: number;
-		READ_MESSAGE_HISTORY?: number;
-		MENTION_EVERYONE?: number;
-		USE_EXTERNAL_EMOJIS?: number;
-		CONNECT?: number;
-		SPEAK?: number;
-		MUTE_MEMBERS?: number;
-		DEAFEN_MEMBERS?: number;
-		MOVE_MEMBERS?: number;
-		USE_VAD?: number;
-		CHANGE_NICKNAME?: number;
-		MANAGE_NICKNAMES?: number;
-		MANAGE_ROLES?: number;
-		MANAGE_WEBHOOKS?: number;
-		MANAGE_EMOJIS?: number;
-	};
+	type PermissionFlags = Record<PermissionString, number>;
 
-	type PermissionObject = {
-		CREATE_INSTANT_INVITE?: boolean;
-		KICK_MEMBERS?: boolean;
-		BAN_MEMBERS?: boolean;
-		ADMINISTRATOR?: boolean;
-		MANAGE_CHANNELS?: boolean;
-		MANAGE_GUILD?: boolean;
-		ADD_REACTIONS?: boolean;
-		VIEW_AUDIT_LOG?: boolean;
-		VIEW_CHANNEL?: number;
-		SEND_MESSAGES?: boolean;
-		SEND_TTS_MESSAGES?: boolean;
-		MANAGE_MESSAGES?: boolean;
-		EMBED_LINKS?: boolean;
-		ATTACH_FILES?: boolean;
-		READ_MESSAGE_HISTORY?: boolean;
-		MENTION_EVERYONE?: boolean;
-		USE_EXTERNAL_EMOJIS?: boolean;
-		CONNECT?: boolean;
-		SPEAK?: boolean;
-		MUTE_MEMBERS?: boolean;
-		DEAFEN_MEMBERS?: boolean;
-		MOVE_MEMBERS?: boolean;
-		USE_VAD?: boolean;
-		CHANGE_NICKNAME?: boolean;
-		MANAGE_NICKNAMES?: boolean;
-		MANAGE_ROLES?: boolean;
-		MANAGE_WEBHOOKS?: boolean;
-		MANAGE_EMOJIS?: boolean;
-	};
+	type PermissionObject = Record<PermissionString, boolean>;
 
 	type PermissionString = 'CREATE_INSTANT_INVITE'
 		| 'KICK_MEMBERS'
@@ -2050,8 +1988,6 @@ declare module 'discord.js' {
 		| 'MANAGE_ROLES'
 		| 'MANAGE_WEBHOOKS'
 		| 'MANAGE_EMOJIS';
-
-	type PermissionOverwriteOptions = PermissionObject;
 
 	interface RecursiveArray<T> extends Array<T | RecursiveArray<T>> { }
 	type PermissionResolvable = RecursiveArray<Permissions | PermissionString | number> | Permissions | PermissionString | number;
