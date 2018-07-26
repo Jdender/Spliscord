@@ -1,6 +1,6 @@
 import { applyOptions } from '../../../util/applyOptions';
-import { Command, KlasaMessage, Timestamp } from 'klasa';
-import { MessageEmbed, GuildMember, Guild } from 'discord.js';
+import { Command, KlasaMessage, Timestamp, KlasaUser, KlasaGuild } from 'klasa';
+import { MessageEmbed, GuildMember, Role } from 'discord.js';
 
 
 const statuses = {
@@ -26,13 +26,14 @@ const filterLevels = [
 
 const timestamp = new Timestamp('d MMMM YYYY');
 
-type Target = GuildMember | Guild;
+type Target = GuildMember | KlasaGuild;
 
 
 @applyOptions({
     name: 'fetch',
     description: 'Fetch various types of "discord entitys" using a id or mention.',
-    usage: '[TargetMember:member|TargetGuild:guild]',
+    usage: '[TargetMember:member|TargetGuild:guild|TargetUser:user]',
+    permissionLevel: 8,
 })
 export default class extends Command {
     
@@ -42,7 +43,8 @@ export default class extends Command {
 
         // Detect what type of target
         if (target instanceof GuildMember) embed = this.member(target);
-        if (target instanceof Guild) embed = this.guild(target);
+        if (target instanceof KlasaGuild) embed = this.guild(target);
+        if (target instanceof KlasaUser) embed = this.user(target);
 
         // See if a target was found
         return embed ? 
@@ -66,7 +68,7 @@ export default class extends Command {
     }
 
     // Fetch info for guilds
-    private guild(target: Guild) {
+    private guild(target: KlasaGuild) {
         return new MessageEmbed()
         .setColor(0xFFFFFF)
         .setThumbnail(target.iconURL())
@@ -78,5 +80,16 @@ export default class extends Command {
         .addField('❯ Verification Level', verificationLevels[target.verificationLevel], true)
         .addField('❯ Owner', target.owner ? target.owner.user.tag : 'None', true)
         .addField('❯ Members', target.memberCount, true);
+    }
+
+    private user(target: KlasaUser) {
+        return new MessageEmbed()
+        .setColor(0xFFFFFF)
+        .setThumbnail(target.displayAvatarURL())
+        .addField('❯ Name', target.tag, true)
+        .addField('❯ ID', target.id, true)
+        .addField('❯ Discord Join Date', timestamp.display(target.createdAt), true)
+        .addField('❯ Status', statuses[target.presence.status], true)
+        .addField('❯ Playing', target.presence.activity ? target.presence.activity.name : 'N/A', true);
     }
 }
