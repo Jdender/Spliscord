@@ -7,7 +7,7 @@
     "node": "10.x"
   },
   "scripts": {
-    "test": "ts-node -r dotenv/config .",
+    "dev": "ts-node -r dotenv/config .",
     "start": "ts-node ."
   },
   "repository": "https://github.com/jdenderplays/Spliscord.git",
