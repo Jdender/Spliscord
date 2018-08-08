@@ -24,37 +24,69 @@ const filterLevels = [
     'Everyone',
 ];
 
+const perms = {
+    ADMINISTRATOR: 'Administrator',
+    VIEW_AUDIT_LOG: 'View Audit Log',
+    MANAGE_GUILD: 'Manage Server',
+    MANAGE_ROLES: 'Manage Roles',
+    MANAGE_CHANNELS: 'Manage Channels',
+    KICK_MEMBERS: 'Kick Members',
+    BAN_MEMBERS: 'Ban Members',
+    CREATE_INSTANT_INVITE: 'Create Instant Invite',
+    CHANGE_NICKNAME: 'Change Nickname',
+    MANAGE_NICKNAMES: 'Manage Nicknames',
+    MANAGE_EMOJIS: 'Manage Emojis',
+    MANAGE_WEBHOOKS: 'Manage Webhooks',
+    VIEW_CHANNEL: 'Read Text Channels and See Voice Channels',
+    SEND_MESSAGES: 'Send Messages',
+    SEND_TTS_MESSAGES: 'Send TTS Messages',
+    MANAGE_MESSAGES: 'Manage Messages',
+    EMBED_LINKS: 'Embed Links',
+    ATTACH_FILES: 'Attach Files',
+    READ_MESSAGE_HISTORY: 'Read Message History',
+    MENTION_EVERYONE: 'Mention Everyone',
+    USE_EXTERNAL_EMOJIS: 'Use External Emojis',
+    ADD_REACTIONS: 'Add Reactions',
+    CONNECT: 'Connect',
+    SPEAK: 'Speak',
+    MUTE_MEMBERS: 'Mute Members',
+    DEAFEN_MEMBERS: 'Deafen Members',
+    MOVE_MEMBERS: 'Move Members',
+    USE_VAD: 'Use Voice Activity',
+};
+
 const timestamp = new Timestamp('d MMMM YYYY');
 
-type Target = GuildMember | KlasaGuild;
+type Target = GuildMember | KlasaGuild | KlasaUser | Role;
 
 
 @applyOptions({
     name: 'fetch',
     description: 'Fetch various types of "discord entitys" using a id or mention.',
-    usage: '[TargetMember:member|TargetGuild:guild|TargetUser:user]',
+    usage: '[TargetMember:member|TargetGuild:guild|TargetUser:user|TargetRole:role]',
     permissionLevel: 8,
 })
 export default class extends Command {
     
     async run(message: KlasaMessage, [target]: [Target]) {
 
-        let embed: MessageEmbed | null = null;
-
         // Detect what type of target
-        if (target instanceof GuildMember) embed = this.member(target);
-        if (target instanceof KlasaGuild) embed = this.guild(target);
-        if (target instanceof KlasaUser) embed = this.user(target);
+        const embed = 
+        target instanceof GuildMember ? this.member(target)
+        : target instanceof KlasaGuild ? this.guild(target)
+        : target instanceof KlasaUser ? this.user(target)
+        : target instanceof Role ? this.role(target)
+        : null;
 
         // See if a target was found
-        return embed ? 
-        message.sendEmbed(embed) : 
-        message.send('No fetchable target found.');
+        return embed
+        ? message.sendEmbed(embed)
+        : message.send('No fetchable target found.');
     }
 
     // Fetch info for members
-    private member(target: GuildMember) {
-        return new MessageEmbed()
+    private member = (target: GuildMember) =>
+        new MessageEmbed()
         .setColor(target.displayHexColor || 0xFFFFFF)
         .setThumbnail(target.user.displayAvatarURL())
         .addField('❯ Name', target.user.tag, true)
@@ -65,11 +97,10 @@ export default class extends Command {
         .addField('❯ Playing', target.presence.activity ? target.presence.activity.name : 'N/A', true)
         .addField('❯ Highest Role', target.roles.size > 1 ? target.roles.highest.name : 'None', true)
         .addField('❯ Hoist Role', target.roles.hoist ? target.roles.hoist.name : 'None', true);
-    }
 
     // Fetch info for guilds
-    private guild(target: KlasaGuild) {
-        return new MessageEmbed()
+    private guild = (target: KlasaGuild) =>
+        new MessageEmbed()
         .setColor(0xFFFFFF)
         .setThumbnail(target.iconURL())
         .addField('❯ Name', target.name, true)
@@ -80,10 +111,9 @@ export default class extends Command {
         .addField('❯ Verification Level', verificationLevels[target.verificationLevel], true)
         .addField('❯ Owner', target.owner ? target.owner.user.tag : 'None', true)
         .addField('❯ Members', target.memberCount, true);
-    }
 
-    private user(target: KlasaUser) {
-        return new MessageEmbed()
+    private user = (target: KlasaUser) =>
+        new MessageEmbed()
         .setColor(0xFFFFFF)
         .setThumbnail(target.displayAvatarURL())
         .addField('❯ Name', target.tag, true)
@@ -91,5 +121,21 @@ export default class extends Command {
         .addField('❯ Discord Join Date', timestamp.display(target.createdAt), true)
         .addField('❯ Status', statuses[target.presence.status], true)
         .addField('❯ Playing', target.presence.activity ? target.presence.activity.name : 'N/A', true);
-    }
+
+    private role = (target: Role) => 
+        new MessageEmbed()
+		.setColor(target.hexColor || 0xFFFFFF)
+		.addField('❯ Name', target.name, true)
+		.addField('❯ ID', target.id, true)
+		.addField('❯ Color', target.hexColor || 'None', true)
+		.addField('❯ Creation Date', timestamp.display(target.createdAt), true)
+		.addField('❯ Hoisted', target.hoist ? 'Yes' : 'No', true)
+		.addField('❯ Mentionable', target.mentionable ? 'Yes' : 'No', true)
+        .addField('❯ Permissions', 
+            Object
+            .entries(target.permissions.serialize())
+            .filter(perm => perm[1])
+            .map(([perm]) => (perms as any)[perm])
+            .join(', '),
+        );
 }
