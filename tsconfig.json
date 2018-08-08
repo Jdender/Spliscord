@@ -2,7 +2,7 @@
     "compilerOptions": {
         "locale": "en",
         "target": "es2018",
-        "lib": [ "es7" ],
+        "lib": [ "es2017" ],
         "module": "commonjs",
         "moduleResolution": "node",
         "outDir": "dist",
