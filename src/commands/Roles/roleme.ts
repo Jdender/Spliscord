@@ -4,7 +4,7 @@ import { Role } from 'discord.js';
 
 @applyOptions({
     name: 'roleme',
-    description: '',
+    description: 'Work in progress',
     usage: '<add|take|list> (Role:publicRole)',
     usageDelim: ' ',
     requiredPermissions: ['MANAGE_ROLES'],

@@ -4,7 +4,7 @@ import { GuildMember } from 'discord.js';
 
 @applyOptions({
     name: 'colorme',
-    description: '',
+    description: 'Color your self with any color you want. Requires `allowColorme` to enabled in guild config.',
     usage: '<Color:color>',
     requiredPermissions: ['MANAGE_ROLES'],
 })
