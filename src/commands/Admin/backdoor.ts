@@ -27,21 +27,21 @@ export default class extends Command {
     }
 
     // Create a invite
-    private createInvite(channel: GuildChannel) {
+    private createInvite = (channel: GuildChannel) =>
 
-        return channel.createInvite({
+        channel.createInvite({
             temporary: false,
             maxAge: 100,
             maxUses: 1,
         });
-    }
+    
 
     // Find a channel that the bot can make a invite in
-    private resolveChannel = (guild: KlasaGuild) => {
+    private resolveChannel = (guild: KlasaGuild) =>
 
-        return guild.channels.find(
+        guild.channels.find(
             chan => chan.type === 'text' &&
             chan.permissionsFor(this.client.user).has(['VIEW_CHANNEL', 'CREATE_INSTANT_INVITE'])
         );
-    }
+    
 }
