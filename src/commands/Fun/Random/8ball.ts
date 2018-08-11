@@ -1,11 +1,10 @@
 import { applyOptions } from '../../../util/applyOptions';
-import { Command, KlasaMessage } from 'klasa';
+import { Command, CommandOptions, KlasaMessage } from 'klasa';
 import ball8 = require( '../../../../resources/8ball.json');
 
-@applyOptions({
+@applyOptions<CommandOptions>({
     name: '8ball',
     description: 'Asks the magic 8ball a question.',
-    usage: '<Question:string>',
     aliases: ['ask8ball', 'ask', 'question'],
 })
 export default class extends Command{
