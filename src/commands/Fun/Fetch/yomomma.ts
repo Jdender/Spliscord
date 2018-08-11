@@ -1,12 +1,12 @@
 import { applyOptions } from '../../../util/applyOptions';
-import { Command, KlasaMessage } from 'klasa';
+import { Command, CommandOptions, KlasaMessage } from 'klasa';
 
 import fetch from 'node-fetch';
 
 // Same as ./dog.ts but for yomomma
 // So look there for comments
 
-@applyOptions({
+@applyOptions<CommandOptions>({
     name: 'yomomma',
     description: 'Sends a yomomma joke from yomomma.info.',
 })
@@ -19,9 +19,7 @@ export default class extends Command {
             .then(body => body.joke as string)
             .catch(() => null);
 
-        if (!joke) return message.send('Unable to find a yomomma joke.');
-
-        return message.send(joke);
+        return message.send(joke || 'Unable to find a yomomma joke.');
     }
 
 }

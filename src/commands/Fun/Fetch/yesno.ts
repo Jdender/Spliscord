@@ -1,32 +1,40 @@
 import { applyOptions } from '../../../util/applyOptions';
-import { Command, KlasaMessage } from 'klasa';
-import { MessageAttachment } from 'discord.js';
+import { Command, CommandOptions, KlasaMessage } from 'klasa';
 
 import fetch from 'node-fetch';
 
-@applyOptions({
+interface YesnoResponse {
+    image: string;
+    answer: string;
+}
+
+@applyOptions<CommandOptions>({
     name: 'yesno',
     description: 'Get a yes or no and a image to go with it.',
-    usage: '<Question:string>',
 })
 export default class extends Command {
 
     async run(message: KlasaMessage) {
 
+        const editMsg = await message.send('Thinking...') as KlasaMessage;
+
         // Fetch yesno.wtf and load page as json
-        const { image, answer } = await fetch('https://yesno.wtf/api')
+        const yesno = await fetch('https://yesno.wtf/api')
             .then(response => response.json())
-            // Null if error
-            .catch(() => null);
+            .then(response => response as YesnoResponse)
+            .catch(() => null); // Null if error
 
-        if (!image || !answer) return message.send('Unable to fetch yesno image.');
-
-        // Make attachment with same file ext
-        const file = new MessageAttachment(image, `yesno${image.slice(image.lastIndexOf('.'), image.length)}`);
-
-        // Caplise the first leter
-        await message.send(answer === 'yes' ? 'Yes' : 'No');
-        return message.send(file);
+        return editMsg.edit(yesno
+            ? {
+                content: yesno.answer === 'yes' ? 'Yes' : 'No',
+                files: [{
+                    // Make attachment with same file ext
+                    attachment: yesno.image,
+                    name: `yesno${yesno.image.slice(yesno.image.lastIndexOf('.'), yesno.image.length)}`,
+                }]
+            }
+            : 'The api was unable to decide.'
+        ) as Promise<KlasaMessage>;
     }
 
 }

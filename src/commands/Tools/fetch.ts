@@ -84,7 +84,6 @@ export default class extends Command {
         : message.send('No fetchable target found.');
     }
 
-    // Fetch info for members
     private member = (target: GuildMember) =>
         new MessageEmbed()
         .setColor(target.displayHexColor || 0xFFFFFF)
@@ -98,7 +97,6 @@ export default class extends Command {
         .addField('❯ Highest Role', target.roles.size > 1 ? target.roles.highest.name : 'None', true)
         .addField('❯ Hoist Role', target.roles.hoist ? target.roles.hoist.name : 'None', true);
 
-    // Fetch info for guilds
     private guild = (target: KlasaGuild) =>
         new MessageEmbed()
         .setColor(0xFFFFFF)

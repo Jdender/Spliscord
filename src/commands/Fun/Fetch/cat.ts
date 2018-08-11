@@ -1,5 +1,5 @@
 import { applyOptions } from '../../../util/applyOptions';
-import { Command, KlasaMessage } from 'klasa';
+import { Command, CommandOptions,  KlasaMessage } from 'klasa';
 import { MessageAttachment } from 'discord.js';
 
 import fetch from 'node-fetch';
@@ -12,7 +12,7 @@ normal json api returns 403,
 I'm going to have to use this.
 */
 
-@applyOptions({
+@applyOptions<CommandOptions>({
     name: 'cat',
     description: 'Grabs a random cat image from random.cat.',
     aliases: ['randomcat', 'meow'],
@@ -25,19 +25,16 @@ export default class extends Command {
         const $ = await fetch('http://random.cat')
             .then(response => response.text())
             .then(cheerio.load)
-
-            // Have cheerio load a blank page if http error
+            // Blank page if error
             .catch(() => cheerio.load(''));
 
-        // Get the src property of the element with the id 'cat'
         const cat = $('#cat').prop('src') as string | undefined;
 
-        if (!cat) return message.send('Unable to fetch cat image.');
-
-        // Make attachment with same file ext
-        const file = new MessageAttachment(cat, `cat${cat.slice(cat.lastIndexOf('.'), cat.length)}`);
-
-        return message.send(file);
+        return message.send(cat
+            // Make attachment with same file ext
+            ? new MessageAttachment(cat, `cat${cat.slice(cat.lastIndexOf('.'), cat.length)}`)
+            : 'Unable to fetch cat image.'
+        );
     }
 
 }

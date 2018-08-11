@@ -1,10 +1,10 @@
 import { applyOptions } from '../../../util/applyOptions';
-import { Command, KlasaMessage } from 'klasa';
+import { Command, CommandOptions, KlasaMessage } from 'klasa';
 import { MessageAttachment } from 'discord.js';
 
 import fetch from 'node-fetch';
 
-@applyOptions({
+@applyOptions<CommandOptions>({
     name: 'dog',
     description: 'Grabs a random dog image from dog.ceo.',
     aliases: ['randomdog', 'woof'],
@@ -20,12 +20,11 @@ export default class extends Command {
             // Return null if http error
             .catch(() => null);
 
-        if (!dog) return message.send('Unable to fetch dog image.');
-
-        // Make attachment with same file ext
-        const file = new MessageAttachment(dog, `dog${dog.slice(dog.lastIndexOf('.'), dog.length)}`);
-
-        return message.send(file);
+        return message.send(dog
+            // Make attachment with same file ext
+            ? new MessageAttachment(dog, `dog${dog.slice(dog.lastIndexOf('.'), dog.length)}`)
+            : 'Unable to fetch dog image.'
+        );
     }
 
 }
