@@ -19,4 +19,5 @@ export default (client: KlasaClient) => {
     .on('warn', (e: any) => reporter.send(`KLASA WARNING: ${e.stack || e.message || e}`))
     .on('error', (e: any) => reporter.send(`KLASA ERROR: ${e.stack || e.message || e}`))
     .on('wtf', (e: any) => reporter.send(`KLASA WTF ERROR: ${e.stack || e.message || e}`))
+    .on('rateLimit', (e: any) => reporter.send(`RATELIMIT: ${e.stack || e.message || e}`))
 }
