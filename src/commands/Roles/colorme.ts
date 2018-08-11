@@ -17,7 +17,6 @@ export default class extends Command {
 
     async run(message: KlasaMessage, [color]: [string]) {
         
-        // Self explainitory
         if (!message.guildConfigs.get('allowColorme'))
             return message.send('The guild admins disabled or never enabled the `allowColorme` config option.');
 
@@ -28,32 +27,20 @@ export default class extends Command {
         // Compute the new roles in an array
         return this.getNewRoles(message, color)
 
-        // Set the member's roles to the array made earlyer
         .then(roles => message.member.roles.set(roles, 'Set color roles'))
 
-        // The .then above this returns a member
-        // And removeExtra takes a member
-        // So we can just pass it to .then
         .then(this.removeExtra(color))
 
-        // Last but not least
-        // Send a message confirming the color
         .then(() => message.send(`Swoosh! You're now painted \`${color}\`.`))
         
-        // If any of the above steps threw a error,
-        // Send a error message
         .catch(() => message.send('Sorry, I was unable to paint you.'));
     }
 
     // Get the roles of the member with the color role included
     private getNewRoles = async (message: KlasaMessage, color: string) =>
 
-        // See if there is a color role with the same color
-        // If existing make an array with it and all the non color roles
-        // If not create one and do the same
         [
             ...this.getMemberNonColorRoles(message),
-            // Find *or* create one
             this.findExistingColorRole(message, color) || await this.createColorRole(message, color),
         ];
     
@@ -62,15 +49,15 @@ export default class extends Command {
     private findExistingColorRole = (message: KlasaMessage, color: string) => 
 
         message.guild.roles
-        .find(role => role.name === `§${color}`); // Find using color role name format
+        .find(role => role.name === `§${color}`);
     
 
     // The roles the member allredy has, filtering out any existing color roles
     private getMemberNonColorRoles = (message: KlasaMessage) => 
 
         message.member.roles
-        .filter(role => !role.name.startsWith('§#')) // Use name to determine color role or not
-        .array(); // We want to return a array not a collection
+        .filter(role => !role.name.startsWith('§#'))
+        .array();
     
 
     // Creates a role with color and name
@@ -78,16 +65,15 @@ export default class extends Command {
 
         message.guild.roles.create({
             data: {
-                name: `§${color}`, // Use color role name format
+                name: `§${color}`,
                 color,
                 mentionable: false,
-                hoist: false, // "Display role members separately from online members"
+                hoist: false,
             },
             reason: 'Create color role',
         });
 
 
-    // This function is curryed using arrows
     // Remove any unused color roles in guild
     private removeExtra = (color: string) => (member: GuildMember) =>
 
@@ -104,7 +90,6 @@ export default class extends Command {
 
         if (!schema) return;
 
-        // Add allowColorme key if not existing
         if (!schema.has('allowColorme'))
             await schema.add('allowColorme', { type: 'boolean' });
     }

@@ -28,7 +28,6 @@ export default class extends Command {
     // Add a member to a public role
     add = (message: KlasaMessage, [role]: [Role]) => 
 
-        // Add role to member, send a message if we can't
         message.member.roles.add(role)
         .then(() => message.send(`Added you to: ${role.name}`))
         .catch(() => message.send('I don\'t have permisson to do that.'));
@@ -45,15 +44,14 @@ export default class extends Command {
     // List all public roles in the guild
     list = (message: KlasaMessage) => {
 
-        // Get the names of all the guild's public roles
         const roleNames = message.guildConfigs.get('publicRoleNames') as string[];
 
         return message.send(
 
             // Cast to boolean, if length is zero it will be false
             !!roleNames.length
-            ? roleNames.join(', ') // Send list
-            : 'This guild has no public roles to list.' // If the guild has none     
+            ? roleNames.join(', ')
+            : 'This guild has no public roles to list.'
         );
     }
 
@@ -90,14 +88,12 @@ export default class extends Command {
 
     async init() {
 
-        // Register arg type
         this.createCustomResolver('publicrole', this.publicRoleResolver);
 
         const { schema } = this.client.gateways.guilds;
 
         if (!schema) return;
 
-        // Add publicRoles key if not existing
         if (!schema.has('publicRoleIds'))
             await schema.add('publicRoleIds', { type: 'role', array: true, configurable: false });
 
