@@ -1,10 +1,6 @@
 import { applyOptions } from '../../../util/applyOptions';
 import { Command, CommandOptions, KlasaMessage } from 'klasa';
-
-import fetch from 'node-fetch';
-
-// Same as ./dog.ts but for yomomma
-// So look there for comments
+import { FunMisc } from '../../../services/FunMisc';
 
 @applyOptions<CommandOptions>({
     name: 'yomomma',
@@ -14,12 +10,8 @@ export default class extends Command {
 
     async run(message: KlasaMessage) {
 
-        const joke = await fetch('http://api.yomomma.info')
-            .then(response => response.json())
-            .then(body => body.joke as string)
-            .catch(() => null);
+        const joke = await FunMisc.fetchJson('http://api.yomomma.info', body => body.joke as string);
 
         return message.send(joke || 'Unable to find a yomomma joke.');
     }
-
 }

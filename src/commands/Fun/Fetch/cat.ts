@@ -1,9 +1,7 @@
 import { applyOptions } from '../../../util/applyOptions';
 import { Command, CommandOptions,  KlasaMessage } from 'klasa';
 import { MessageAttachment } from 'discord.js';
-
-import fetch from 'node-fetch';
-import cheerio = require('cheerio');
+import { FunMisc } from '../../../services/FunMisc';
 
 /*
 I am aware that this is bad practas.
@@ -21,18 +19,12 @@ export default class extends Command {
 
     async run(message: KlasaMessage) {
 
-        // Fetch random.cat and load the page with cherrio
-        const $ = await fetch('http://random.cat')
-            .then(response => response.text())
-            .then(cheerio.load)
-            // Blank page if error
-            .catch(() => cheerio.load(''));
+        const $ = await FunMisc.fetchCheerio('http://random.cat');
 
         const cat = $('#cat').prop('src') as string | undefined;
 
         return message.send(cat
-            // Make attachment with same file ext
-            ? new MessageAttachment(cat, `cat${cat.slice(cat.lastIndexOf('.'), cat.length)}`)
+            ? FunMisc.makeAttachment('cat', cat)
             : 'Unable to fetch cat image.'
         );
     }

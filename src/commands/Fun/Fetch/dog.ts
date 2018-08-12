@@ -1,8 +1,7 @@
 import { applyOptions } from '../../../util/applyOptions';
 import { Command, CommandOptions, KlasaMessage } from 'klasa';
 import { MessageAttachment } from 'discord.js';
-
-import fetch from 'node-fetch';
+import { FunMisc } from '../../../services/FunMisc';
 
 @applyOptions<CommandOptions>({
     name: 'dog',
@@ -13,16 +12,10 @@ export default class extends Command {
 
     async run(message: KlasaMessage) {
 
-        // Fetch dog.ceo and load the page as json
-        const dog = await fetch('https://dog.ceo/api/breeds/image/random')
-            .then(response => response.json())
-            .then(body => body.message as string)
-            // Return null if http error
-            .catch(() => null);
+        const dog = await FunMisc.fetchJson('https://dog.ceo/api/breeds/image/random', body => body.message as string);
 
         return message.send(dog
-            // Make attachment with same file ext
-            ? new MessageAttachment(dog, `dog${dog.slice(dog.lastIndexOf('.'), dog.length)}`)
+            ? FunMisc.makeAttachment('dog', dog)
             : 'Unable to fetch dog image.'
         );
     }
