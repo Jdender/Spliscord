@@ -13,9 +13,7 @@ const filter = (stats: any, path: string) =>
     extensions.includes(extname(path));
 
 // Monkeypatch klasa Store
-(Store as any).walk = async (store: any, core: boolean) => {
-
-    const dir = core ? store.coreDir : store.userDir;
+(Store as any).walk = async (store: any, dir = store.userDirectory) => {
 
     const files = await fs.scan(dir, { filter })
     .catch(() => {}); // Ignore errors
@@ -26,8 +24,8 @@ const filter = (stats: any, path: string) =>
     .from(files.keys())
     .map(file => 
         store.load(
-            relative(dir, file).split(sep), 
-            core,
+            dir,
+            relative(dir, file).split(sep),
         ),
     );
 
