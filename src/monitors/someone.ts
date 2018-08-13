@@ -1,5 +1,6 @@
 import { applyOptions } from '../util/applyOptions';
 import { Monitor, KlasaMessage } from 'klasa';
+import { GuildMember } from 'discord.js';
 
 @applyOptions({
     name: 'someone',
@@ -15,11 +16,15 @@ export default class extends Monitor {
 
         if (!/@someone/i.test(message.content)) return;
 
-        message.send(this.getMention(message));
+        const someone = message.guild.members.random();
+
+        if(!someone) return;
+
+        message.send(this.getMention(someone));
     }
 
-    private getMention = (message: KlasaMessage) =>
-        `<@${message.guild.members.random().id}>`;
+    private getMention = (someone: GuildMember) =>
+        `<@${someone.id}>`;
 
     async init() {
 
