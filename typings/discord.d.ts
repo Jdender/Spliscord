@@ -297,7 +297,7 @@ declare module 'discord.js' {
 		public array(): V[];
 		public clone(): Collection<K, V>;
 		public concat(...collections: Collection<K, V>[]): Collection<K, V>;
-		public deleteAll(): Promise<V>[];
+		public each(fn: (value: V, key: K, collection: Collection<K, V>) => void, thisArg?: any): void;
 		public equals(collection: Collection<any, any>): boolean;
 		public every(fn: (value: V, key: K, collection: Collection<K, V>) => boolean, thisArg?: any): boolean;
 		public filter(fn: (value: V, key: K, collection: Collection<K, V>) => boolean, thisArg?: any): Collection<K, V>;
@@ -321,6 +321,8 @@ declare module 'discord.js' {
 		public reduce<T>(fn: (accumulator: any, value: V, key: K, collection: Collection<K, V>) => T, initialValue?: any): T;
 		public some(fn: (value: V, key: K, collection: Collection<K, V>) => boolean, thisArg?: any): boolean;
 		public sort(compareFunction?: (a: V, b: V, c?: K, d?: K) => number): Collection<K, V>;
+		public sweep(fn: (value: V, key: K, collection: Collection<K, V>) => boolean, thisArg?: any): number;
+		public tap(fn: (collection: Collection<K, V>) => void, thisArg?: any): Collection<K, V>;
 		public toJSON(): object;
 	}
 
@@ -475,6 +477,7 @@ declare module 'discord.js' {
 		public setAFKChannel(afkChannel: ChannelResolvable, reason?: string): Promise<Guild>;
 		public setAFKTimeout(afkTimeout: number, reason?: string): Promise<Guild>;
 		public setChannelPositions(channelPositions: ChannelPosition[]): Promise<Guild>;
+		public setDefaultMessageNotifications(defaultMessageNotifications: DefaultMessageNotifications | number, reason?: string): Promise<Guild>;
 		public setExplicitContentFilter(explicitContentFilter: number, reason?: string): Promise<Guild>;
 		public setIcon(icon: Base64Resolvable, reason?: string): Promise<Guild>;
 		public setName(name: string, reason?: string): Promise<Guild>;
@@ -545,12 +548,16 @@ declare module 'discord.js' {
 		public equals(channel: GuildChannel): boolean;
 		public fetchInvites(): Promise<Collection<string, Invite>>;
 		public lockPermissions(): Promise<GuildChannel>;
-		public overwritePermissions(userOrRole: RoleResolvable | UserResolvable, options: Partial<PermissionObject>, reason?: string): Promise<void>;
+		public overwritePermissions(
+			options: Array<Partial<PermissionOverwrites|PermissionOverwriteOptions>> | Collection<Snowflake, Partial<PermissionOverwriteOptions>>,
+			reason?: string
+		): Promise<GuildChannel>;
 		public permissionsFor(memberOrRole: GuildMemberResolvable | RoleResolvable): Permissions;
 		public setName(name: string, reason?: string): Promise<GuildChannel>;
 		public setParent(channel: GuildChannel | Snowflake, options?: { lockPermissions?: boolean, reason?: string }): Promise<GuildChannel>;
 		public setPosition(position: number, options?: { relative?: boolean, reason?: string }): Promise<GuildChannel>;
 		public setTopic(topic: string, reason?: string): Promise<GuildChannel>;
+		public updateOverwrite(userOrRole: RoleResolvable | UserResolvable, options: Partial<PermissionObject>, reason?: string): Promise<GuildChannel>;
 	}
 
 	export class GuildEmoji extends Emoji {
@@ -593,7 +600,7 @@ declare module 'discord.js' {
 		public readonly selfMute: boolean;
 		public readonly serverDeaf: boolean;
 		public readonly serverMute: boolean;
-		public speaking: boolean;
+		public readonly speaking: boolean;
 		public user: User;
 		public readonly voiceChannel: VoiceChannel;
 		public readonly voiceChannelID: Snowflake;
@@ -616,7 +623,7 @@ declare module 'discord.js' {
 
 	export class Invite extends Base {
 		constructor(client: Client, data: object);
-		public channel: GuildChannel;
+		public channel: GuildChannel | GroupDMChannel;
 		public code: string;
 		public readonly createdAt: Date;
 		public createdTimestamp: number;
@@ -754,13 +761,13 @@ declare module 'discord.js' {
 	export class MessageMentions {
 		constructor(message: Message, users: any[], roles: any[], everyone: boolean);
 		private _channels: Collection<Snowflake, GuildChannel>;
-		private _client: Client;
-		private _content: Message;
-		private _guild: Guild;
+		private readonly _content: Message;
 		private _members: Collection<Snowflake, GuildMember>;
 
 		public readonly channels: Collection<Snowflake, TextChannel>;
+		public readonly client: Client;
 		public everyone: boolean;
+		public readonly guild: Guild;
 		public has(data: User | GuildMember | Role | GuildChannel, options?: {
 			ignoreDirect?: boolean;
 			ignoreRoles?: boolean;
@@ -915,6 +922,7 @@ declare module 'discord.js' {
 		private _handleMessage(message: any): void;
 
 		public args: string[];
+		public execArgv: string[];
 		public env: object;
 		public id: number;
 		public manager: ShardingManager;
@@ -965,6 +973,7 @@ declare module 'discord.js' {
 			respawn?: boolean;
 			shardArgs?: string[];
 			token?: string;
+			execArgv?: string[];
 		});
 
 		public file: string;
@@ -1064,6 +1073,7 @@ declare module 'discord.js' {
 		public readonly defaultAvatarURL: string;
 		public readonly dmChannel: DMChannel;
 		public id: Snowflake;
+		public locale: string;
 		public readonly note: string;
 		public readonly presence: Presence;
 		public readonly tag: string;
@@ -1108,9 +1118,10 @@ declare module 'discord.js' {
 	export class Util {
 		public static basename(path: string, ext?: string): string;
 		public static binaryToID(num: string): Snowflake;
-		public static delayFor(ms: number): Promise<void>;
+		public static cleanContent(str: string, message: Message): string;
 		public static cloneObject(obj: object): object;
 		public static convertToBuffer(ab: ArrayBuffer | string): Buffer;
+		public static delayFor(ms: number): Promise<void>;
 		public static discordSort<K, V extends { rawPosition: number; id: string; }>(collection: Collection<K, V>): Collection<K, V>
 		public static escapeMarkdown(text: string, onlyCodeBlock?: boolean, onlyInlineCode?: boolean): string;
 		public static fetchRecommendedShards(token: string, guildsPerShard?: number): Promise<number>;
@@ -1297,6 +1308,7 @@ declare module 'discord.js' {
 
 	export class DataStore<K, V, VConstructor = Constructable<V>, R = any> extends Collection<K, V> {
 		constructor(client: Client, iterable: Iterable<any>, holds: VConstructor);
+		public static readonly [Symbol.species]: typeof Collection;
 		public client: Client;
 		public holds: VConstructor;
 		public add(data: any, cache?: boolean, { id, extras }?: { id: K, extras: any[] }): V;
@@ -1415,7 +1427,7 @@ declare module 'discord.js' {
 		typingCount: number;
 		awaitMessages(filter: CollectorFilter, options?: AwaitMessagesOptions): Promise<Collection<Snowflake, Message>>;
 		bulkDelete(messages: Collection<Snowflake, Message> | Message[] | number, filterOld?: boolean): Promise<Collection<Snowflake, Message>>;
-		createMessageCollector(filter: CollectorFilter, options?: CollectorOptions): MessageCollector;
+		createMessageCollector(filter: CollectorFilter, options?: MessageCollectorOptions): MessageCollector;
 		search(options?: MessageSearchOptions): Promise<MessageSearchResult>;
 		startTyping(count?: number): Promise<void>;
 		stopTyping(force?: boolean): void;
@@ -1778,6 +1790,7 @@ declare module 'discord.js' {
 		region?: string;
 		verificationLevel?: number;
 		explicitContentFilter?: number;
+		defaultMessageNotifications?: DefaultMessageNotifications | number;
 		afkChannel?: ChannelResolvable;
 		systemChannel?: ChannelResolvable;
 		afkTimeout?: number;
@@ -1845,7 +1858,7 @@ declare module 'discord.js' {
 
 	type MessageEditOptions = {
 		content?: string;
-		embed?: MessageEmbedOptions;
+		embed?: MessageEmbedOptions | null;
 		code?: string | boolean;
 	};
 
@@ -1874,7 +1887,7 @@ declare module 'discord.js' {
 		content?: string;
 		embed?: MessageEmbed | MessageEmbedOptions,
 		disableEveryone?: boolean;
-		files?: FileOptions[] | string[];
+		files?: (FileOptions | BufferResolvable | MessageAttachment)[];
 		code?: string | boolean;
 		split?: boolean | SplitOptions;
 		reply?: UserResolvable;
@@ -1968,6 +1981,7 @@ declare module 'discord.js' {
 		| 'MANAGE_GUILD'
 		| 'ADD_REACTIONS'
 		| 'VIEW_AUDIT_LOG'
+		| 'PRIORITY_SPEAKER'
 		| 'VIEW_CHANNEL'
 		| 'SEND_MESSAGES'
 		| 'SEND_TTS_MESSAGES'
@@ -1990,7 +2004,14 @@ declare module 'discord.js' {
 		| 'MANAGE_EMOJIS';
 
 	interface RecursiveArray<T> extends Array<T | RecursiveArray<T>> { }
+
 	type PermissionResolvable = RecursiveArray<Permissions | PermissionString | number> | Permissions | PermissionString | number;
+
+	type PermissionOverwriteOptions = {
+		allowed: PermissionResolvable;
+		denied: PermissionResolvable;
+		id: UserResolvable | RoleResolvable;
+	}
 
 	type PresenceData = {
 		status?: PresenceStatus;
