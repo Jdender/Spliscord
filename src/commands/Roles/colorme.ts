@@ -17,7 +17,7 @@ export default class extends Command {
 
     async run(message: KlasaMessage, [color]: [string]) {
         
-        if (!message.guildConfigs.get('allowColorme'))
+        if (!message.guild.settings.get('allowColorme'))
             return message.send('The guild admins disabled or never enabled the `allowColorme` config option.');
 
         // Discord.js can't do more than one role action quickly

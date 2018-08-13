@@ -7,7 +7,7 @@ interface BalanceReturnObject {
 
 export abstract class Currency {
 
-    static initDatabase = (userSchema?: SchemaFolder) => 
+    static initDatabase = (userSchema: SchemaFolder | null) => 
 
         // Schema exitsts and does not have, then add it
         !!userSchema &&
@@ -18,13 +18,13 @@ export abstract class Currency {
             configurable: false,
         });
 
-    static getBalance = (target: KlasaUser): number => target.configs.get('balance');
+    static getBalance = (target: KlasaUser): number => target.settings.get('balance');
 
     static setBalance = async (target: KlasaUser, amount: number): Promise<BalanceReturnObject> => {
 
         const prebal = Currency.getBalance(target);
 
-        await target.configs.update('balance', amount);
+        await target.settings.update('balance', amount);
 
         return {
             prebal,

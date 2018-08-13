@@ -16,16 +16,16 @@ export default class extends Command {
 
         if (prefix === 'reset') return this.reset(message);
         
-        if (message.guildConfigs.get('prefix') === prefix) throw 'This guild\'s prefix is already set to that.';
+        if (message.guild.settings.get('prefix') === prefix) throw 'This guild\'s prefix is already set to that.';
         
-        await message.guild.configs.update('prefix', prefix);
+        await message.guild.settings.update('prefix', prefix);
         
 		return message.send(`The prefix for this guild has been set to ${prefix}.`);
 	}
 
 	async reset(message: KlasaMessage) {
 
-        await message.guildConfigs.update('prefix', this.client.options.prefix);
+        await message.guild.settings.update('prefix', this.client.options.prefix);
         
 		return message.send(`Switched back the guild's prefix back to \`${this.client.options.prefix}\`.`);
 	}

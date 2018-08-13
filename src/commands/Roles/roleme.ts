@@ -44,7 +44,7 @@ export default class extends Command {
     // List all public roles in the guild
     list = (message: KlasaMessage) => {
 
-        const roleNames = message.guildConfigs.get('publicRoleNames') as string[];
+        const roleNames = message.guild.settings.get('publicRoleNames') as string[];
 
         return message.send(
 
@@ -63,14 +63,14 @@ export default class extends Command {
 
         if (!arg) throw 'You need to provide a role.';
 
-        const roleNames = message.guildConfigs.get('publicRoleNames') as string[];
+        const roleNames = message.guild.settings.get('publicRoleNames') as string[];
 
         const roleIndex = roleNames.indexOf(arg);
 
         if (roleIndex  === -1)
             throw 'That public role was not found.';
 
-        const roleIds = message.guildConfigs.get('publicRoleIds') as string[];
+        const roleIds = message.guild.settings.get('publicRoleIds') as string[];
 
         const role = message.guild.roles.get(roleIds[roleIndex]);
 
