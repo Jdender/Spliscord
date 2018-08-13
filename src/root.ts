@@ -15,5 +15,9 @@ const client = new KlasaClient(config)
 import reporter from './util/errorReporter';
 if (process.env.NODE_ENV === 'production') reporter(client);
 
+// Init services
+import { Currency } from './services/Currency';
+Currency.initDatabase(client.gateways.users.schema);
+
 // Start bot
 client.login(process.env.TOKEN!);
