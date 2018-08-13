@@ -1,5 +1,6 @@
 import { applyOptions } from '../../../util/applyOptions';
 import { Command, CommandOptions, KlasaMessage, KlasaUser } from 'klasa';
+import { Currency } from '../../../services/Currency';
 
 @applyOptions<CommandOptions>({
     name: 'balance',
@@ -11,7 +12,7 @@ export default class extends Command {
 
     async run(message: KlasaMessage, [target]: [KlasaUser]) {
 
-        const balance: number = (target || message.author).configs.get('balance');
+        const balance = Currency.getBalance(target || message.author);
 
         return message.send(
             `${target ? `${target.username} has` : 'You have'} a balance of ${balance} spliscoin${balance !== 1 ? 's' : ''}.`
