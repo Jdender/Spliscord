@@ -6,6 +6,8 @@
         "module": "commonjs",
         "moduleResolution": "node",
         "outDir": "dist",
+        "sourceMap": true,
+        "sourceRoot": "src",
         "strict": true,
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true,
