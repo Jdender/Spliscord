@@ -37,7 +37,7 @@
     "@types/node": "^9.4.6",
     "@types/node-fetch": "^2.1.1",
     "@types/tinycolor2": "^1.4.0",
-    "ts-node": "^4.1.0",
-    "typescript": "^2.9.0"
+    "ts-node": "^7.0.1",
+    "typescript": "^3.0.1"
   }
 }
