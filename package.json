@@ -3,13 +3,6 @@
   "version": "0.2.0",
   "description": "Spliscord is a Discord bot made using the Discord.js wrapper for Discord's API. Spliscord is actively developed with new features being added and tested almost every week.",
   "main": "src/root.ts",
-  "engines": {
-    "node": "10.x"
-  },
-  "scripts": {
-    "dev": "ts-node -r dotenv/config .",
-    "start": "ts-node ."
-  },
   "repository": "https://github.com/jdenderplays/Spliscord.git",
   "contributors": [
     "Jdender~ <jdenderplays@gmail.com> (https://github.com/jdenderplays)"
@@ -19,6 +12,13 @@
     "url": "https://github.com/jdenderplays/Spliscord/issues"
   },
   "homepage": "https://github.com/jdenderplays/Spliscord#readme",
+  "scripts": {
+    "dev": "ts-node --files -r dotenv/config .",
+    "start": "ts-node ."
+  },
+  "engines": {
+    "node": "10.x"
+  },
   "dependencies": {
     "cheerio": "^1.0.0-rc.2",
     "discord.js": "github:discordjs/discord.js#master",
