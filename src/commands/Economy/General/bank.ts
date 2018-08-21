@@ -14,7 +14,7 @@ export default class extends Command {
 
     give = async (message: KlasaMessage, [target, amount]: [KlasaUser, number]) => {
 
-        const { prebal, newbal } = await Currency.giveBalance(target, amount);
+        const { prebal, newbal } = await Currency.addBalance(target, amount);
 
         return message.send(
             `Added ${amount} to ${target.username}'s ${prebal}. They now have a balance of ${newbal}.`

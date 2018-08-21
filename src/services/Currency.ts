@@ -7,16 +7,17 @@ interface BalanceReturnObject {
 
 export abstract class Currency {
 
-    static initDatabase = (userSchema: SchemaFolder | null) => 
+    static initDatabase = async (userSchema: SchemaFolder | null) => {
 
-        // Schema exitsts and does not have, then add it
-        !!userSchema &&
-        !userSchema.has('balance') &&
-        userSchema.add('balance', { 
-            type: 'integer',
-            default: 0,
-            configurable: false,
-        });
+        if (!userSchema) return;
+
+        if (!userSchema.has('balance'))
+            await userSchema.add('balance', { 
+                type: 'integer',
+                default: 0,
+                configurable: false,
+            });
+    }
 
     static getBalance = (target: KlasaUser): number => target.settings.get('balance');
 
@@ -32,7 +33,7 @@ export abstract class Currency {
         };
     };
 
-    static giveBalance = async (target: KlasaUser, amount: number) =>
+    static addBalance = async (target: KlasaUser, amount: number) =>
 
         Currency.setBalance(target, Currency.getBalance(target) + amount);
     
