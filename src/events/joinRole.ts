@@ -12,13 +12,15 @@ export default class extends Event {
 
         if (!member.guild.me.hasPermission('MANAGE_ROLES')) return;
         
-        const id = this.client.gateways.guilds.get(member.guild.id).get('joinRole');
+        const ids = this.client.gateways.guilds.get(member.guild.id).get('joinRoles') as string[];
 
-        const role = member.guild.roles.get(id);
+        const roles = ids
+        .map(id => member.guild.roles.get(id))
+        .filter(r => !!r && r.editable) as Role[];
         
-        if (!role || !role.editable) return;
+        if (!roles.length) return;
 
-        member.roles.add(role, 'Join role');
+        member.roles.add(roles, 'Join role');
     }
 
     async init() {
@@ -27,7 +29,10 @@ export default class extends Event {
 
         if (!schema) return;
 
-        if (!schema.has('joinRole'))
-            await schema.add('joinRole', { type: 'role' });
+        if (!schema.has('joinRoles'))
+            await schema.add('joinRoles', { 
+                type: 'role',
+                array: true,
+            });
     }
 }
