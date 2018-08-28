@@ -10,7 +10,7 @@ export default class extends Argument {
 
         if (!color.isValid())
             throw 'Tinycolor was unable to recognize that color.';
-
-        return color.toHexString();
+        
+        return color.toHex();
     }
 }
