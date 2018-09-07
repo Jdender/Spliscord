@@ -107,6 +107,6 @@ export default class extends Command {
             .map(n => ` • ${n}`) // Add fancy dot
             .join('\n') // Join by newline
 
-        return message.send(`Users currently in game:\n ${list}`);
+        return message.send(`Users currently in game:\n${list}`);
     };
 }
