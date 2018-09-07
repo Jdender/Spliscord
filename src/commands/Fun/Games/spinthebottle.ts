@@ -103,7 +103,7 @@ export default class extends Command {
         const list = current
             .map(m => message.guild.members.get(m)) // Map ids to user
             .filter(m => m) // Filter non existant users (if it can even happen)
-            .map(m => m!.nickname) // Get usernames
+            .map(m => m!.nickname || m!.user.username) // Get usernames
             .map(n => ` • ${n}`) // Add fancy dot
             .join('\n') // Join by newline
 
