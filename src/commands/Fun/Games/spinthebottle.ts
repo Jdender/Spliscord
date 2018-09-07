@@ -101,12 +101,12 @@ export default class extends Command {
 
         // Display list
         const list = current
-            .map(u => this.client.users.get(u)) // Map ids to user
-            .filter(u => u) // Filter non existant users (if it can even happen)
-            .map(u => u!.username) // Get usernames
+            .map(m => message.guild.members.get(m)) // Map ids to user
+            .filter(m => m) // Filter non existant users (if it can even happen)
+            .map(m => m!.nickname) // Get usernames
             .map(n => ` • ${n}`) // Add fancy dot
             .join('\n') // Join by newline
 
-        return message.send(`Users currently in game:\n${list}`);
+        return message.send(`Members currently in game:\n${list}`);
     };
 }
