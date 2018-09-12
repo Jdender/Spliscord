@@ -72,13 +72,17 @@ export default class extends Command {
                 color,
                 mentionable: false,
                 hoist: false,
-                position: message.guild.settings.get('putColorRolesAtTop')
-                ? message.guild.me.roles.highest.position
-                : undefined,
+                position: (this.getRoleAnchor(message) || {} as any).position,
             },
             reason: 'Create color role',
         });
 
+    private getRoleAnchor = ({ guild }: KlasaMessage) =>
+
+        guild.roles.get(
+            guild.settings.get('colormeRoleAnchor')
+        );
+        
 
     // Remove any unused color roles in guild
     private removeExtra = (color: number, name: string) => (member: GuildMember) =>
@@ -99,8 +103,8 @@ export default class extends Command {
         if (!schema.has('allowColorme'))
             await schema.add('allowColorme', { type: 'boolean' });
 
-        if (!schema.has('putColorRolesAtTop'))
-            await schema.add('putColorRolesAtTop', { type: 'boolean' });
+        if (!schema.has('colormeRoleAnchor'))
+            await schema.add('colormeRoleAnchor', { type: 'role' });
 
         if (!schema.has('colormeRoleName'))
             await schema.add('colormeRoleName', { 
