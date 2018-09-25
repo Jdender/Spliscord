@@ -1,0 +1,51 @@
+import { applyOptions } from '../util/applyOptions';
+import { Event, EventOptions, KlasaGuild, KlasaUser, KlasaTextChannel } from 'klasa';
+import { MessageEmbed } from 'discord.js';
+
+const banColor = 0xd60404; // Replace # with 0x when using hex colors
+
+@applyOptions<EventOptions>({
+    name: 'banLogger',
+    event: 'guildBanAdd',
+})
+export default class extends Event {
+
+    async run(guild: KlasaGuild, user: KlasaUser) {
+
+        const logChannel = this.client.channels.get(guild.settings.get('logChannel'));
+        
+        if (!logChannel) return;
+
+        // Find out how to check channel permissions for send messages
+        if (!guild.me.hasPermission('VIEW_AUDIT_LOG')) return;
+
+        const audit = await guild.fetchAuditLogs({
+            user,
+            type: 'MEMBER_BAN_ADD',
+        })
+        .then(logs => logs.entries.first());
+
+        if (!audit) return;
+
+        (logChannel as KlasaTextChannel).sendEmbed(
+            new MessageEmbed()
+            .setTitle(`**Ban Added:** ${user.tag}`)
+            .setThumbnail(user.avatarURL())
+            .setDescription(audit.reason)
+            .setColor(banColor)
+            .setAuthor(audit.executor.tag, audit.executor.avatarURL())
+        );
+    }
+
+    async init() {
+
+        const { schema } = this.client.gateways.guilds;
+
+        if (!schema) return;
+
+        if (!schema.has('logChannel'))
+            await schema.add('logChannel', { 
+                type: 'channel',
+            });
+    }
+}
