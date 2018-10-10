@@ -1,12 +1,13 @@
 import { applyOptions } from '../../util/applyOptions';
-import { Command, KlasaMessage } from 'klasa';
+import { Command, KlasaMessage, CommandOptions } from 'klasa';
 import { GuildMember } from 'discord.js';
 
-@applyOptions({
+@applyOptions<CommandOptions>({
     name: 'colorme',
     description: 'Color your self with any color you want. Requires `allowColorme` to enabled in guild config.',
     usage: '<Color:color>',
     requiredPermissions: ['MANAGE_ROLES'],
+    aliases: ['colourme'],
 })
 
 // I use names to determine color roles, it's easier than storing a array in db
