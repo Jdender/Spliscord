@@ -18,6 +18,7 @@
   "dependencies": {
     "discord.js": "discordjs/discord.js#master",
     "importful": "^2.0.1",
+    "pg": "^7.7.1",
     "rxjs": "^6.3.3",
     "typeorm": "^0.2.9"
   },
