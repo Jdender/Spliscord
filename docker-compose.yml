@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+
+  discord:
+    build: .
+    command: maid serve:dev
+    volumes:
+      - .:/usr/app/
+    depends_on:
+      - postgres
+    env_file:
+      - .env
+    environment:
+      NODE_ENV: development
+      POSTGRES_URL: postgres://spliscord@postgres/spliscord
+
+  postgres:
+    image: postgres:9.6.2-alpine
+    volumes:
+      - ./.data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: spliscord
