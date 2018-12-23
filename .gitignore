@@ -10,7 +10,7 @@ yarn-error.log*
 .data/
 
 # Environment variables files
-docker-compose.yml
+.env
 
 # Build generated
 dist/
