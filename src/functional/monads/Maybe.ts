@@ -25,3 +25,17 @@ export const nullToNone = <A>(m: Maybe<A>) => Maybe.chain(v => v == null ? none 
 const { ap, chain, join, map, of } = Maybe;
 
 export { ap, chain, join, map, of };
+
+/*
+> Could be used for a test:
+
+```ts
+const t = pipe(
+    _ => Maybe.of(1),
+    _ => Maybe.map(x => x + 1, _),
+    _ => Maybe.map(x => null, _),
+    _ => Maybe.nullToNone(_),
+    _ => Maybe.orElse('wew', _),
+);
+```
+*/
