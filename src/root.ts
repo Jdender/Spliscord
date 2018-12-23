@@ -1,19 +1,29 @@
-if (!process.env.TOKEN) process.exit(1);
+import { createConnection } from 'typeorm';
+import { Client, Message } from 'discord.js';
+import { fromEvent } from 'rxjs';
+import { filter, map } from 'rxjs/operators';
+import { handleMessage } from './handleMessage';
 
-process
-.on('unhandledRejection', e => console.error(`UNHANDLED REJECTION: ${e.stack || e}`)) 
-.on('uncaughtException', e => console.error(`UNCAUGHT EXCEPTION: ${e.stack || e}`));
+void async function() {
 
-import './util/patchStore';
-import { KlasaClient } from 'klasa';
-import { config } from './config';
+    await createConnection({
+        type: 'postgres',
+        url: process.env.POSTGRES_URL,
+        synchronize: true,
+        entities: [__dirname + '/**/*.entity.ts'],
+    });
 
-// Change klasa client options here
-const client = new KlasaClient(config)
+    const client = new Client();
 
-// Use webhook error reporter if in prod
-import reporter from './util/errorReporter';
-if (process.env.NODE_ENV === 'production') reporter(client);
+    fromEvent(client, 'ready')
+    .subscribe(() => {
+        console.log('Ready!');
+    });
 
-// Start bot
-client.login(process.env.TOKEN!);
+    fromEvent<Message>(client, 'message')
+    .pipe(handleMessage)
+    .subscribe();
+
+    await client.login(process.env.DISCORD_TOKEN);
+}()
+.catch(console.error);

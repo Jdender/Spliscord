@@ -1,13 +1,8 @@
 {
     "compilerOptions": {
         "locale": "en",
-        "target": "es2018",
-        "lib": [ "es2017" ],
+        "lib": ["esnext"],
         "module": "commonjs",
-        "moduleResolution": "node",
-        "outDir": "dist",
-        "sourceMap": true,
-        "sourceRoot": "src",
         "strict": true,
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true,
