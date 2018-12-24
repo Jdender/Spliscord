@@ -1,17 +1,17 @@
 {
-  "name": "spliscord",
+  "name": "calamus",
   "version": "0.2.0",
-  "description": "Spliscord is a Discord bot made using the Discord.js wrapper for Discord's API. Spliscord is actively developed with new features being added and tested almost every week.",
+  "description": "TODO",
   "main": "src/root.ts",
-  "repository": "https://github.com/jdenderplays/Spliscord.git",
+  "repository": "https://github.com/jdenderplays/Calamus.git",
   "contributors": [
     "Jdender~ <jdenderplays@gmail.com> (https://github.com/jdenderplays)"
   ],
   "license": "AGPL-3.0",
   "bugs": {
-    "url": "https://github.com/jdenderplays/Spliscord/issues"
+    "url": "https://github.com/jdenderplays/Calamus/issues"
   },
-  "homepage": "https://github.com/jdenderplays/Spliscord#readme",
+  "homepage": "https://github.com/jdenderplays/Calamus#readme",
   "engines": {
     "node": "10.x"
   },

@@ -1,19 +1,17 @@
-# Spliscord
-Spliscord is a Discord bot made using TypeScript and the Klasa framework for Discord.js. They are being actively developed with new features added and tested almost every week.
+# Calamus
 
 [![Discord](https://discordapp.com/api/guilds/411973008236740619/embed.png)](https://discord.gg/jqrUHPe)
 
-Spliscord has various commands and systems, ranging from self-roles, being able to color your self, and even a reimplementation of @someone. All configure able with both guild and user config. You can always suggest an idea, we even can work on server specific systems.
 
 ## Authors
 
 * **Jdender~** - *Full stack & Initial work* - [GitHub](https://github.com/jdenderplays)
 
-Also, check the list of [contributors](https://github.com/jdenderplays/Spliscord/contributors) who did minor contributions.
+Also, check the list of [contributors](https://github.com/jdenderplays/Calamus/contributors) who did minor contributions.
 
 ## License
 
-This project is licensed under the AGPL 3.0 License - see the [license](https://github.com/jdenderplays/Spliscord/blob/master/LICENSE) file for details.
+This project is licensed under the AGPL 3.0 License - see the [license](https://github.com/jdenderplays/Calamus/blob/master/LICENSE) file for details.
 
 ## Acknowledgments
 
