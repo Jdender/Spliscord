@@ -1,36 +1,41 @@
 {
   "name": "calamus",
   "version": "0.2.0",
-  "description": "TODO",
+  "description": "A work in progress discord bot; nothing much to see yet.",
+  "license": "AGPL-3.0",
+
   "main": "src/root.ts",
-  "repository": "https://github.com/jdenderplays/Calamus.git",
+
   "contributors": [
     "Jdender~ <jdenderplays@gmail.com> (https://github.com/jdenderplays)"
   ],
-  "license": "AGPL-3.0",
-  "bugs": {
-    "url": "https://github.com/jdenderplays/Calamus/issues"
-  },
+
+  "repository": "github:jdenderplays/Calamus",
+  "bugs": "https://github.com/jdenderplays/Calamus/issues",
   "homepage": "https://github.com/jdenderplays/Calamus#readme",
+
   "engines": {
-    "node": "10.x"
+    "node": "^10.0.0",
+    "yarn": "^1.12.3"
   },
   "dependencies": {
+    "@types/node": "^10.12.18",
     "discord.js": "discordjs/discord.js#master",
     "importful": "^2.0.1",
     "pg": "^7.7.1",
-    "rxjs": "^6.3.3",
+    "ts-node": "^7.0.1",
+    "typescript": "^3.2.2",
     "typeorm": "^0.2.9"
   },
   "devDependencies": {
-    "@types/node": "^10.12.18",
-    "ts-node": "^7.0.1",
-    "ts-node-dev": "^1.0.0-pre.32",
-    "typescript": "^3.2.2"
+    "ts-node-dev": "^1.0.0-pre.32"
   },
   "optionalDependencies": {
     "@discordjs/uws": "^11.149.1",
     "erlpack": "discordapp/erlpack",
     "zlib-sync": "^0.1.4"
+  },
+  "peerDependencies": {
+    "maid": "^0.3.0"
   }
 }
