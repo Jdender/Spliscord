@@ -2,6 +2,7 @@
 
 [![Discord](https://discordapp.com/api/guilds/411973008236740619/embed.png)](https://discord.gg/jqrUHPe)
 
+A work in progress discord bot; nothing much to see yet.
 
 ## Authors
 
